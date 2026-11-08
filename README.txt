@@ -1,33 +1,37 @@
 XC ShiftApp – Progressive Web App
-Version: 1.0.0
+Version: 1.0.4
 Unique app ID: uk.co.crosscountry.shiftapp
 
-CONTENTS
+CONTENTS (all files are in the application root)
 - index.html: app interface
-- style.css: responsive XC-inspired styling and print layout
-- app.js: shift logging, local saving, clipboard, email-copy and PDF print/export
+- style.css: responsive XC-inspired styling
+- app.js: shift logging, autosave, clipboard/email-copy and print preview
 - manifest.json: PWA installation identity and metadata
 - app-identity.json: explicit app/build/storage/cache identification
-- service-worker.js: offline cache and versioned updates
-- icons/: generated app icons
-- shiftapp-logo.png: 512 x 512 app logo
+- service-worker.js: offline cache and versioned update checks
+- icon-*.png and shiftapp-logo.png: app image assets
 
 INSTALL / RUN
-1. Extract this folder.
-2. Host the folder on an HTTPS static host (for example GitHub Pages), or use localhost for testing.
-3. Open index.html through the hosted HTTPS address.
+1. Extract the ZIP package.
+2. Host the files on an HTTPS static host (for example GitHub Pages), or use localhost for testing.
+3. Open the hosted HTTPS address.
 4. Use the browser's Install / Add to Home Screen option.
 
-The app is designed to work offline after the first successful load. The browser's localStorage holds shift records on that device. Save is also available as a manual save action. Export PDF opens the print dialog; select Save as PDF.
+LOCAL DATA
+Shift date, headcode, shift notes, trains and timestamped log entries are automatically saved in this browser's localStorage as fields change and when the app is backgrounded or closed. The Save button remains available for manual saving. Data remains on this device/browser and is not uploaded to a server. Clearing browser/site data may remove it; export important records regularly.
 
-DATA NOTE
-No server, cloud sync, or email sending is configured. Copy to Email copies the complete log so it can be pasted into an email. Local browser data can be lost if site data is cleared or the app is removed with browser storage cleared; export important records regularly.
+PRINT PREVIEW
+Export PDF opens a separate print-preview tab with a Close Preview button and a Print / Save PDF button. Closing the preview returns to the shift app. The browser print dialog can also be cancelled normally.
+
+UPDATES
+The app checks for a new service-worker build on launch and no more than once every 24 hours while open, including when returning to the foreground after the interval. The cache version changes with each build. App updates do not delete the local shift-data key.
+
+EMAIL
+Copy to Email copies the report text for pasting into an email. No email account connection or automatic sending is configured.
 
 IDENTITY
 App ID: uk.co.crosscountry.shiftapp
 Storage key: uk.co.crosscountry.shiftapp.shiftdata.v1
-Service worker cache: xc-shiftapp-cache-v1.0.2-build-2026.11.08-003
+Service worker cache: xc-shiftapp-cache-v1.0.4-build-2026.11.08-001
 
-Build 1.0.2: screenshot-inspired dark burgundy/magenta styling. All PNG image assets are in the application root directory; no images subfolder is used.
-
-Build 1.0.2: removed the footer text requested; local storage key remains unchanged.
+Build 1.0.4: added closable print preview, reinforced local autosaving, and 24-hour update checks. All image assets remain in the application root directory.

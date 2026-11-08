@@ -1,11 +1,11 @@
 {
   "app_id": "uk.co.crosscountry.shiftapp",
   "product_name": "XC ShiftApp",
-  "full_name": "CrossCountry ShiftApp \u2013 Train Manager Shift Log",
-  "version": "1.0.2",
-  "build": "2026.11.08-003",
+  "full_name": "CrossCountry ShiftApp – Train Manager Shift Log",
+  "version": "1.0.4",
+  "build": "2026.11.08-001",
   "storage_key": "uk.co.crosscountry.shiftapp.shiftdata.v1",
-  "service_worker_cache": "xc-shiftapp-cache-v1.0.2-build-2026.11.08-003",
+  "service_worker_cache": "xc-shiftapp-cache-v1.0.4-build-2026.11.08-001",
   "manifest": "manifest.json",
   "entry_point": "index.html",
   "language": "en-GB",
@@ -15,7 +15,7 @@
     "background": "#16040D",
     "surface": "#FFFFFF"
   },
-  "data_policy": "Shift data is stored locally in this browser using localStorage. No server upload is configured.",
-  "update_policy": "The service worker checks for an updated app when the app is opened and uses a versioned cache. Local shift data is not cleared during app updates.",
+  "data_policy": "Shift details, trains and timestamped entries autosave locally in this browser using localStorage. Manual Save is also available. No server upload is configured.",
+  "update_policy": "The app checks for updates on launch and at most once every 24 hours while open or when returning to the foreground. Updates use a versioned cache and do not clear locally saved shift data.",
   "asset_layout": "All image assets are stored in the application root directory."
 }
