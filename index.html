@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#A50034"><meta name="description" content="Offline-ready operational shift log for CrossCountry Train Managers.">
+<meta name="application-name" content="XC ShiftApp"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="XC ShiftApp">
+<link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><link rel="icon" href="icon-48.png">
+<title>XC ShiftApp – Shift Log</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar"><img src="icon-96.png" alt="XC ShiftApp logo"><div><div class="brand">XC <b>ShiftApp</b></div><small>TRAIN MANAGER • OPERATIONAL LOG</small></div><button id="installBtn" class="install hidden">Install</button></header>
+<main>
+<section class="panel"><h2>Shift details</h2><div class="fields two"><label>Date <input id="shiftDate" type="date"></label><label>Headcode <input id="shiftHeadcode" maxlength="4" placeholder="1V50" autocapitalize="characters"></label></div><label>Shift notes <textarea id="shiftNotes" rows="3" placeholder="General notes about this shift..."></textarea></label></section>
+<section class="panel"><div class="sectionhead"><h2>Trains</h2><button id="addTrain" class="secondary">＋ Add train</button></div><div id="trains" class="empty">No trains added yet.</div></section>
+<section class="panel"><div class="sectionhead"><h2>Operational log</h2><span id="entryCount" class="count">0 entries</span></div><button id="addIssue" class="primary full">＋ Add issue / log entry</button><div id="entries" class="entries empty">No log entries yet.</div></section>
+<section class="panel actions"><h2>Shift actions</h2><div class="actiongrid"><button id="save" class="primary">Save shift</button><button id="pdf" class="secondary">Export PDF</button><button id="copy" class="secondary">Copy log</button><button id="email" class="secondary">Copy to email</button><button id="clear" class="danger wide">Clear all</button></div><p id="status" role="status" aria-live="polite"></p></section>
+
+</main>
+<dialog id="trainDialog"><form method="dialog" id="trainForm"><div class="dialoghead"><h2>Add train</h2><button class="x" value="cancel" aria-label="Close">×</button></div><label>Headcode<input id="trainCode" maxlength="4" placeholder="1V50" required></label><label>Unit number<input id="unitNumber" inputmode="numeric" maxlength="6" placeholder="Six digit unit number" required></label><div class="dialogactions"><button value="cancel" class="secondary">Cancel</button><button id="trainSubmit" value="default" class="primary">Add train</button></div></form></dialog>
+<dialog id="issueDialog"><form method="dialog" id="issueForm"><div class="dialoghead"><h2>Add log entry</h2><button class="x" value="cancel" aria-label="Close">×</button></div><label>Entry type<select id="entryType"><option>General Note</option><option>Defect</option><option>Passenger Counts</option><option>Control Message</option><option>Delay</option><option>Assist</option><option>Reminder</option></select></label><div id="dynamicFields"></div><label id="descriptionLabel">Information / description<textarea id="description" rows="4" placeholder="Enter details..."></textarea></label><div class="dialogactions"><button value="cancel" class="secondary">Cancel</button><button id="entrySubmit" value="default" class="primary">Add to log</button></div></form></dialog>
+<script src="app.js" defer></script>
+</body></html>
