@@ -1,5 +1,5 @@
 XC ShiftApp – Progressive Web App
-Version: 1.0.4
+Version: 1.0.7
 Unique app ID: uk.co.crosscountry.shiftapp
 
 CONTENTS (all files are in the application root)
@@ -32,6 +32,10 @@ Copy to Email copies the report text for pasting into an email. No email account
 IDENTITY
 App ID: uk.co.crosscountry.shiftapp
 Storage key: uk.co.crosscountry.shiftapp.shiftdata.v1
-Service worker cache: xc-shiftapp-cache-v1.0.4-build-2026.11.08-001
+Service worker cache: xc-shiftapp-cache-v1.0.8-build-2026.11.09-001
 
-Build 1.0.4: added closable print preview, reinforced local autosaving, and 24-hour update checks. All image assets remain in the application root directory.
+Build 1.0.6: added closable print preview, reinforced local autosaving, and 24-hour update checks. All image assets remain in the application root directory.
+
+Build 1.0.7: added a Full and standing checkbox to Passenger Counts entries; selection is included in saved log text and exports.
+
+Copy to email: copies rich HTML tables (with plain-text fallback) and opens the device default email handler with a plain-text table-formatted report.
