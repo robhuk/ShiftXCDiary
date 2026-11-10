@@ -11,7 +11,11 @@
 <header class="topbar"><img src="icon-96.png" alt="XC ShiftApp logo"><div><div class="brand">XC <b>ShiftApp</b></div></div><button id="installBtn" class="install hidden">Install</button></header>
 <section class="xc-clock" aria-label="Live CrossCountry clock">
   <div class="clock-face">
-    <div class="clock-digits" aria-live="off"><span id="clockHours">00</span><i>:</i><span id="clockMinutes">00</span><i>:</i><span id="clockSeconds" class="seconds">00</span></div>
+    <div class="clock-digits" aria-live="off" aria-label="Current time">
+    <span id="clockHours" class="led-group" aria-hidden="true">00</span><i class="led-colon">:</i>
+    <span id="clockMinutes" class="led-group" aria-hidden="true">00</span><i class="led-colon">:</i>
+    <span id="clockSeconds" class="led-group seconds" aria-hidden="true">00</span>
+  </div>
     <div class="clock-brand" aria-label="CrossCountry"><span class="brand-cross">×</span><span>crosscountry</span></div>
   </div>
   <div class="clock-strip"><span id="clockDate">MONDAY 10 NOVEMBER 2026</span><span id="clockZone">UK TIME</span></div>

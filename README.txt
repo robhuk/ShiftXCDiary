@@ -60,3 +60,8 @@ Version 1.1.2 (10/11/2026)
 - Removed the standalone Create incident button.
 - Added 🚨 INCIDENT to Add issue / log entry. Selecting it opens a custom prompt for an optional incident log number before entering incident details.
 - Incident records retain sequential follow-up entry support and appear in all exports.
+
+
+Version 1.1.3
+- Updated the live CrossCountry clock to use custom seven-segment LED digits matching the supplied reference image: lime-green hours/minutes, red seconds, dark inactive segments, and illuminated colon dots.
+- Preserved app identity and local shift storage.
