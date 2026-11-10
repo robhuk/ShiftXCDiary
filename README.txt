@@ -65,3 +65,14 @@ Version 1.1.2 (10/11/2026)
 Version 1.1.3
 - Updated the live CrossCountry clock to use custom seven-segment LED digits matching the supplied reference image: lime-green hours/minutes, red seconds, dark inactive segments, and illuminated colon dots.
 - Preserved app identity and local shift storage.
+
+Version 1.1.4
+- Refined clock to match the supplied seven-segment digital display reference.
+- Enlarged lime-green hours/minutes, reduced red seconds digits, dark inactive segments, and removed the clock-side wordmark for a clean display.
+- Preserved app identity and local shift storage.
+
+Version 1.1.5
+- Removed sequential incident follow-up/update workflow.
+- Added Update as a standalone entry type in Add issue / log entry.
+- Existing incident log-number prompt remains in place.
+- Preserved app identity and local shift storage.
