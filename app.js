@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.1.6', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
+const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.1.7', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
 const $=id=>document.getElementById(id);
 const state={trains:[],entries:[]};
 const nowLocal=()=>{const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10)};
@@ -10,8 +10,7 @@ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const status=msg=>{$('status').textContent=msg};
 // Live CrossCountry clock: Europe/London handles GMT/BST transitions automatically.
 function ledDigits(value){
- const map={0:'abcdef',1:'bc',2:'abged',3:'abgcd',4:'fgbc',5:'afgcd',6:'afgecd',7:'abc',8:'abcdefg',9:'abfgcd'};
- return String(value).split('').map(n=>'<span class="led-digit">'+['a','b','c','d','e','f','g'].map(seg=>'<i class="seg-'+seg+(map[n].includes(seg)?' on':'')+'"></i>').join('')+'</span>').join('');
+ return String(value).split('').map(n=>'<span class="led-digit">'+n+'</span>').join('');
 }
 function updateClock(){
  const now=new Date(), parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(now);

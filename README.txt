@@ -81,3 +81,8 @@ Version 1.1.6
 - Improved clock legibility with larger, thicker bevelled seven-segment LED numerals and brighter active segments.
 - Increased contrast for inactive segments and improved responsive sizing.
 - Preserved existing app identity and local shift data.
+
+Version 1.1.7
+- Changed clock digits from custom seven-segment shapes to a clear standard system digital font with tabular numerals.
+- Retained lime hours/minutes, red seconds, dark display and UK time handling.
+- Preserved app identity and local shift data.

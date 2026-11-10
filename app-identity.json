@@ -2,10 +2,10 @@
   "app_id": "uk.co.crosscountry.shiftapp",
   "product_name": "XC ShiftApp",
   "full_name": "CrossCountry ShiftApp \u2013 Train Manager Shift Log",
-  "version": "1.1.6",
-  "build": "2026.11.10-006",
+  "version": "1.1.7",
+  "build": "2026.11.10-007",
   "storage_key": "uk.co.crosscountry.shiftapp.shiftdata.v1",
-  "service_worker_cache": "xc-shiftapp-cache-v1.1.6-build-2026.11.10-006",
+  "service_worker_cache": "xc-shiftapp-cache-v1.1.7-build-2026.11.10-007",
   "manifest": "manifest.json",
   "entry_point": "index.html",
   "language": "en-GB",
@@ -26,6 +26,7 @@
     "Reference-matched seven-segment LED clock with lime main digits and red seconds",
     "Reference-matched seven-segment LED clock with smaller red seconds digits",
     "Removed sequential incident follow-up entries; added standalone Update entry type",
-    "High-legibility LED clock with wider bevelled segments, brighter illumination and improved mobile sizing"
+    "High-legibility LED clock with wider bevelled segments, brighter illumination and improved mobile sizing",
+    "Clock changed to clear standard system digital numerals with tabular spacing"
   ]
 }
