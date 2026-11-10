@@ -53,3 +53,10 @@ Version 1.1.1 additions:
 - Shows hours, minutes and seconds, UK date and GMT/BST zone.
 - Uses the Europe/London time zone so daylight-saving changes are handled automatically.
 - Preserves the existing app ID and local shift-data storage key.
+
+
+Version 1.1.2 (10/11/2026)
+- Updated the CrossCountry clock to a brighter LED / seven-segment-inspired display.
+- Removed the standalone Create incident button.
+- Added 🚨 INCIDENT to Add issue / log entry. Selecting it opens a custom prompt for an optional incident log number before entering incident details.
+- Incident records retain sequential follow-up entry support and appear in all exports.
