@@ -32,10 +32,24 @@ Copy to Email copies the report text for pasting into an email. No email account
 IDENTITY
 App ID: uk.co.crosscountry.shiftapp
 Storage key: uk.co.crosscountry.shiftapp.shiftdata.v1
-Service worker cache: xc-shiftapp-cache-v1.0.8-build-2026.11.09-001
+Service worker cache: xc-shiftapp-cache-v1.0.9-build-2026.11.09-001
 
 Build 1.0.6: added closable print preview, reinforced local autosaving, and 24-hour update checks. All image assets remain in the application root directory.
 
 Build 1.0.7: added a Full and standing checkbox to Passenger Counts entries; selection is included in saved log text and exports.
 
 Copy to email: copies rich HTML tables (with plain-text fallback) and opens the device default email handler with a plain-text table-formatted report.
+
+Incident logging (v1.0.9): Create a numbered incident with a nature/what happened description. Use Add sequential entry on an incident to attach further timestamped log entries; sequence numbering is retained in the log and exports.
+
+Version 1.1.0 additions:
+- Dedicated Lost Property entry button and custom capture dialog.
+- Captures found/handed-in source, item, description, location, optional person details and handover/storage destination.
+- Automatically timestamped and included in chronological log, local save, PDF, clipboard and email reports.
+
+
+Version 1.1.1 additions:
+- Live CrossCountry station-style digital clock displayed at the top of the app.
+- Shows hours, minutes and seconds, UK date and GMT/BST zone.
+- Uses the Europe/London time zone so daylight-saving changes are handled automatically.
+- Preserves the existing app ID and local shift-data storage key.

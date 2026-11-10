@@ -1,11 +1,11 @@
 {
   "app_id": "uk.co.crosscountry.shiftapp",
   "product_name": "XC ShiftApp",
-  "full_name": "CrossCountry ShiftApp – Train Manager Shift Log",
-  "version": "1.0.8",
-  "build": "2026.11.09-002",
+  "full_name": "CrossCountry ShiftApp \u2013 Train Manager Shift Log",
+  "version": "1.1.1",
+  "build": "2026.11.10-001",
   "storage_key": "uk.co.crosscountry.shiftapp.shiftdata.v1",
-  "service_worker_cache": "xc-shiftapp-cache-v1.0.8-build-2026.11.09-001",
+  "service_worker_cache": "xc-shiftapp-cache-v1.1.1-build-2026.11.10-001",
   "manifest": "manifest.json",
   "entry_point": "index.html",
   "language": "en-GB",
@@ -17,5 +17,9 @@
   },
   "data_policy": "Shift details, trains and timestamped entries autosave locally in this browser using localStorage. Manual Save is also available. No server upload is configured.",
   "update_policy": "The app checks for updates on launch and at most once every 24 hours while open or when returning to the foreground. Updates use a versioned cache and do not clear locally saved shift data.",
-  "asset_layout": "All image assets are stored in the application root directory."
+  "asset_layout": "All image assets are stored in the application root directory.",
+  "features": [
+    "Lost property capture: found/handed-in source, item, identifying description, location, optional person details and handover/storage destination; timestamped and included in shift exports.",
+    "Live CrossCountry station-style digital clock at the top of the page, showing UK local time and date with automatic GMT/BST handling."
+  ]
 }

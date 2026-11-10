@@ -1,13 +1,23 @@
 (()=>{'use strict';
-const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.0.8', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
+const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.1.1', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
 const $=id=>document.getElementById(id);
-const state={trains:[],entries:[]};
+const state={trains:[],entries:[]};let activeIncident=null;
 const nowLocal=()=>{const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10)};
 const stamp=()=>new Date().toISOString();
 const fmt=iso=>{const d=new Date(iso);return Number.isNaN(d.getTime())?'Unknown time':d.toLocaleString('en-GB',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'})};
 const cleanHead=v=>String(v||'').toUpperCase().replace(/[^0-9A-Z]/g,'').slice(0,4);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const status=msg=>{$('status').textContent=msg};
+// Live CrossCountry clock: Europe/London handles GMT/BST transitions automatically.
+function updateClock(){
+ const now=new Date(), parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(now);
+ const part=type=>parts.find(x=>x.type===type)?.value||'00';
+ $('clockHours').textContent=part('hour');$('clockMinutes').textContent=part('minute');$('clockSeconds').textContent=part('second');
+ $('clockDate').textContent=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',weekday:'long',day:'2-digit',month:'long',year:'numeric'}).format(now).toUpperCase();
+ const zone=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',timeZoneName:'short'}).formatToParts(now).find(x=>x.type==='timeZoneName')?.value||'UK TIME';
+ $('clockZone').textContent=zone;
+}
+updateClock();window.setInterval(updateClock,250);
 $('shiftDate').value=nowLocal();
 if($('version'))$('version').textContent='v'+VERSION;
 function snapshot(){return {appId:APP_ID,version:VERSION,shift:{date:$('shiftDate').value,jobNumber:$('shiftJobNumber').value.trim(),notes:$('shiftNotes').value},trains:state.trains,entries:state.entries,updatedAt:stamp()}}
@@ -20,7 +30,7 @@ function render(){
  $('trains').className=state.trains.length?'':'empty';
  $('trains').innerHTML=state.trains.length?state.trains.map((t,i)=>`<div class="trainrow"><div><strong>${esc(t.headcode)}</strong><div class="muted">Unit ${esc(t.unit)}${t.unit2?' + '+esc(t.unit2):''}</div></div><button type="button" class="remove" data-train="${i}" aria-label="Remove train">Remove</button></div>`).join(''):'No trains added yet.';
  $('entries').className='entries '+(state.entries.length?'':'empty');
- $('entries').innerHTML=state.entries.length?state.entries.map((e,i)=>`<article class="entry ${e.type==='Reminder'?'reminder':''}"><div class="entrytop"><span>${esc(String(e.type||'NOTE').toUpperCase())}</span><time>${esc(fmt(e.timestamp))}</time></div><p>${esc(e.text)}</p><button type="button" class="remove" data-entry="${i}">Delete</button><div style="clear:both"></div></article>`).join(''):'No log entries yet.';
+ $('entries').innerHTML=state.entries.length?state.entries.map((e,i)=>{const incidentLabel=e.incidentId?`INCIDENT ${e.incidentNumber||''} · ENTRY ${e.sequence||1} — `:'';return `<article class="entry ${e.type==='Reminder'?'reminder':''} ${e.type==='Incident'?'incident-entry':''}"><div class="entrytop"><span>${esc(incidentLabel+String(e.type||'NOTE').toUpperCase())}</span><time>${esc(fmt(e.timestamp))}</time></div><p>${esc(e.text)}</p>${e.type==='Incident'?`<button type="button" class="secondary followup" data-followup="${esc(e.incidentId)}">＋ Add sequential entry</button>`:''}<button type="button" class="remove" data-entry="${i}">Delete</button><div style="clear:both"></div></article>`}).join(''):'No log entries yet.';
  $('entryCount').textContent=`${state.entries.length} ${state.entries.length===1?'entry':'entries'}`;
 }
 $('shiftJobNumber').addEventListener('input',()=>persist(true));
@@ -28,6 +38,16 @@ $('shiftJobNumber').addEventListener('input',()=>persist(true));
 $('addTrain').addEventListener('click',()=>{$('trainForm').reset();$('trainDialog').showModal();$('trainCode').focus()});
 $('trainCancel').addEventListener('click',()=>$('trainDialog').close());$('trainClose').addEventListener('click',()=>$('trainDialog').close());
 $('trainForm').addEventListener('submit',e=>{e.preventDefault();const code=cleanHead($('trainCode').value),unit=$('unitNumber').value.replace(/\D/g,''),unit2=$('unitNumber2').value.replace(/\D/g,'');if(code.length!==4){alert('Enter a four-character headcode, for example 1V50.');$('trainCode').focus();return}if(unit.length!==6){alert('Enter a six-digit unit number.');$('unitNumber').focus();return}if(unit2&&unit2.length!==6){alert('Second unit number must be six digits, or left blank.');$('unitNumber2').focus();return}state.trains.push({headcode:code,unit,unit2,addedAt:stamp()});$('trainDialog').close();render();persist()});
+function nextIncidentNumber(){return state.entries.reduce((n,e)=>Math.max(n,Number(e.incidentNumber)||0),0)+1}
+function openIssueForIncident(incidentId){const incident=state.entries.find(e=>e.type==='Incident'&&e.incidentId===incidentId);if(!incident)return;activeIncident={id:incidentId,number:incident.incidentNumber};$('issueForm').reset();fields();$('issueDialog').querySelector('.dialoghead h2').textContent=`Add entry to incident ${incident.incidentNumber}`;$('entrySubmit').textContent='Add sequential entry';$('issueDialog').showModal();$('description').focus()}
+$('createIncident').addEventListener('click',()=>{$('incidentForm').reset();$('incidentDialog').showModal();$('incidentNature').focus()});
+$('incidentCancel').addEventListener('click',()=>$('incidentDialog').close());$('incidentClose').addEventListener('click',()=>$('incidentDialog').close());
+$('incidentForm').addEventListener('submit',e=>{e.preventDefault();const nature=$('incidentNature').value.trim();if(!nature){$('incidentNature').focus();return}const id=crypto.randomUUID?crypto.randomUUID():String(Date.now())+'-'+Math.random().toString(16).slice(2),number=nextIncidentNumber();state.entries.push({type:'Incident',text:nature,timestamp:stamp(),id,incidentId:id,incidentNumber:number,sequence:1});$('incidentDialog').close();render();persist();status(`Incident ${number} created. You can add sequential entries as it develops.`)});
+// Dedicated lost-property capture; stored as a normal timestamped log entry so it appears in every export.
+$('lostProperty').addEventListener('click',()=>{$('lostPropertyForm').reset();$('lostPropertyDialog').showModal();$('propertyItem').focus()});
+$('lostPropertyCancel').addEventListener('click',()=>$('lostPropertyDialog').close());
+$('lostPropertyClose').addEventListener('click',()=>$('lostPropertyDialog').close());
+$('lostPropertyForm').addEventListener('submit',e=>{e.preventDefault();const item=$('propertyItem').value.trim(),description=$('propertyDescription').value.trim(),location=$('propertyLocation').value.trim();if(!item||!description||!location){status('Complete the item, description and location fields.');return}const lines=[`Receipt: ${$('propertyReceipt').value}`,`Item: ${item}`,`Description: ${description}`,`Found / handed in at: ${location}`,`Person details: ${$('propertyPerson').value.trim()||'Not provided'}`,`Handover / storage: ${$('propertyHandover').value.trim()||'Not recorded'}`];state.entries.push({type:'Lost Property',text:lines.join('\n'),timestamp:stamp(),id:(crypto.randomUUID?crypto.randomUUID():String(Date.now())+'-'+Math.random().toString(16).slice(2))});$('lostPropertyDialog').close();render();persist();status('Lost property record added to the shift log.')});
 const type=$('entryType'),dyn=$('dynamicFields');
 function fields(){const common=(id,label,placeholder='')=>`<label>${label}<input id="${id}" placeholder="${placeholder}"></label>`;let html='';switch(type.value){case'Defect':html=common('coach','Coach letter','e.g. A')+`<label>Defect category<select id="defectCategory"><option>Safety Critical</option><option>Non-Safety Critical</option><option>Service Critical</option></select></label>`;break;case'Passenger Counts':html=`<div class="dynamic-grid"><label>First Class<input id="firstCount" type="number" min="0" step="1" value="0"></label><label>Standard Class<input id="standardCount" type="number" min="0" step="1" value="0"></label></div>`+common('location','Location','Station / between stations')+`<label class="checkline"><input id="fullStanding" type="checkbox"> Full and standing</label>`;break;case'Delay':html=`<label>Delay (minutes)<input id="delayMinutes" type="number" min="0" step="1" value="0"></label>`;break;case'Assist':html=`<div class="dynamic-grid">${common('coach','Coach letter','e.g. B')}${common('seat','Seat number','e.g. 42')}</div>`;break;}
  dyn.innerHTML=html;
@@ -35,13 +55,14 @@ function fields(){const common=(id,label,placeholder='')=>`<label>${label}<input
  $('descriptionLabel').firstChild.textContent=labels[type.value]||'Information / description';
 }
 type.addEventListener('change',fields);
-$('addIssue').addEventListener('click',()=>{$('issueForm').reset();fields();$('issueDialog').showModal();$('description').focus()});
+$('addIssue').addEventListener('click',()=>{activeIncident=null;$('issueForm').reset();fields();$('issueDialog').querySelector('.dialoghead h2').textContent='Add log entry';$('entrySubmit').textContent='Add to log';$('issueDialog').showModal();$('description').focus()});
 $('issueCancel').addEventListener('click',()=>$('issueDialog').close());$('issueClose').addEventListener('click',()=>$('issueDialog').close());
 $('issueForm').addEventListener('submit',e=>{e.preventDefault();const t=type.value,desc=$('description').value.trim();if(!desc){$('description').focus();status('Please enter the entry details.');return}let prefix='';const val=id=>$(id)?.value??'';switch(t){case'Defect':prefix=`Coach ${val('coach')||'Not specified'} · ${val('defectCategory')}\n`;break;case'Passenger Counts':prefix=`First Class: ${val('firstCount')} · Standard Class: ${val('standardCount')} · Location: ${val('location')||'Not specified'} · Full and standing: ${$('fullStanding')?.checked?'Yes':'No'}\n`;break;case'Delay':prefix=`Delay: ${val('delayMinutes')} minutes\n`;break;case'Assist':prefix=`Coach ${val('coach')||'Not specified'} · Seat ${val('seat')||'Not specified'}\n`;break;}
- state.entries.push({type:t,text:prefix+desc,timestamp:stamp(),id:(crypto.randomUUID?crypto.randomUUID():String(Date.now())+'-'+Math.random().toString(16).slice(2))});$('issueDialog').close();render();persist()});
-$('entries').addEventListener('click',e=>{const i=e.target.dataset.entry;if(i!==undefined){state.entries.splice(Number(i),1);render();persist()}});
+ const entry={type:t,text:prefix+desc,timestamp:stamp(),id:(crypto.randomUUID?crypto.randomUUID():String(Date.now())+'-'+Math.random().toString(16).slice(2))};if(activeIncident){entry.incidentId=activeIncident.id;entry.incidentNumber=activeIncident.number;entry.sequence=state.entries.filter(x=>x.incidentId===activeIncident.id).reduce((n,x)=>Math.max(n,Number(x.sequence)||0),0)+1}state.entries.push(entry);const linked=activeIncident;activeIncident=null;$('issueDialog').close();$('issueDialog').querySelector('.dialoghead h2').textContent='Add log entry';$('entrySubmit').textContent='Add to log';render();persist();if(linked)status(`Entry ${entry.sequence} added to incident ${linked.number}.`)});
+$('entries').addEventListener('click',e=>{const follow=e.target.dataset.followup;if(follow){openIssueForIncident(follow);return}const i=e.target.dataset.entry;if(i!==undefined){state.entries.splice(Number(i),1);render();persist()}});
 $('trains').addEventListener('click',e=>{const i=e.target.dataset.train;if(i!==undefined){state.trains.splice(Number(i),1);render();persist()}});
-function report(){const s=snapshot();return `XC SHIFTAPP — OPERATIONAL SHIFT LOG\nDate: ${dateDMY(s.shift.date)}\nJob number: ${s.shift.jobNumber}\nShift notes:\n${s.shift.notes||'—'}\n\nTRAINS\n${s.trains.length?s.trains.map(t=>`${t.headcode} — Unit ${t.unit}${t.unit2?' + '+t.unit2:''}`).join('\n'):'None recorded'}\n\nCHRONOLOGICAL LOG\n${s.entries.length?s.entries.map(e=>`${fmt(e.timestamp)} | ${e.type}\n${e.text}`).join('\n\n'):'No entries recorded'}\n\nGenerated by XC ShiftApp ${VERSION}`}
+function entryLabel(e){return e.incidentId?`INCIDENT ${e.incidentNumber||''} · ENTRY ${e.sequence||1} — ${e.type}`:e.type}
+function report(){const s=snapshot();return `XC SHIFTAPP — OPERATIONAL SHIFT LOG\nDate: ${dateDMY(s.shift.date)}\nJob number: ${s.shift.jobNumber}\nShift notes:\n${s.shift.notes||'—'}\n\nTRAINS\n${s.trains.length?s.trains.map(t=>`${t.headcode} — Unit ${t.unit}${t.unit2?' + '+t.unit2:''}`).join('\n'):'None recorded'}\n\nCHRONOLOGICAL LOG\n${s.entries.length?s.entries.map(e=>`${fmt(e.timestamp)} | ${entryLabel(e)}\n${e.text}`).join('\n\n'):'No entries recorded'}\n\nGenerated by XC ShiftApp ${VERSION}`}
 async function copyText(text){try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text)}else{fallbackCopy(text)}status('Shift log copied to clipboard.')}catch(err){try{fallbackCopy(text)}catch(e){status('Copy unavailable. Please use a secure browser connection.')}}}
 function fallbackCopy(text){const el=document.createElement('textarea');el.value=text;el.setAttribute('readonly','');el.style.position='fixed';el.style.opacity='0';document.body.appendChild(el);el.select();const ok=document.execCommand('copy');el.remove();if(!ok)throw new Error('Clipboard copy failed')}
 $('save').addEventListener('click',()=>persist());
@@ -51,10 +72,10 @@ function emailTables(){
  const table=(headers,rows)=>`<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;width:100%;font-family:Arial,sans-serif;font-size:13px"><thead><tr>${headers.map(h=>`<th align="left" bgcolor="#A50034" style="color:#fff">${escHtml(h)}</th>`).join('')}</tr></thead><tbody>${rows.length?rows.map(row=>`<tr>${row.map(cell=>`<td>${escHtml(cell).replace(/\n/g,'<br>')}</td>`).join('')}</tr>`).join(''):`<tr><td colspan="${headers.length}">None recorded</td></tr>`}</tbody></table>`;
  const details=table(['Field','Value'],[['Date',dateDMY(s.shift.date)],['Job number',s.shift.jobNumber||'—'],['Shift notes',s.shift.notes||'—']]);
  const trains=table(['Headcode','Unit number(s)'],s.trains.map(t=>[t.headcode,`${t.unit}${t.unit2?' + '+t.unit2:''}`]));
- const logs=table(['Time / date','Entry type','Details'],s.entries.map(e=>[fmt(e.timestamp),e.type,e.text]));
+ const logs=table(['Time / date','Entry type','Details'],s.entries.map(e=>[fmt(e.timestamp),entryLabel(e),e.text]));
  const html=`<div style="font-family:Arial,sans-serif;color:#241821"><h2 style="color:#A50034">Shift details</h2>${details}<h2 style="color:#A50034">Trains</h2>${trains}<h2 style="color:#A50034">Chronological log</h2>${logs}<p>Generated ${escHtml(new Date().toLocaleString('en-GB'))}</p></div>`;
  const plainTable=(headers,rows)=>[headers.join(' | '),headers.map(()=> '----------------').join(' | '),...(rows.length?rows.map(r=>r.join(' | ')):['None recorded'])].join('\n');
- const plain=[`SHIFT DETAILS\n${plainTable(['Field','Value'],[['Date',dateDMY(s.shift.date)],['Job number',s.shift.jobNumber||'—'],['Shift notes',s.shift.notes||'—']])}`,`TRAINS\n${plainTable(['Headcode','Unit number(s)'],s.trains.map(t=>[t.headcode,`${t.unit}${t.unit2?' + '+t.unit2:''}`]))}`,`CHRONOLOGICAL LOG\n${plainTable(['Time / date','Entry type','Details'],s.entries.map(e=>[fmt(e.timestamp),e.type,e.text]))}`,`Generated: ${new Date().toLocaleString('en-GB')}`].join('\n\n');
+ const plain=[`SHIFT DETAILS\n${plainTable(['Field','Value'],[['Date',dateDMY(s.shift.date)],['Job number',s.shift.jobNumber||'—'],['Shift notes',s.shift.notes||'—']])}`,`TRAINS\n${plainTable(['Headcode','Unit number(s)'],s.trains.map(t=>[t.headcode,`${t.unit}${t.unit2?' + '+t.unit2:''}`]))}`,`CHRONOLOGICAL LOG\n${plainTable(['Time / date','Entry type','Details'],s.entries.map(e=>[fmt(e.timestamp),entryLabel(e),e.text]))}`,`Generated: ${new Date().toLocaleString('en-GB')}`].join('\n\n');
  return {html,plain,subject:`Shift Log – ${s.shift.jobNumber||'No job number'} – ${dateDMY(s.shift.date)}`};
 }
 $('email').addEventListener('click',async()=>{
