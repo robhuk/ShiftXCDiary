@@ -76,3 +76,8 @@ Version 1.1.5
 - Added Update as a standalone entry type in Add issue / log entry.
 - Existing incident log-number prompt remains in place.
 - Preserved app identity and local shift storage.
+
+Version 1.1.6
+- Improved clock legibility with larger, thicker bevelled seven-segment LED numerals and brighter active segments.
+- Increased contrast for inactive segments and improved responsive sizing.
+- Preserved existing app identity and local shift data.
