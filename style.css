@@ -18,5 +18,16 @@
 .clock-brand{display:none}
 .clock-strip{display:flex;justify-content:space-between;gap:8px;padding:5px 4px 4px;color:#fff;font-size:10px;font-weight:850;letter-spacing:1.1px;text-transform:uppercase}
 @media(max-width:520px){.clock-face{padding:9px 6px;min-height:78px}.clock-digits{font-size:clamp(42px,11.8vw,62px);gap:clamp(4px,1vw,7px)}.clock-strip{font-size:9px;letter-spacing:.5px}}
+
+/* Operational log category highlighting */
+.entry.assist-entry{background:#e4f3ff;border-color:#b7dcf5;border-left-color:#1687c9}
+.entry.control-entry{background:#fff0df;border-color:#f3d0a9;border-left-color:#e58a2b}
+.entry.safety-critical{background:#fff0ef;border-color:#e9aaa5;border-left:6px solid #c62828}
+.entry.safety-critical .entrytop{color:#a31313}
+
 /* Incident capture prompt */
 #incidentLogDialog{border:2px solid #a50034}#incidentLogDialog .dialoghead h2{color:#a50034}#incidentLogNumberWrap.hidden{display:none}
+
+/* Consistent CrossCountry-styled confirmation modal */
+.confirm-dialog{width:min(90vw,410px);border:1px solid #ffffff55;border-top:5px solid var(--mag);border-radius:20px;padding:0;background:linear-gradient(160deg,#fff 0%,#fff8fb 100%);box-shadow:0 22px 80px #000b}
+.confirm-dialog form{padding:22px}.confirm-dialog .confirm-mark{width:42px;height:42px;display:grid;place-items:center;border-radius:50%;background:#fff0f3;color:#b0003a;border:2px solid #f1bdce;font-size:24px;font-weight:900;margin-bottom:12px}.confirm-dialog .dialoghead h2{color:var(--xc);font-size:19px}.confirm-message{color:#51434b;font-size:14px;line-height:1.55;margin:4px 0 20px;white-space:pre-line}.confirm-dialog .dialogactions{margin-top:0}.confirm-dialog .danger{background:linear-gradient(105deg,#a50034,#d00052);color:white;border:0;box-shadow:0 3px 9px #a5003433}.confirm-dialog::backdrop{background:#10030ad9;backdrop-filter:blur(5px)}

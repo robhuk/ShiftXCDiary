@@ -86,3 +86,30 @@ Version 1.1.7
 - Changed clock digits from custom seven-segment shapes to a clear standard system digital font with tabular numerals.
 - Retained lime hours/minutes, red seconds, dark display and UK time handling.
 - Preserved app identity and local shift data.
+
+Version 1.1.8
+- Safety Critical defects display a warning symbol and red highlight.
+- Passenger Counts can be saved without additional description text.
+- Assist entries are highlighted light blue; Control Message entries light orange.
+- Added category icons to General Note, Update, Defect, Passenger Counts, Control Message, Delay, Assist and Reminder entries.
+- Preserved app identity and local shift storage.
+
+Version 1.1.9
+- Added a From selector to Add train with Working, ASST, ACC and PASS options.
+- Selected value is shown in the train list and included in text, email and PDF exports.
+- Existing trains without a saved selection default to Working when displayed/exported.
+- Preserved app identity and local shift data.
+
+Version 1.2.0
+- Renamed the train From selector to Activity.
+- Added TAXI as an activity option.
+- Activity value continues to appear in the train list and exports.
+- Preserved app identity and local shift data.
+
+Version 1.2.3
+- Added a confirmation prompt before deleting any Operational Log entry. Cancel leaves the entry untouched.
+- Preserved app identity and local shift data.
+
+Version 1.2.3: all confirmation prompts now use the custom CrossCountry modal style.
+
+Version 1.2.3: Improved Copy log and Copy to email readability with clear section headings, spacing, numbered log entries, and formatted HTML email tables.
