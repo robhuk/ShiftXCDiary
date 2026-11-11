@@ -1,11 +1,11 @@
 {
   "app_id": "uk.co.crosscountry.shiftapp",
   "product_name": "XC ShiftApp",
-  "full_name": "CrossCountry ShiftApp – Train Manager Shift Log",
-  "version": "1.2.8",
-  "build": "2026.11.11-018",
+  "full_name": "CrossCountry ShiftApp \u2013 Train Manager Shift Log",
+  "version": "1.2.9",
+  "build": "2026.11.11-022",
   "storage_key": "uk.co.crosscountry.shiftapp.shiftdata.v1",
-  "service_worker_cache": "xc-shiftapp-cache-v1.2.8-build-2026.11.11-018",
+  "service_worker_cache": "xc-shiftapp-cache-v1.2.9-build-2026.11.11-022",
   "manifest": "manifest.json",
   "entry_point": "index.html",
   "language": "en-GB",
@@ -40,9 +40,10 @@
     "Incident capture includes an Incident Number or headcode reference field.",
     "Colour-coded operational categories in PDF and HTML email exports.",
     "PASS and TAXI train activities do not require or display unit numbers; unit number fields are hidden and validation is skipped for these activities.",
-    "Each individual operational log entry has a one-tap clipboard copy control (🗒️) and an icon-only delete control (🗑️) with the existing custom confirmation prompt.",
+    "Each individual operational log entry has a one-tap clipboard copy control (\ud83d\uddd2\ufe0f) and an icon-only delete control (\ud83d\uddd1\ufe0f) with the existing custom confirmation prompt.",
     "PASS and TAXI train records capture mandatory free-text FROM and TO locations; route details appear in the train list, copy log, email and PDF exports.",
     "Compact inline copy and delete controls on each operational log entry",
-    "Compact inline copy and delete controls on each operational log entry"
+    "Compact inline copy and delete controls on each operational log entry",
+    "Restored PASS/TAXI FROM and TO inputs required by Add Train dialog logic."
   ]
 }

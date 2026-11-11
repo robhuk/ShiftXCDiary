@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.2.8', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
+const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.2.9', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
 const $=id=>document.getElementById(id);
 const state={trains:[],entries:[]};
 const nowLocal=()=>{const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10)};
