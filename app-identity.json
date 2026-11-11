@@ -2,10 +2,10 @@
   "app_id": "uk.co.crosscountry.shiftapp",
   "product_name": "XC ShiftApp",
   "full_name": "CrossCountry ShiftApp \u2013 Train Manager Shift Log",
-  "version": "1.2.9",
-  "build": "2026.11.11-022",
+  "version": "1.3.0",
+  "build": "2026.11.11-230",
   "storage_key": "uk.co.crosscountry.shiftapp.shiftdata.v1",
-  "service_worker_cache": "xc-shiftapp-cache-v1.2.9-build-2026.11.11-022",
+  "service_worker_cache": "xc-shiftapp-cache-v1.3.0-build-2026.11.11-230",
   "manifest": "manifest.json",
   "entry_point": "index.html",
   "language": "en-GB",
@@ -44,6 +44,7 @@
     "PASS and TAXI train records capture mandatory free-text FROM and TO locations; route details appear in the train list, copy log, email and PDF exports.",
     "Compact inline copy and delete controls on each operational log entry",
     "Compact inline copy and delete controls on each operational log entry",
-    "Restored PASS/TAXI FROM and TO inputs required by Add Train dialog logic."
+    "Restored PASS/TAXI FROM and TO inputs required by Add Train dialog logic.",
+    "PASS/TAXI train reference field label and flexible headcode/reference validation."
   ]
 }
