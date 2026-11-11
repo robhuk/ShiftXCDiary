@@ -1,4 +1,4 @@
-const CACHE='xc-shiftapp-cache-v1.2.6-build-2026.11.11-016';
+const CACHE='xc-shiftapp-cache-v1.2.8-build-2026.11.11-018';
 const ASSETS=['./','./index.html','./style.css','./app.js','./manifest.json','./app-identity.json','./shiftapp-logo.png','./icon-48.png','./icon-72.png','./icon-96.png','./icon-144.png','./icon-192.png','./icon-256.png','./icon-512.png'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('xc-shiftapp-cache-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
