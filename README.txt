@@ -119,15 +119,18 @@ Version 1.2.5 changes: emoji dropdown categories; Lost Property integrated into 
 
 Version 1.2.5: PASS and TAXI activities hide unit number fields and do not require unit numbers.
 
-Version 1.3.0: Added a per-entry clipboard copy button (🗒️) and replaced the individual log entry Delete text button with an icon-only 🗑️ button. The delete action retains the custom confirmation dialog.
+Version 1.3.1: Added a per-entry clipboard copy button (🗒️) and replaced the individual log entry Delete text button with an icon-only 🗑️ button. The delete action retains the custom confirmation dialog.
 
-Version 1.3.0: PASS and TAXI activities request free-text FROM and TO locations. These route details are saved with the train and included in the on-screen train list, copy log, email and PDF exports. Unit numbers remain not required for PASS and TAXI.
-
-
-Version 1.3.0: Copy and delete controls are compact and displayed inline beside each operational log entry heading and timestamp.
+Version 1.3.1: PASS and TAXI activities request free-text FROM and TO locations. These route details are saved with the train and included in the on-screen train list, copy log, email and PDF exports. Unit numbers remain not required for PASS and TAXI.
 
 
-v1.3.0 repair: Restored the PASS/TAXI FROM and TO input container expected by the Add Train dialog logic. This fixes the Add Train button failing before the dialog opens. App ID and local storage key remain unchanged.
+Version 1.3.1: Copy and delete controls are compact and displayed inline beside each operational log entry heading and timestamp.
 
 
-v1.3.0: PASS and TAXI activities now prompt for Headcode or Reference, allowing free-text reference values up to 40 characters. Other activities retain the four-character headcode validation.
+v1.3.1 repair: Restored the PASS/TAXI FROM and TO input container expected by the Add Train dialog logic. This fixes the Add Train button failing before the dialog opens. App ID and local storage key remain unchanged.
+
+
+v1.3.1: PASS and TAXI activities now prompt for Headcode or Reference, allowing free-text reference values up to 40 characters. Other activities retain the four-character headcode validation.
+
+
+v1.3.1: Lost Property now omits Person details from the report when blank, records a selected item condition, and supports an optional compressed item photograph. Photographs are retained in local shift data and embedded in PDF print preview and HTML email export. Images are resized to a maximum 1280px edge and JPEG-compressed before storage.

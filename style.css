@@ -42,3 +42,5 @@
 .entry-action:active{transform:scale(.96)}
 .entry-action:focus-visible{outline:3px solid #ff78b1;outline-offset:2px}
 @media(max-width:420px){.entrytop{align-items:flex-start}.entry-meta-actions{gap:4px}.entry-meta-actions time{font-size:10px}.entry-action{width:25px;height:25px;font-size:14px}}
+
+.entry-photo{display:block;max-width:100%;max-height:240px;object-fit:contain;margin:10px 0 2px;border:1px solid #e6dce1;border-radius:9px;background:#fff;padding:4px}.muted small,.muted{color:#71666d}
