@@ -1,11 +1,11 @@
 {
   "app_id": "uk.co.crosscountry.shiftapp",
   "product_name": "XC ShiftApp",
-  "full_name": "CrossCountry ShiftApp \u2013 Train Manager Shift Log",
-  "version": "1.2.3",
-  "build": "2026.11.11-013",
+  "full_name": "CrossCountry ShiftApp – Train Manager Shift Log",
+  "version": "1.2.4",
+  "build": "2026.11.11-014",
   "storage_key": "uk.co.crosscountry.shiftapp.shiftdata.v1",
-  "service_worker_cache": "xc-shiftapp-cache-v1.2.3-build-2026.11.11-013",
+  "service_worker_cache": "xc-shiftapp-cache-v1.2.4-build-2026.11.11-014",
   "manifest": "manifest.json",
   "entry_point": "index.html",
   "language": "en-GB",
@@ -33,6 +33,11 @@
     "Train activity selector labelled Activity with Working, ASST, ACC, PASS and TAXI choices",
     "Confirmation prompt before deleting an operational log entry",
     "All confirmation prompts use a matching custom CrossCountry modal; train removal, log deletion and clear-all confirmations are consistent with the custom popup design.",
-    "Improved readable plain-text shift log and formatted HTML email export"
+    "Improved readable plain-text shift log and formatted HTML email export",
+    "Emoji-led dropdown options for operational log categories and train activity.",
+    "Lost Property capture moved into the main Add issue / log entry dropdown with suitcase icon.",
+    "Incident Update is a subcategory of incident management; updates append to the original incident entry, selecting an incident only when multiple incidents exist.",
+    "Incident capture includes an Incident Number or headcode reference field.",
+    "Colour-coded operational categories in PDF and HTML email exports."
   ]
 }
