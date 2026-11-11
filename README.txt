@@ -106,12 +106,17 @@ Version 1.2.0
 - Activity value continues to appear in the train list and exports.
 - Preserved app identity and local shift data.
 
-Version 1.2.4
+Version 1.2.5
 - Added a confirmation prompt before deleting any Operational Log entry. Cancel leaves the entry untouched.
 - Preserved app identity and local shift data.
 
-Version 1.2.4: all confirmation prompts now use the custom CrossCountry modal style.
+Version 1.2.5: all confirmation prompts now use the custom CrossCountry modal style.
 
-Version 1.2.4: Improved Copy log and Copy to email readability with clear section headings, spacing, numbered log entries, and formatted HTML email tables.
+Version 1.2.5: Improved Copy log and Copy to email readability with clear section headings, spacing, numbered log entries, and formatted HTML email tables.
 
-Version 1.2.4 changes: emoji dropdown categories; Lost Property integrated into Add issue dropdown; incident updates append to original incident and prompt for incident selection only when multiple incidents exist; incident reference field accepts an incident number or headcode; PDF and HTML email exports colour-code operational categories.
+Version 1.2.5 changes: emoji dropdown categories; Lost Property integrated into Add issue dropdown; incident updates append to original incident and prompt for incident selection only when multiple incidents exist; incident reference field accepts an incident number or headcode; PDF and HTML email exports colour-code operational categories.
+
+
+Version 1.2.5: PASS and TAXI activities hide unit number fields and do not require unit numbers.
+
+Version 1.2.6: Added a per-entry clipboard copy button (🗒️) and replaced the individual log entry Delete text button with an icon-only 🗑️ button. The delete action retains the custom confirmation dialog.

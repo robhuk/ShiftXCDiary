@@ -31,3 +31,11 @@
 /* Consistent CrossCountry-styled confirmation modal */
 .confirm-dialog{width:min(90vw,410px);border:1px solid #ffffff55;border-top:5px solid var(--mag);border-radius:20px;padding:0;background:linear-gradient(160deg,#fff 0%,#fff8fb 100%);box-shadow:0 22px 80px #000b}
 .confirm-dialog form{padding:22px}.confirm-dialog .confirm-mark{width:42px;height:42px;display:grid;place-items:center;border-radius:50%;background:#fff0f3;color:#b0003a;border:2px solid #f1bdce;font-size:24px;font-weight:900;margin-bottom:12px}.confirm-dialog .dialoghead h2{color:var(--xc);font-size:19px}.confirm-message{color:#51434b;font-size:14px;line-height:1.55;margin:4px 0 20px;white-space:pre-line}.confirm-dialog .dialogactions{margin-top:0}.confirm-dialog .danger{background:linear-gradient(105deg,#a50034,#d00052);color:white;border:0;box-shadow:0 3px 9px #a5003433}.confirm-dialog::backdrop{background:#10030ad9;backdrop-filter:blur(5px)}
+
+/* Per-entry clipboard and delete controls */
+.entry-actions{display:flex;justify-content:flex-end;align-items:center;gap:7px;margin-top:9px;padding-top:7px;border-top:1px solid #0000000d}
+.entry-action{display:inline-grid;place-items:center;width:38px;height:36px;border:1px solid #e4dbe0;border-radius:9px;background:#fff;font-size:19px;line-height:1;cursor:pointer;box-shadow:0 1px 3px #0000000a}
+.entry-action.copy-entry{border-color:#d9c6d0;background:#fff8fb}
+.entry-action.delete-entry{border-color:#f0c5ca;background:#fff5f5}
+.entry-action:active{transform:scale(.96)}
+.entry-action:focus-visible{outline:3px solid #ff78b1;outline-offset:2px}
