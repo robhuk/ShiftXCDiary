@@ -44,3 +44,5 @@
 @media(max-width:420px){.entrytop{align-items:flex-start}.entry-meta-actions{gap:4px}.entry-meta-actions time{font-size:10px}.entry-action{width:25px;height:25px;font-size:14px}}
 
 .entry-photo{display:block;max-width:100%;max-height:240px;object-fit:contain;margin:10px 0 2px;border:1px solid #e6dce1;border-radius:9px;background:#fff;padding:4px}.muted small,.muted{color:#71666d}
+
+.reference-subsection{margin:12px 0;padding:12px;border:1px solid #ead3dc;border-radius:12px;background:#fff8fb}.reference-subsection summary{font-weight:700;color:#A50034;cursor:pointer;padding:2px 0}.reference-subsection label{margin-top:12px}
