@@ -164,3 +164,9 @@ Version 1.3.11 changes:
 - Train Diversion popup now contains both the diversionary route selector and optional train selector on the same screen.
 
 Version 1.3.11: Added a dedicated Full and standing entry with a custom popup, multi-select operational categories, and required last/current station field.
+
+
+Version 1.3.13 changes:
+- Train Diversion is now captured on one Add log entry screen. Select the train/headcode and diversionary route together; custom routes can still be saved for future use.
+- Linked headcodes are displayed in bold red square brackets on screen and in formatted reports for every applicable operational log entry.
+- Preserves the existing local storage key and saved shift data.
