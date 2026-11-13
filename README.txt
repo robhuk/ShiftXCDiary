@@ -1,5 +1,5 @@
 XC ShiftApp – Progressive Web App
-Version: 1.3.7
+Version: 1.3.18
 Unique app ID: uk.co.crosscountry.shiftapp
 
 CONTENTS (all files are in the application root)
