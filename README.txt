@@ -1,5 +1,5 @@
 XC ShiftApp – Progressive Web App
-Version: 1.0.7
+Version: 1.3.7
 Unique app ID: uk.co.crosscountry.shiftapp
 
 CONTENTS (all files are in the application root)
@@ -32,7 +32,7 @@ Copy to Email copies the report text for pasting into an email. No email account
 IDENTITY
 App ID: uk.co.crosscountry.shiftapp
 Storage key: uk.co.crosscountry.shiftapp.shiftdata.v1
-Service worker cache: xc-shiftapp-cache-v1.0.9-build-2026.11.09-001
+Service worker cache: xc-shiftapp-cache-v1.3.6-build-2026.11.12-001
 
 Build 1.0.6: added closable print preview, reinforced local autosaving, and 24-hour update checks. All image assets remain in the application root directory.
 
@@ -134,3 +134,27 @@ v1.3.2: PASS and TAXI activities now prompt for Headcode or Reference, allowing 
 
 
 v1.3.2: Lost Property now omits Person details from the report when blank, records a selected item condition, and supports an optional compressed item photograph. Photographs are retained in local shift data and embedded in PDF print preview and HTML email export. Images are resized to a maximum 1280px edge and JPEG-compressed before storage.
+
+
+v1.3.2: Added an optional Related train selector to the Add log entry dialog. The selector appears when one or more trains have been entered. Selected train activity, headcode/reference and route or unit details are included with the log entry in copy, email and PDF exports. Incident updates can also be linked to a train and retain that association within the original incident.
+
+
+Version 1.3.5: Removed the log-number prompt from Add incident. Log / reference numbers can now be added later to any live incident using the optional “Add log / reference number” subsection under Incident Update. A reference-only save is supported without requiring an incident narrative update. Existing incident records and saved shift data remain compatible.
+
+Version 1.3.5: Operational log entries display an associated train only as a bold headcode in square brackets (for example [1S51]); activity, unit numbers and the Related train label are omitted.
+
+
+Version 1.3.6 changes:
+- Updated the Train Diversion dropdown with the current routes: Adwick; Barnsley; Beighton; Erewash; Lichfield (Cross City); Newcastle HLB; Newcastle Forth Banks; Newcastle Bridges Loop; Rotherham; S&K (Swinton & Knottingley); Whitacre / Coleshill PW / Kingsbury Slow. Other remains available for custom route entry. Previous built-in Newcastle Bridges – KEB East to South Jn option is removed; user-added custom routes are retained.
+
+Version 1.3.5 changes:
+- PDF layout reduces forced page breaks between Trains and the Operational Log.
+- Added Train Diversion entry type with a custom route-selection popup.
+- Choose a listed diversion or select Other to enter a route; optionally save new routes to the dropdown for future shifts.
+
+Version 1.3.7 changes:
+- Added inline edit controls for operational log entries and train records.
+- Made Shift details, Trains and Operational log collapsible sections (expanded by default).
+- Preserved the existing app ID and local storage key.
+
+Version 1.3.8: Renamed the Operational log section to Operational Log / Occurrences, including exported log headings.
