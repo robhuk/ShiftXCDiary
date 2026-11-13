@@ -157,4 +157,10 @@ Version 1.3.7 changes:
 - Made Shift details, Trains and Operational log collapsible sections (expanded by default).
 - Preserved the existing app ID and local storage key.
 
-Version 1.3.8: Renamed the Operational log section to Operational Log / Occurrences, including exported log headings.
+Version 1.3.11: Renamed the Operational log section to Operational Log / Occurrences, including exported log headings.
+
+Version 1.3.11 changes:
+- Lost Property opens its dedicated capture form and no longer leaves or resets to a visible General Note entry form.
+- Train Diversion popup now contains both the diversionary route selector and optional train selector on the same screen.
+
+Version 1.3.11: Added a dedicated Full and standing entry with a custom popup, multi-select operational categories, and required last/current station field.

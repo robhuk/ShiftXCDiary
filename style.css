@@ -61,3 +61,9 @@
 .collapse-count{margin-left:auto}
 .collapsible:not([open]) .collapse-content{display:none}
 .collapse-summary:focus-visible{outline:3px solid #e50069;outline-offset:-3px}
+
+/* Make saved edits immediately visible in the Occurrences list. */
+.edited-stamp{display:inline-block;color:#8b6474;font-size:.78em;font-weight:600;margin-left:3px}
+.entry-just-edited{outline:2px solid #E50069;outline-offset:2px;transition:outline-color .8s ease}
+
+.fullstanding-options{display:grid;gap:10px;margin:12px 0 16px}.fullstanding-option{display:flex;align-items:flex-start;gap:10px;padding:11px 12px;border:1px solid #eadde2;border-radius:10px;background:#fff}.fullstanding-option input{flex:0 0 auto;margin-top:3px}.fullstanding-option span{line-height:1.35}
