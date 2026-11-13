@@ -67,3 +67,10 @@
 .entry-just-edited{outline:2px solid #E50069;outline-offset:2px;transition:outline-color .8s ease}
 
 .fullstanding-options{display:grid;gap:10px;margin:12px 0 16px}.fullstanding-option{display:flex;align-items:flex-start;gap:10px;padding:11px 12px;border:1px solid #eadde2;border-radius:10px;background:#fff}.fullstanding-option input{flex:0 0 auto;margin-top:3px}.fullstanding-option span{line-height:1.35}
+
+/* Force linked headcodes to remain bold CrossCountry red in the on-screen log and HTML exports. */
+.headcode-highlight{color:#c00035 !important;font-weight:800 !important}
+
+/* Prominent headcode label in each on-screen Operational Log / Occurrences card. */
+#entries .entry-headcode{display:inline-block;margin-left:8px;padding:2px 7px;border:1px solid #efb7c7;border-radius:6px;background:#fff0f4;color:#c00035!important;font-weight:900!important;letter-spacing:.25px;white-space:nowrap;text-shadow:none}
+#entries .entry-headcode.headcode-highlight{color:#c00035!important;font-weight:900!important}

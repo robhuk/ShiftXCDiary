@@ -170,3 +170,5 @@ Version 1.3.13 changes:
 - Train Diversion is now captured on one Add log entry screen. Select the train/headcode and diversionary route together; custom routes can still be saved for future use.
 - Linked headcodes are displayed in bold red square brackets on screen and in formatted reports for every applicable operational log entry.
 - Preserves the existing local storage key and saved shift data.
+
+Version 1.3.15: Fixed headcode colour rendering. Bracketed headcodes are now wrapped in a dedicated style with forced bold CrossCountry red formatting in the on-screen Operational Log / Occurrences and HTML-based exports.
