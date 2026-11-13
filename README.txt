@@ -32,7 +32,7 @@ Copy to Email copies the report text for pasting into an email. No email account
 IDENTITY
 App ID: uk.co.crosscountry.shiftapp
 Storage key: uk.co.crosscountry.shiftapp.shiftdata.v1
-Service worker cache: xc-shiftapp-cache-v1.3.3-build-2026.11.12-002
+Service worker cache: xc-shiftapp-cache-v1.0.9-build-2026.11.09-001
 
 Build 1.0.6: added closable print preview, reinforced local autosaving, and 24-hour update checks. All image assets remain in the application root directory.
 
@@ -134,9 +134,3 @@ v1.3.2: PASS and TAXI activities now prompt for Headcode or Reference, allowing 
 
 
 v1.3.2: Lost Property now omits Person details from the report when blank, records a selected item condition, and supports an optional compressed item photograph. Photographs are retained in local shift data and embedded in PDF print preview and HTML email export. Images are resized to a maximum 1280px edge and JPEG-compressed before storage.
-
-
-v1.3.2: Added an optional Related train selector to the Add log entry dialog. The selector appears when one or more trains have been entered. Selected train activity, headcode/reference and route or unit details are included with the log entry in copy, email and PDF exports. Incident updates can also be linked to a train and retain that association within the original incident.
-
-
-Version 1.3.3: Removed the log-number prompt from Add incident. Log / reference numbers can now be added later to any live incident using the optional “Add log / reference number” subsection under Incident Update. A reference-only save is supported without requiring an incident narrative update. Existing incident records and saved shift data remain compatible.

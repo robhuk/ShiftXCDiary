@@ -3,9 +3,9 @@
   "product_name": "XC ShiftApp",
   "full_name": "CrossCountry ShiftApp \u2013 Train Manager Shift Log",
   "version": "1.3.3",
-  "build": "2026.11.12-002",
+  "build": "2026.11.12-1835",
   "storage_key": "uk.co.crosscountry.shiftapp.shiftdata.v1",
-  "service_worker_cache": "xc-shiftapp-cache-v1.3.3-build-2026.11.12-002",
+  "service_worker_cache": "xc-shiftapp-cache-v1.3.3-build-2026.11.12-1835",
   "manifest": "manifest.json",
   "entry_point": "index.html",
   "language": "en-GB",
@@ -46,7 +46,6 @@
     "Compact inline copy and delete controls on each operational log entry",
     "Restored PASS/TAXI FROM and TO inputs required by Add Train dialog logic.",
     "PASS/TAXI train reference field label and flexible headcode/reference validation.",
-    "Lost Property: optional person details omitted when blank; condition selector; optional compressed item photo included in PDF and HTML email exports.",
-    "Operational log entries can optionally be linked to a train from a dropdown; selected train details are included in log text and exports, including incident updates."
+    "Lost Property: optional person details omitted when blank; condition selector; optional compressed item photo included in PDF and HTML email exports."
   ]
 }
