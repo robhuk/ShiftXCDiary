@@ -211,3 +211,6 @@ VERSION 1.3.32 – ARCHIVE CONFIRMATION
 - Existing local storage key retained; service worker cache version incremented.
 
 PDF exports now include the supplied CrossCountry Voyager header image and a Page X of Y footer on every page.
+
+Version 1.3.35 (2026-11-14)
+PDF header updated to the supplied CrossCountry Voyager banner, printed 10mm (1cm) high across the page on every page. Automatic page-number footer retained.
