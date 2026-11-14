@@ -1,5 +1,5 @@
 XC ShiftApp – Progressive Web App
-Version: 1.3.18
+Version: 1.3.31
 Unique app ID: uk.co.crosscountry.shiftapp
 
 CONTENTS (all files are in the application root)
@@ -172,3 +172,40 @@ Version 1.3.13 changes:
 - Preserves the existing local storage key and saved shift data.
 
 Version 1.3.15: Fixed headcode colour rendering. Bracketed headcodes are now wrapped in a dedicated style with forced bold CrossCountry red formatting in the on-screen Operational Log / Occurrences and HTML-based exports.
+
+
+Version 1.3.26 (14/11/2026)
+
+Version 1.3.26 changes:
+- Removed the separate red “DELAY OVER 10 MINUTES” warning text from delay entries. The bold red border remains in HTML and PDF reports. Plain-text reports no longer add a warning marker.
+- Ticket acceptance entries are highlighted in pale pink in the on-screen chronological log and exported HTML reports.
+- Existing local storage key retained; service worker cache version incremented.
+
+Version 1.3.25 changes:
+- Delay entries exceeding 10 minutes are highlighted with a bold red border in the HTML and PDF reports. Plain-text reports include a prominent warning marker.
+
+Version 1.3.27: Defect entries now support optional six-digit PVN and unit number. A linked single-set train automatically supplies its unit number; a linked double-set train requires selection of the affected unit.
+
+
+Version 1.3.28 changes:
+- Defect entries sharing the same linked headcode, unit number and PVN are grouped into one item in the on-screen chronological log and in plain-text, email/HTML and print/PDF reports. Each defect retains its own timestamp and its own edit/copy/delete menu action. Underlying defect records are not merged or deleted.
+
+
+Version 1.3.30 changes:
+- PDF print preview document title is set to DDMMYYYY_TurnNumber so Save as PDF defaults to the requested filename format (for example 14122026_NES604.pdf).
+- Existing local storage key and saved shift data are unchanged.
+
+
+VERSION 1.3.30 – SHIFT DIARY ARCHIVE
+- Archive completed shift diaries locally and start a fresh active diary.
+- Browse archived shifts in a collapsible panel at the bottom of the app.
+- Restore an archived shift as the active diary; any current unsaved diary is archived first.
+- Delete archived records after confirmation.
+- Export/import a JSON backup containing the active diary and archived shifts.
+- Clearing the active shift no longer removes archived records.
+
+
+VERSION 1.3.31 – ARCHIVE CONFIRMATION
+- Archiving a shift now asks “Are you sure you want to archive this shift?” and clearly explains that a complete copy is saved while the active diary is cleared.
+- The action proceeds only after the user selects “Yes, archive shift”; cancelling leaves the active diary unchanged.
+- Existing local storage key retained; service worker cache version incremented.

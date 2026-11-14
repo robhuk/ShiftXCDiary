@@ -80,3 +80,35 @@
 .entry-menu-options{display:grid;gap:9px;margin-top:14px}
 .entry-menu-options button{width:100%;text-align:left;min-height:48px}
 .entry-actions-dialog{max-width:360px}
+
+.passenger-set-options{border:1px solid #e8cbd7;border-radius:12px;padding:10px;margin:4px 0 14px}.passenger-set-options legend{font-size:13px;font-weight:850;color:#A50034;padding:0 5px}.passenger-set-options .checkline{margin:7px 0;padding:9px 10px}
+.assist-options{border:1px solid #e8cbd7;border-radius:12px;padding:10px;margin:4px 0 14px;display:grid;grid-template-columns:1fr 1fr;gap:7px 9px}.assist-options legend{font-size:13px;font-weight:850;color:#A50034;padding:0 5px}.assist-option{display:flex;align-items:center;gap:8px;margin:0;padding:9px 8px;border:1px solid #eadde3;border-radius:9px;background:#fff7fa;color:#3b3037;font-size:13px;font-weight:700;min-height:42px}.assist-option input{width:19px;height:19px;margin:0;flex:0 0 auto;accent-color:#A50034}.assist-option:has(input:checked){background:#fbe8ef;border-color:#A50034;color:#85002b}@media(max-width:380px){.assist-options{grid-template-columns:1fr}}
+
+/* Ticket acceptance entries are highlighted in pale CrossCountry pink. */
+.entry.ticket-acceptance-entry{background:#fff0f6;border-color:#f2bfd4;border-left-color:#E50069}
+.entry.ticket-acceptance-entry .entrytop{color:#8f1748}
+@media print{.entry.ticket-acceptance-entry{background:#fff0f6!important;border-color:#f2bfd4!important;border-left-color:#E50069!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+
+/* Defects with the same train, unit and PVN are shown as one grouped timeline card. */
+#entries .defect-group{border-left:5px solid #c00035;background:#fff3f3}
+#entries .defect-group-meta{margin:5px 0 10px;padding:6px 9px;border-radius:7px;background:#ffe5e8;color:#7d1026;font-size:13px;font-weight:800}
+#entries .defect-group-item{padding:9px 0;border-top:1px solid #edc9cf}
+#entries .defect-group-item-head{display:flex;align-items:center;gap:8px;min-height:30px}
+#entries .defect-group-item-head time{margin-left:auto;font-size:11px;color:#76636a}
+#entries .defect-group-item p{margin:5px 0 0;white-space:normal}
+.defect-group-print{border:1px solid #edc9cf;border-radius:7px;padding:10px 13px;margin:10px 0;break-inside:avoid}
+.defect-group-print .defect-group-item{border-top:1px solid #edc9cf;padding:7px 0}
+
+/* Shift diary archive and portable record backups */
+.archive-panel .collapse-summary h2{font-size:17px}
+.archive-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0 14px}
+.archive-actions #archiveCurrent{grid-column:1/-1}
+.archive-actions button{min-height:44px}
+.archived-shifts{display:grid;gap:9px}
+.archive-record{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;border:1px solid #ead5de;border-left:4px solid #A50034;border-radius:10px;background:#fffafd}
+.archive-record-info{display:grid;gap:4px;min-width:0}
+.archive-record-info strong{color:#6f1235;overflow-wrap:anywhere}
+.archive-record-info span{font-size:12px;color:#766a71}
+.archive-record-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;flex:0 0 auto}
+.archive-record-actions button{min-height:36px;padding:7px 10px;font-size:12px}
+@media(max-width:480px){.archive-record{align-items:flex-start;flex-direction:column}.archive-record-actions{width:100%;justify-content:flex-start}.archive-record-actions button{flex:1}.archive-actions{grid-template-columns:1fr}.archive-actions #archiveCurrent{grid-column:auto}}
