@@ -212,5 +212,8 @@ VERSION 1.3.32 – ARCHIVE CONFIRMATION
 
 PDF exports now include the supplied CrossCountry Voyager header image and a Page X of Y footer on every page.
 
-Version 1.3.35 (2026-11-14)
+Version 1.3.36 (2026-11-14)
 PDF header updated to the supplied CrossCountry Voyager banner, printed 10mm (1cm) high across the page on every page. Automatic page-number footer retained.
+
+
+Version 1.3.36 update: PDF Voyager header remains 10mm high and is centered at 60% of page width, leaving 20% margins on both sides. The image preserves its aspect ratio.

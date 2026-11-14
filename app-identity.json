@@ -2,10 +2,10 @@
   "app_id": "uk.co.crosscountry.shiftapp",
   "product_name": "XC ShiftApp",
   "full_name": "CrossCountry ShiftApp – Train Manager Shift Log",
-  "version": "1.3.35",
-  "build": "2026.11.14-011",
+  "version": "1.3.36",
+  "build": "2026.11.14-012",
   "storage_key": "uk.co.crosscountry.shiftapp.shiftdata.v1",
-  "service_worker_cache": "xc-shiftapp-cache-v1.3.35-build-2026.11.14-011",
+  "service_worker_cache": "xc-shiftapp-cache-v1.3.36-build-2026.11.14-012",
   "manifest": "manifest.json",
   "entry_point": "index.html",
   "language": "en-GB",
@@ -17,7 +17,7 @@
   },
   "data_policy": "Shift details, trains and timestamped entries autosave locally in this browser using localStorage. Manual Save is also available. No server upload is configured.",
   "update_policy": "The app checks for updates on launch and at most once every 24 hours while open or when returning to the foreground. Updates use a versioned cache and do not clear locally saved shift data.",
-  "asset_layout": "PDF exports use the supplied CrossCountry Voyager header image at exactly 10mm high across the printable page width on every page, with automatic page-number footers.",
+  "asset_layout": "PDF exports use the supplied CrossCountry Voyager header image at 10mm high, centered at 60% page width with 20% margins on each side on every page, with automatic page-number footers.",
   "features": [
     "Restore archived shifts without creating duplicate archive copies: repeated restores of an already-active shift are idempotent, and an identical active shift is not archived again.",
     "Explicit “Are you sure you want to archive this shift?” confirmation before archiving and clearing the active diary.",
@@ -70,6 +70,6 @@
     "Ticket acceptance entries highlighted in pale pink in the on-screen chronological log and exported HTML reports.",
     "Report highlighting: Delay entries exceeding 10 minutes retain a bold red border in HTML and PDF reports; no separate warning label is displayed.",
     "PDF export filename automatically uses DDMMYYYY_TurnNumber, for example 14122026_NES604.",
-    "PDF header updated to the newly supplied white-background CrossCountry Voyager banner, displayed 10mm (1cm) high on every printed page; page-number footer retained."
+    "PDF header uses the supplied white-background CrossCountry Voyager banner, displayed 10mm high, centered at 60% page width with 20% margins on each side on every printed page; page-number footer retained."
   ]
 }
