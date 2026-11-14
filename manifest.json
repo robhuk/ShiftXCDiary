@@ -1,9 +1,9 @@
 {
   "id": "uk.co.crosscountry.shiftapp",
-  "name": "CrossCountry ShiftApp – Train Manager Shift Log",
+  "name": "CrossCountry ShiftApp \u2013 Train Manager Shift Log",
   "short_name": "XC ShiftApp",
   "description": "Operational shift logging for CrossCountry Train Managers. Record trains, defects, passenger counts, control messages, delays, assistance and reminders.",
-  "version": "1.3.31",
+  "version": "1.3.34",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

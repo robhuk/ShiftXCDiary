@@ -1,5 +1,5 @@
 XC ShiftApp – Progressive Web App
-Version: 1.3.31
+Version: 1.3.32
 Unique app ID: uk.co.crosscountry.shiftapp
 
 CONTENTS (all files are in the application root)
@@ -205,7 +205,9 @@ VERSION 1.3.30 – SHIFT DIARY ARCHIVE
 - Clearing the active shift no longer removes archived records.
 
 
-VERSION 1.3.31 – ARCHIVE CONFIRMATION
+VERSION 1.3.32 – ARCHIVE CONFIRMATION
 - Archiving a shift now asks “Are you sure you want to archive this shift?” and clearly explains that a complete copy is saved while the active diary is cleared.
 - The action proceeds only after the user selects “Yes, archive shift”; cancelling leaves the active diary unchanged.
 - Existing local storage key retained; service worker cache version incremented.
+
+PDF exports now include the supplied CrossCountry Voyager header image and a Page X of Y footer on every page.
