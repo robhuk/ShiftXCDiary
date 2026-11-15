@@ -2,10 +2,10 @@
   "app_id": "uk.co.crosscountry.shiftapp",
   "product_name": "XC ShiftApp",
   "full_name": "CrossCountry ShiftApp – Train Manager Shift Log",
-  "version": "1.3.37",
-  "build": "2026.11.14-013",
+  "version": "1.3.41",
+  "build": "2026.11.15-002",
   "storage_key": "uk.co.crosscountry.shiftapp.shiftdata.v1",
-  "service_worker_cache": "xc-shiftapp-cache-v1.3.37-build-2026.11.14-013",
+  "service_worker_cache": "xc-shiftapp-cache-v1.3.41-build-2026.11.15-002",
   "manifest": "manifest.json",
   "entry_point": "index.html",
   "language": "en-GB",
@@ -15,7 +15,7 @@
     "background": "#16040D",
     "surface": "#FFFFFF"
   },
-  "data_policy": "Shift details, trains and timestamped entries autosave locally in this browser using localStorage. Manual Save is also available. No server upload is configured.",
+  "data_policy": "Shift details, trains, timestamped log entries and archived records autosave locally. When the user connects Google Drive, the complete JSON snapshot is automatically backed up after each diary change using the narrowly scoped drive.file permission. Offline changes queue for upload when connectivity returns. Local data remains available if cloud backup is disconnected or fails.",
   "update_policy": "The app checks for updates on launch and at most once every 24 hours while open or when returning to the foreground. Updates use a versioned cache and do not clear locally saved shift data.",
   "asset_layout": "PDF exports no longer include a header image; automatic page-number footers remain.",
   "features": [

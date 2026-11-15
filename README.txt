@@ -1,5 +1,5 @@
 XC ShiftApp – Progressive Web App
-Version: 1.3.32
+Version: 1.3.40
 Unique app ID: uk.co.crosscountry.shiftapp
 
 CONTENTS (all files are in the application root)
@@ -32,7 +32,7 @@ Copy to Email copies the report text for pasting into an email. No email account
 IDENTITY
 App ID: uk.co.crosscountry.shiftapp
 Storage key: uk.co.crosscountry.shiftapp.shiftdata.v1
-Service worker cache: xc-shiftapp-cache-v1.3.6-build-2026.11.12-001
+Service worker cache: xc-shiftapp-cache-v1.3.40-build-2026.11.15-001
 
 Build 1.0.6: added closable print preview, reinforced local autosaving, and 24-hour update checks. All image assets remain in the application root directory.
 
@@ -217,3 +217,19 @@ PDF header updated to the supplied CrossCountry Voyager banner, printed 10mm (1c
 
 
 Version 1.3.36 update: PDF Voyager header remains 10mm high and is centered at 60% of page width, leaving 20% margins on both sides. The image preserves its aspect ratio.
+
+Version 1.3.40 – Google Drive automatic backup
+- Added an optional Google Drive backup panel.
+- After every diary change, saves locally immediately and queues a cloud backup.
+- Uploads the full current shift and archived records as XC-ShiftApp-Backup.json in an XC ShiftApp Backups folder.
+- Offline changes are queued and uploaded when the app reconnects, provided Google Drive authorisation is still active.
+- Uses the Google Identity Services browser OAuth flow and the limited drive.file scope; it does not request access to all Drive files.
+- Access tokens are held in memory and are not written to local storage. Reconnect after token expiry or revocation.
+- Google Cloud setup is required: enable Google Drive API, create a Web application OAuth client, and add the hosted app origin under Authorized JavaScript origins. Enter the resulting Client ID in the app and select Connect Google Drive.
+- Existing local data key and archive records are preserved. Cloud backup is optional and never blocks local saving.
+
+
+Version 1.3.41 – Google OAuth Client ID preconfigured
+- Pre-filled the Google Drive backup setup with the OAuth Web Client ID supplied by the user.
+- The Client ID remains editable in the Google Drive backup panel.
+- All local saving, offline queueing and existing diary/archive features remain unchanged.

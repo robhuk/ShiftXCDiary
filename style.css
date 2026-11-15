@@ -132,3 +132,9 @@
 .archive-view-dialog .dialogactions{padding-top:10px}
 
 .archive-view-entry-tools{display:flex;align-items:center;gap:8px;flex-shrink:0}.archive-copy-entry{display:inline-flex;align-items:center;justify-content:center;min-width:36px;min-height:34px;padding:4px 7px;border:1px solid #eadde3;border-radius:8px;background:#fff;color:inherit;font-size:17px;cursor:pointer}.archive-copy-entry:active{background:#fff0f6;transform:scale(.97)}
+
+/* Google Drive backup controls */
+#driveBackupPanel .collapse-content>label{display:block;margin:12px 0}
+#driveBackupPanel input{width:100%;box-sizing:border-box}
+#driveBackupStatus{font-size:13px;margin:10px 0 0}
+#driveBackupBadge{font-size:11px}
