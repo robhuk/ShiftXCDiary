@@ -2,10 +2,10 @@
   "app_id": "uk.co.crosscountry.shiftapp",
   "product_name": "XC ShiftApp",
   "full_name": "CrossCountry ShiftApp – Train Manager Shift Log",
-  "version": "1.3.44",
-  "build": "2026.11.15-005",
+  "version": "1.3.45",
+  "build": "2026.11.15-006",
   "storage_key": "uk.co.crosscountry.shiftapp.shiftdata.v1",
-  "service_worker_cache": "xc-shiftapp-cache-v1.3.44-build-2026.11.15-005",
+  "service_worker_cache": "xc-shiftapp-cache-v1.3.45-build-2026.11.15-006",
   "manifest": "manifest.json",
   "entry_point": "index.html",
   "language": "en-GB",
@@ -71,6 +71,7 @@
     "Report highlighting: Delay entries exceeding 10 minutes retain a bold red border in HTML and PDF reports; no separate warning label is displayed.",
     "PDF export filename automatically uses DDMMYYYY_TurnNumber, for example 14122026_NES604.",
     "PDF header uses the supplied white-background CrossCountry Voyager banner, displayed 10mm high, centered at 60% page width with 20% margins on each side on every printed page; page-number footer retained.",
-    "Google Drive background backup via a Cloudflare Worker with server-side refresh-token renewal, secure session handling and offline queue resumption."
+    "Google Drive background backup via a Cloudflare Worker with server-side refresh-token renewal, secure session handling and offline queue resumption.",
+    "Google Drive backup service URL is preconfigured to the XC ShiftApp Cloudflare Worker, hidden behind an Edit service URL link, editable when needed, and persisted in local storage across app updates."
   ]
 }

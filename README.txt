@@ -1,5 +1,5 @@
 XC ShiftApp – Progressive Web App
-Version: 1.3.43
+Version: 1.3.46
 Unique app ID: uk.co.crosscountry.shiftapp
 
 CONTENTS (all files are in the application root)
@@ -246,3 +246,9 @@ Version 1.3.44 – Secure Google Drive background backup
 - The Worker must be deployed and configured with the Google OAuth client ID, client secret and a private encryption key before cloud backup can connect.
 - The app's secure backup service URL is configured in the bottom Backup & restore popup.
 - Existing local storage key and shift/archive data are preserved.
+
+Version 1.3.46 – Hidden default Cloudflare backup URL
+- Cloudflare backup service URL is preconfigured and used automatically when no saved custom URL exists.
+- Service URL field is hidden behind an Edit service URL link and remains editable.
+- Custom URL remains saved in localStorage across app updates.
+- Existing diary storage key and records are unchanged.

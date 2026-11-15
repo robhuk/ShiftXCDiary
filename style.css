@@ -162,3 +162,6 @@
 /* Cloudflare secure backup service address */
 #driveWorkerUrl{font-size:13px}
 #driveBackupDialog .archive-actions #driveConnect{grid-column:1/-1}
+
+/* Discreet Cloudflare service URL editor */
+.drive-service-edit-row{margin:8px 0 4px;text-align:right}.drive-service-edit-row .subtle-footer-link{font-size:13px}
