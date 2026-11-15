@@ -1,5 +1,5 @@
 XC ShiftApp – Progressive Web App
-Version: 1.3.40
+Version: 1.3.43
 Unique app ID: uk.co.crosscountry.shiftapp
 
 CONTENTS (all files are in the application root)
@@ -233,3 +233,5 @@ Version 1.3.42 – Google OAuth Client ID preconfigured
 - Pre-filled the Google Drive backup setup with the OAuth Web Client ID supplied by the user.
 - The Client ID remains editable in the Google Drive backup panel.
 - All local saving, offline queueing and existing diary/archive features remain unchanged.
+
+Version 1.3.43: Combined local JSON export/import backup controls with the discreet footer Backup & restore popup alongside Google Drive backup settings. Local autosave remains active.

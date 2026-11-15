@@ -152,3 +152,9 @@
 .drive-backup-dialog #driveBackupStatus{font-size:13px;margin:10px 0 0;overflow-wrap:anywhere}
 .drive-backup-dialog #driveBackupBadge{font-size:12px;color:var(--xc)}
 @media(max-width:480px){.drive-backup-dialog .archive-actions{grid-template-columns:1fr}.drive-backup-dialog .archive-actions #driveConnect{grid-column:auto}}
+/* Combined local and cloud backup settings */
+.backup-section{padding:12px 0;border-top:1px solid rgba(165,0,52,.14)}
+.backup-section:first-of-type{border-top:0;padding-top:0}
+.backup-section h3{margin:0 0 6px;font-size:15px;color:var(--xc)}
+.local-backup-actions{grid-template-columns:1fr 1fr;margin:10px 0 2px}
+@media(max-width:480px){.local-backup-actions{grid-template-columns:1fr}}
