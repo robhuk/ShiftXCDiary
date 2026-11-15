@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.3.41', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
+const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.3.42', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
 const $=id=>document.getElementById(id);
 const DEFAULT_DIVERSION_ROUTES=['Adwick','Barnsley','Beighton','Erewash','Lichfield (Cross City)','Newcastle HLB','Newcastle Forth Banks','Newcastle Bridges Loop','Rotherham','S&K (Swinton & Knottingley)','Whitacre / Coleshill PW / Kingsbury Slow'];
 const state={trains:[],entries:[],diversionRoutes:[...DEFAULT_DIVERSION_ROUTES],archivedShifts:[]};
@@ -51,6 +51,8 @@ async function performDriveBackup(){if(driveBusy)return;if(!driveToken){driveSta
 function queueDriveBackup(){if(!driveToken)return;localStorage.setItem(DRIVE_PENDING_KEY,'1');clearTimeout(driveTimer);driveTimer=setTimeout(performDriveBackup,1100)}
 function persist(silent=false){try{localStorage.setItem(STORE,JSON.stringify(snapshot()));if(!silent)status('Saved on this device · '+new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}));queueDriveBackup();return true}catch(err){if(!silent)status('Could not save locally. Check device storage settings.');return false}}
 $('googleClientId').value=localStorage.getItem(DRIVE_CLIENT_KEY)||DEFAULT_GOOGLE_CLIENT_ID;
+$('driveSettingsOpen').addEventListener('click',()=>$('driveBackupDialog').showModal());
+$('driveSettingsClose').addEventListener('click',()=>$('driveBackupDialog').close());
 $('driveConnect').addEventListener('click',driveConnect);
 $('driveBackupNow').addEventListener('click',performDriveBackup);
 $('driveDisconnect').addEventListener('click',()=>{if(driveToken&&window.google?.accounts?.oauth2)google.accounts.oauth2.revoke(driveToken,()=>{});driveToken='';driveTokenClient=null;$('driveBackupNow').disabled=true;driveStatus('Disconnected. Local diary saving continues as normal.','Not connected')});

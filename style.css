@@ -138,3 +138,17 @@
 #driveBackupPanel input{width:100%;box-sizing:border-box}
 #driveBackupStatus{font-size:13px;margin:10px 0 0}
 #driveBackupBadge{font-size:11px}
+
+/* Discreet Google Drive settings entry in the footer */
+.app-footer{display:flex;align-items:center;justify-content:center;gap:12px;padding:18px 12px calc(22px + env(safe-area-inset-bottom));color:var(--muted)}
+.subtle-footer-link{appearance:none;border:0;background:transparent;color:#887b82;text-decoration:underline;text-underline-offset:3px;font-size:11px;padding:6px 8px;min-height:30px;cursor:pointer;opacity:.78}
+.subtle-footer-link:hover,.subtle-footer-link:focus-visible{color:var(--xc);opacity:1}
+.footer-version{font-size:10px;color:#a69ba1}
+.drive-backup-dialog{width:min(92vw,480px);max-height:88vh;overflow:auto}
+.drive-backup-dialog form{padding:18px}
+.drive-backup-dialog input{width:100%;box-sizing:border-box}
+.drive-backup-dialog .archive-actions{grid-template-columns:1fr 1fr}
+.drive-backup-dialog .archive-actions #driveConnect{grid-column:1/-1}
+.drive-backup-dialog #driveBackupStatus{font-size:13px;margin:10px 0 0;overflow-wrap:anywhere}
+.drive-backup-dialog #driveBackupBadge{font-size:12px;color:var(--xc)}
+@media(max-width:480px){.drive-backup-dialog .archive-actions{grid-template-columns:1fr}.drive-backup-dialog .archive-actions #driveConnect{grid-column:auto}}

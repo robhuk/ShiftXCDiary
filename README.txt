@@ -229,7 +229,7 @@ Version 1.3.40 – Google Drive automatic backup
 - Existing local data key and archive records are preserved. Cloud backup is optional and never blocks local saving.
 
 
-Version 1.3.41 – Google OAuth Client ID preconfigured
+Version 1.3.42 – Google OAuth Client ID preconfigured
 - Pre-filled the Google Drive backup setup with the OAuth Web Client ID supplied by the user.
 - The Client ID remains editable in the Google Drive backup panel.
 - All local saving, offline queueing and existing diary/archive features remain unchanged.
