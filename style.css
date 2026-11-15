@@ -158,3 +158,7 @@
 .backup-section h3{margin:0 0 6px;font-size:15px;color:var(--xc)}
 .local-backup-actions{grid-template-columns:1fr 1fr;margin:10px 0 2px}
 @media(max-width:480px){.local-backup-actions{grid-template-columns:1fr}}
+
+/* Cloudflare secure backup service address */
+#driveWorkerUrl{font-size:13px}
+#driveBackupDialog .archive-actions #driveConnect{grid-column:1/-1}

@@ -235,3 +235,14 @@ Version 1.3.42 – Google OAuth Client ID preconfigured
 - All local saving, offline queueing and existing diary/archive features remain unchanged.
 
 Version 1.3.43: Combined local JSON export/import backup controls with the discreet footer Backup & restore popup alongside Google Drive backup settings. Local autosave remains active.
+
+
+Version 1.3.44 – Secure Google Drive background backup
+- Replaced browser-only Google access tokens with a Cloudflare Worker OAuth authorization-code flow.
+- The Worker requests offline access and securely stores the Google refresh token encrypted in Cloudflare KV.
+- Expired Google access tokens are renewed server-side; the PWA stores only a revocable opaque session token.
+- Backup requests continue to run after diary changes, with local-first saving and offline queueing.
+- Added Cloudflare Worker source, Wrangler configuration and SETUP-GUIDE.md in the cloudflare-worker folder.
+- The Worker must be deployed and configured with the Google OAuth client ID, client secret and a private encryption key before cloud backup can connect.
+- The app's secure backup service URL is configured in the bottom Backup & restore popup.
+- Existing local storage key and shift/archive data are preserved.
