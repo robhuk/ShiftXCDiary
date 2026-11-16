@@ -254,3 +254,6 @@ Version 1.3.47 – Hidden default Cloudflare backup URL
 - Existing diary storage key and records are unchanged.
 
 Version 1.3.47: Added a monthly archive calendar with red highlights for dates containing archived shift content. Shift headcode/activity field accepts REFRESH, ROUTES and OTHER as well as train headcodes.
+
+
+Version 1.3.48: Archived shift list is collapsed by default and shows only records for the selected red-highlighted calendar date. Selecting a highlighted day opens the day list.
