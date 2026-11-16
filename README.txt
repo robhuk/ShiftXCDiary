@@ -1,5 +1,5 @@
 XC ShiftApp – Progressive Web App
-Version: 1.3.46
+Version: 1.3.47
 Unique app ID: uk.co.crosscountry.shiftapp
 
 CONTENTS (all files are in the application root)
@@ -247,8 +247,10 @@ Version 1.3.44 – Secure Google Drive background backup
 - The app's secure backup service URL is configured in the bottom Backup & restore popup.
 - Existing local storage key and shift/archive data are preserved.
 
-Version 1.3.46 – Hidden default Cloudflare backup URL
+Version 1.3.47 – Hidden default Cloudflare backup URL
 - Cloudflare backup service URL is preconfigured and used automatically when no saved custom URL exists.
 - Service URL field is hidden behind an Edit service URL link and remains editable.
 - Custom URL remains saved in localStorage across app updates.
 - Existing diary storage key and records are unchanged.
+
+Version 1.3.47: Added a monthly archive calendar with red highlights for dates containing archived shift content. Shift headcode/activity field accepts REFRESH, ROUTES and OTHER as well as train headcodes.
