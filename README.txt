@@ -1,5 +1,5 @@
 XC ShiftApp – Progressive Web App
-Version: 1.3.47
+Version: 1.3.54
 Unique app ID: uk.co.crosscountry.shiftapp
 
 CONTENTS (all files are in the application root)
@@ -257,3 +257,20 @@ Version 1.3.47: Added a monthly archive calendar with red highlights for dates c
 
 
 Version 1.3.48: Archived shift list is collapsed by default and shows only records for the selected red-highlighted calendar date. Selecting a highlighted day opens the day list.
+
+
+Version 1.3.49: Archive calendar dates for shifts with job number REFRESH or ROUTES are highlighted yellow. Other archived dates with content remain CrossCountry red. The calendar legend explains both colours.
+
+
+Version 1.3.51
+- Archived calendar dates for shifts with job number OTHER are highlighted light blue. REFRESH and ROUTES remain yellow; other archived content remains red.
+- Calendar legend updated to explain all three colours.
+
+
+Version 1.3.52: Fixed the PDF Preview Print / Save PDF control using explicit preview-window event handlers.
+
+
+Version 1.3.53: Changed the on-screen “Headcode / activity” field label to “Job Number”. The underlying field, activity suggestions, stored data and exports are unchanged.
+
+
+Version 1.3.54: Changed the Job Number field placeholder prompt to “Job #”.
