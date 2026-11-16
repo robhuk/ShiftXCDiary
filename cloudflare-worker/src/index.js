@@ -136,6 +136,17 @@ async function uploadBackup(accessToken, payload) {
     : 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,name,modifiedTime';
   return driveRequest(accessToken, endpoint, { method: existing ? 'PATCH' : 'POST', headers: { 'Content-Type': 'multipart/related; boundary=' + boundary }, body });
 }
+
+async function downloadBackup(accessToken) {
+  const q = `name = '${BACKUP_NAME}' and trashed = false`;
+  const found = await driveRequest(accessToken, 'https://www.googleapis.com/drive/v3/files?q=' + encodeURIComponent(q) + '&fields=files(id,name,modifiedTime)&pageSize=10&orderBy=modifiedTime desc');
+  const file = found.files?.[0];
+  if (!file) throw new Error('No XC ShiftApp cloud backup was found in this Google Drive account.');
+  const payload = await driveRequest(accessToken, 'https://www.googleapis.com/drive/v3/files/' + file.id + '?alt=media');
+  if (!payload || payload.appId !== APP_ID || !payload.shift || !Array.isArray(payload.entries) || !Array.isArray(payload.trains)) throw new Error('The Google Drive file is not a valid XC ShiftApp diary backup.');
+  return { backup: payload, modifiedTime: file.modifiedTime || payload.cloudBackupAt || null };
+}
+
 function requireAppOrigin(request, env) {
   const origin = request.headers.get('Origin');
   if (origin !== env.ALLOWED_ORIGIN) return false;
@@ -207,7 +218,7 @@ export default {
       }
     }
 
-    if (url.pathname.startsWith('/auth/') || ['/auth/exchange', '/backup', '/status', '/disconnect'].includes(url.pathname)) {
+    if (url.pathname.startsWith('/auth/') || ['/auth/exchange', '/backup', '/restore', '/status', '/disconnect'].includes(url.pathname)) {
       if (!requireAppOrigin(request, env)) return json({ error: 'Origin not allowed.' }, 403, env.ALLOWED_ORIGIN || '*');
     }
 
@@ -247,6 +258,19 @@ export default {
         return json({ ok: true, lastBackupAt }, 200, env.ALLOWED_ORIGIN);
       } catch (error) {
         const message = error.message || 'Backup failed.';
+        const authFailure = /authorisation|refresh token|invalid_grant|session expired/i.test(message);
+        return json({ error: message }, authFailure ? 401 : 500, env.ALLOWED_ORIGIN);
+      }
+    }
+
+    if (url.pathname === '/restore' && request.method === 'GET') {
+      try {
+        const sub = await sessionUser(request, env);
+        const accessToken = await getGoogleAccessToken(sub, env);
+        const result = await downloadBackup(accessToken);
+        return json(result, 200, env.ALLOWED_ORIGIN);
+      } catch (error) {
+        const message = error.message || 'Cloud restore failed.';
         const authFailure = /authorisation|refresh token|invalid_grant|session expired/i.test(message);
         return json({ error: message }, authFailure ? 401 : 500, env.ALLOWED_ORIGIN);
       }
