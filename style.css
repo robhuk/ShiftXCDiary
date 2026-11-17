@@ -216,3 +216,6 @@ main{margin-top:12px}
 @media print{.staff-banner{padding:0!important}.staff-banner img{height:38px;aspect-ratio:auto;object-fit:cover}}
 
 .shift-length-line{margin:8px 0 14px;padding:10px 12px;border-radius:9px;background:rgba(6,73,245,.07);color:var(--muted,#536078);font-size:.92rem}.shift-length-line strong{color:var(--navy,#061B50);font-variant-numeric:tabular-nums}
+/* Defects are grouped by six-digit unit, then separated by PVN */
+#entries .defect-pvn-group{margin:8px 0 2px;padding:7px 9px;border:1px solid #f0c8d0;border-radius:8px;background:rgba(255,255,255,.72)}
+#entries .defect-pvn-heading{font-size:12px;font-weight:900;letter-spacing:.35px;color:#8f002d;padding:2px 0 5px;border-bottom:1px solid #f0c8d0}

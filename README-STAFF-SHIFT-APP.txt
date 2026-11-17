@@ -8,3 +8,7 @@ Back up shift records before replacing deployed files. On an installed PWA, reop
 
 
 Version 1.3.66: Removed the large top branding header and banner for a cleaner, more compact app layout. The PWA install action is retained in the footer.
+
+Version 1.3.71: Defect entries are grouped together by six-digit unit number and separated into PVN subgroups. Grouping is reflected in the live log, copy, email and PDF reports. Individual defect edit controls remain available.
+
+Version 1.3.72: Added Cosmetic, Minor and Other to the defect category selector. Existing defect categories and unit/PVN grouping remain unchanged.
