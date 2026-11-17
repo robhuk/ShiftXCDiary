@@ -199,8 +199,18 @@ footer{color:#D7E5FF}
 @media print{.staff-banner{height:38px;print-color-adjust:exact;-webkit-print-color-adjust:exact}body{background:#fff}}
 
 /* v1.3.66 – remove the large branded header/banner; retain a compact install action in the footer */
-.topbar,.staff-banner{display:none!important}
+.topbar{display:none!important}
+/* v1.3.67 – full-width railway banner with iPhone Dynamic Island safe-area clearance */
+.staff-banner{display:block!important;width:100%;height:clamp(118px,22vw,190px);height:calc(clamp(92px,22vw,150px) + env(safe-area-inset-top));padding-top:env(safe-area-inset-top);background:#061B50 url("staff-shift-banner.jpg") center center/cover no-repeat;border:0;box-shadow:0 3px 14px #061B5030}
+@media(max-width:600px){.staff-banner{height:calc(92px + env(safe-area-inset-top));background-position:center center}}
 .install-footer{display:inline-block;margin:0 8px 8px 0;background:#fff;color:#061B50;border:1px solid #C8D8F3;border-radius:9px;padding:9px 13px;font-weight:800}
 .install-footer.hidden{display:none!important}
 main{margin-top:12px}
-@media print{.install-footer{display:none!important}}
+@media print{.install-footer{display:none!important}.staff-banner{height:38px;padding:0}}
+
+/* v1.3.68 – render the supplied railway artwork as a real, full-width top banner.
+   The navy safe-area strip keeps the iPhone status bar / Dynamic Island clear. */
+.staff-banner{display:block!important;width:100%;height:auto!important;min-height:0!important;padding:env(safe-area-inset-top) 0 0!important;margin:0;background:#061B50!important;border:0!important;box-shadow:none!important;overflow:hidden}
+.staff-banner img{display:block;width:100%;height:auto;aspect-ratio:3/1;object-fit:cover;object-position:center center}
+@media(min-width:700px){.staff-banner img{max-height:180px;aspect-ratio:auto;height:180px;object-fit:cover}}
+@media print{.staff-banner{padding:0!important}.staff-banner img{height:38px;aspect-ratio:auto;object-fit:cover}}

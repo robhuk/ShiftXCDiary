@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.3.65', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
+const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.3.68', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
 const $=id=>document.getElementById(id);
 const DEFAULT_DIVERSION_ROUTES=['Adwick','Barnsley','Beighton','Erewash','Lichfield (Cross City)','Newcastle HLB','Newcastle Forth Banks','Newcastle Bridges Loop','Rotherham','S&K (Swinton & Knottingley)','Whitacre / Coleshill PW / Kingsbury Slow'];
 const state={trains:[],entries:[],diversionRoutes:[...DEFAULT_DIVERSION_ROUTES],archivedShifts:[]};
