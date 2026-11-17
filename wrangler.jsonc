@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "xc-shiftapp-drive-backup",
+  "main": "src/index.js",
+  "compatibility_date": "2026-11-15",
+  "workers_dev": true,
+  "vars": {
+    "APP_URL": "https://robhuk.github.io/xcstaffinfo/",
+    "ALLOWED_ORIGIN": "https://robhuk.github.io"
+  },
+  "kv_namespaces": [
+    { "binding": "TOKENS" }
+  ],
+  "observability": { "enabled": true }
+}
