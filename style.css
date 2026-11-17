@@ -177,3 +177,6 @@
 /* v1.3.50: OTHER activity calendar highlight */
 .archive-cal-day.activity-blue,.archive-cal-day.has-content.activity-blue{background:#b9e4f5;color:#123747;border-color:#79bfdc;font-weight:800}
 .calendar-blue-dot{width:10px;height:10px;border-radius:50%;display:inline-block;background:#b9e4f5;border:1px solid #79bfdc}
+
+/* Incident reference marker in the live operational log */
+.incident-ref-marker{display:inline-block;margin:3px 0 2px 6px;padding:3px 8px;border:1px solid #d99aa9;border-radius:5px;background:#fff0f3;color:#8f002d;font:700 11px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.2px;vertical-align:middle;white-space:nowrap}
