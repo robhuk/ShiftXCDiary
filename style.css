@@ -214,3 +214,5 @@ main{margin-top:12px}
 .staff-banner img{display:block;width:100%;height:auto;aspect-ratio:3/1;object-fit:cover;object-position:center center}
 @media(min-width:700px){.staff-banner img{max-height:180px;aspect-ratio:auto;height:180px;object-fit:cover}}
 @media print{.staff-banner{padding:0!important}.staff-banner img{height:38px;aspect-ratio:auto;object-fit:cover}}
+
+.shift-length-line{margin:8px 0 14px;padding:10px 12px;border-radius:9px;background:rgba(6,73,245,.07);color:var(--muted,#536078);font-size:.92rem}.shift-length-line strong{color:var(--navy,#061B50);font-variant-numeric:tabular-nums}
