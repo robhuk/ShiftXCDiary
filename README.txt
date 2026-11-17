@@ -276,3 +276,5 @@ Version 1.3.53: Changed the on-screen “Headcode / activity” field label to �
 Version 1.3.54: Changed the Job Number field placeholder prompt to “Job #”.
 
 Version 1.3.56: For Job Numbers REFRESH, ROUTES and OTHER, Add train no longer requires a headcode and records the headcode as N/A. Normal train jobs retain mandatory headcode validation.
+
+Version 1.3.59: Incident entries now capture a user-defined incident name / description. The custom name is shown in the operational log, incident update selector, copied entry and shift exports. Older incident records remain supported with their previous numbering.
