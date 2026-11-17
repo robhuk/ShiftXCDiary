@@ -197,3 +197,10 @@ main{margin-top:18px}.panel{border:1px solid #DCE5F2;box-shadow:0 7px 24px #061B
 input:focus,textarea:focus,select:focus{outline-color:#78A8FF;border-color:#0649F5}
 footer{color:#D7E5FF}
 @media print{.staff-banner{height:38px;print-color-adjust:exact;-webkit-print-color-adjust:exact}body{background:#fff}}
+
+/* v1.3.66 – remove the large branded header/banner; retain a compact install action in the footer */
+.topbar,.staff-banner{display:none!important}
+.install-footer{display:inline-block;margin:0 8px 8px 0;background:#fff;color:#061B50;border:1px solid #C8D8F3;border-radius:9px;padding:9px 13px;font-weight:800}
+.install-footer.hidden{display:none!important}
+main{margin-top:12px}
+@media print{.install-footer{display:none!important}}
