@@ -2,10 +2,10 @@
   "app_id": "uk.co.crosscountry.shiftapp",
   "product_name": "Staff Shift App",
   "full_name": "Staff Shift App – Rail Staff Shift Diary",
-  "version": "1.3.74",
-  "build": "2026.11.18-001",
+  "version": "1.3.85",
+  "build": "2026.11.18-003",
   "storage_key": "uk.co.crosscountry.shiftapp.shiftdata.v1",
-  "service_worker_cache": "xc-shiftapp-cache-v1.3.74-shiftwide-settings-2026.11.18-001",
+  "service_worker_cache": "xc-shiftapp-cache-v1.3.85-passenger-count-formation-notes-2026.11.18-001",
   "manifest": "manifest.json",
   "entry_point": "index.html",
   "language": "en-GB",
@@ -80,6 +80,15 @@
     "Defect category selector includes Cosmetic, Minor and Other in addition to the existing categories.",
     "Ticket scans, ticket sales and commission are recorded as shift-wide entries with no train selection or train association.",
     "Shift equipment records BWV camera and ticket machine set numbers as shift-wide entries with no train selection or train association.",
-    "App Settings contains editable commission rates; rates are included in local JSON and Google Drive backups and restored on import."
+    "App Settings contains editable commission rates; rates are included in local JSON and Google Drive backups and restored on import.",
+    "Fixed ticket commission capture to use the saved App Settings rates at save time; each commission entry stores structured scan, sales and calculated commission values, and the shift commission report totals these values with backward-compatible parsing of earlier entries.",
+    "Commission reports robustly read structured commission data and legacy text entries, including fallback calculation from stored scan and sales rates, preventing shift scan and commission totals from displaying as zero.",
+    "Incident action menu includes Generate incident report. The report follows the supplied XC Report Writing Template, auto-fills known shift, incident, train, location, headcode, date/time and incident-update details, highlights missing template information in red for custom completion, saves completed report details to the incident, and provides copy and print/PDF output.",
+    "Passenger count entries are grouped by matching headcode in the operational log and shift reports, with combined first-class and standard-class totals and individual records expandable.",
+    "Incident report fields are all optional; empty fields are omitted from generated reports. ADVOKATE identification considerations are not requested or included.",
+    "Passenger counts grouped by headcode display a station-by-station table with First Class, Standard Class and Total columns, including a grand total row.",
+    "Removed the Total column from passenger count tables in operational log and reports; station rows show First Class and Standard Class only.",
+    "Defect entries include an optional six-digit numeric PVN field with numeric keypad and input validation.",
+    "Passenger count rows show station, first class, standard class and train portion (front set, back set or whole train); notes are retained with timestamp and headcode; full-and-standing rows and notes are highlighted red."
   ]
 }

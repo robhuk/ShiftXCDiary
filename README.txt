@@ -285,3 +285,15 @@ Version 1.3.73: Added daily ticket scans and ticket sales commission logging (de
 
 
 Version 1.3.74: Ticket commission and shift equipment entries are shift-wide and no longer display or store a related train. Renamed Backup & restore to App Settings. Commission rates are edited in App Settings and included in local JSON and Google Drive backup/restore.
+
+Version 1.3.78: Fixed commission report totals showing zero. Report aggregation now reads structured commission fields, supports older text-only log entries and derives totals from stored commission components/rates when needed.
+
+Version 1.3.79: Added Generate incident report to each incident entry menu. Uses the supplied two-page XC Report Writing Template, prepopulates available shift / incident / train details, prompts for missing red-highlighted information, saves completed report details with the incident, and offers copy and print / PDF output.
+
+Version 1.3.80: Passenger count entries are grouped by headcode across the operational log and reports. Incident report fields are optional and blank sections are omitted; ADVOKATE is removed from the generator.
+
+Version 1.3.82: Removed passenger count totals. Passenger count tables now show Station, First Class and Standard Class only.
+
+Version 1.3.84: Passenger count entries now record a note with timestamp and headcode, include front set/back set/whole train in the station table, and highlight full-and-standing rows red with a timestamped headcode note below the table.
+
+Version 1.3.85: Passenger count notes are now displayed visibly underneath the passenger table for the matching train, with timestamp and headcode, rather than only being available inside each entry's expandable details.

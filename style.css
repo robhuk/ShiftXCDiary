@@ -221,3 +221,16 @@ main{margin-top:12px}
 #entries .defect-pvn-heading{font-size:12px;font-weight:900;letter-spacing:.35px;color:#8f002d;padding:2px 0 5px;border-bottom:1px solid #f0c8d0}
 
 .commission-total-highlight{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:7px 11px;border-radius:9px;background:#fff3d2;border:1px solid #e8c76a;color:#674400;font-size:14px;font-weight:750}.commission-total-highlight strong{font-size:16px;color:#5b3900;font-variant-numeric:tabular-nums}
+
+/* Incident report builder */
+.incident-report-dialog{width:min(760px,calc(100% - 24px));max-width:760px;max-height:90vh;overflow:auto}
+.incident-report-dialog #incidentReportFields{display:block;max-height:62vh;overflow:auto;padding:2px 3px}
+.incident-report-section{margin:18px 0 8px;padding:8px 10px;background:#edf3ff;border-left:4px solid #0649F5;border-radius:7px;color:#061B50;font-size:14px}
+.incident-report-field{display:block;margin:10px 0}
+.missing-report-label{color:#C00035!important;font-weight:800}
+.incident-report-field input,.incident-report-field textarea{width:100%;margin-top:5px}
+#incidentReportPreview{width:100%;min-height:55vh;white-space:pre-wrap;font-family:Arial,sans-serif;font-size:13px;line-height:1.45}
+#generateIncidentReportAction:not(.hidden){display:block;width:100%}
+
+.passenger-table-wrap{overflow-x:auto;margin:10px 0}.passenger-count-table{width:100%;border-collapse:collapse;font-size:13px}.passenger-count-table th,.passenger-count-table td{padding:8px 9px;border:1px solid #d8dce3;text-align:right;white-space:nowrap}.passenger-count-table th:first-child,.passenger-count-table td:first-child{text-align:left;white-space:normal}.passenger-count-table thead th{background:#0b245b;color:#fff}.passenger-count-table .passenger-grand-total{background:#eaf0ff;font-weight:800}
+.passenger-count-table .full-standing-row{background:#ffe5e7!important;color:#8f001f;font-weight:800}.passenger-count-table .full-standing-row td{border-top:2px solid #c00035;border-bottom:2px solid #c00035}.full-standing-note{margin:8px 0;padding:8px 10px;background:#fff0f1;border-left:4px solid #c00035;border-radius:6px;color:#8f001f;font-weight:800;font-size:.9rem}
