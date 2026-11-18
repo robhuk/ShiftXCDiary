@@ -16,3 +16,7 @@ Version 1.3.72: Added Cosmetic, Minor and Other to the defect category selector.
 Version 1.3.89: Generated incident reports can now be saved to the active daily / operational log. Saving again updates the existing report for that incident instead of creating a duplicate.
 
 Version 1.3.90: Added a direct pencil edit button to each passenger count entry in the grouped operational log. Tapping it opens the passenger count editor immediately, without the entry options menu.
+
+Version 1.3.91: Passenger count tables now display the station name only, stripping a trailing three-letter CRS code in brackets.
+
+Version 1.3.92: Passenger count entries can be deleted individually or all together for a selected headcode from the passenger count group. Both actions require confirmation.
