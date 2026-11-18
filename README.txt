@@ -282,3 +282,6 @@ Version 1.3.59: Incident entries now capture a user-defined incident name / desc
 Version 1.3.69: Added Book on and Book off time fields to shift details, with automatic shift-length calculation (including shifts crossing midnight). Added the Late book off operational log type; it records delay minutes and the new book-off time calculated from the original Book off time.
 
 Version 1.3.73: Added daily ticket scans and ticket sales commission logging (default £0.02 per scan and 6% of sales; editable rates persist on device), plus shift equipment logging for BWV camera and ticket machine set numbers.
+
+
+Version 1.3.74: Ticket commission and shift equipment entries are shift-wide and no longer display or store a related train. Renamed Backup & restore to App Settings. Commission rates are edited in App Settings and included in local JSON and Google Drive backup/restore.
