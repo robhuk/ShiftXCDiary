@@ -19,4 +19,4 @@ Version 1.3.90: Added a direct pencil edit button to each passenger count entry 
 
 Version 1.3.91: Passenger count tables now display the station name only, stripping a trailing three-letter CRS code in brackets.
 
-Version 1.3.92: Passenger count entries can be deleted individually or all together for a selected headcode from the passenger count group. Both actions require confirmation.
+Version 1.3.93: Passenger count entries can be deleted individually or all together for a selected headcode from the passenger count group. Both actions require confirmation.
