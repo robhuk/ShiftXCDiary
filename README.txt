@@ -317,3 +317,7 @@ Version 1.3.96: Removed the Train column and Train portion / formation text from
 Version 1.3.98: Removed Train portion / Applies to text from passenger count station cells and rows, including full-and-standing row annotations. Station cells now contain only the station name.
 
 Version 1.3.98: Passenger count PDF output now uses a clean table layout without emojis or action icons; notes and full-and-standing status are shown as plain text.
+
+Version 1.3.99: Defect PVN accepts numeric characters only with no maximum length. PVN grouping and report parsing now support PVNs of any length; the field remains optional.
+
+Version 1.3.100: Defect PVN is optional, numeric only, and accepts between one and six digits (maximum six). Unit number remains exactly six digits.
