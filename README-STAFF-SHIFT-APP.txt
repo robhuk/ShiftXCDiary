@@ -12,3 +12,7 @@ Version 1.3.66: Removed the large top branding header and banner for a cleaner, 
 Version 1.3.71: Defect entries are grouped together by six-digit unit number and separated into PVN subgroups. Grouping is reflected in the live log, copy, email and PDF reports. Individual defect edit controls remain available.
 
 Version 1.3.72: Added Cosmetic, Minor and Other to the defect category selector. Existing defect categories and unit/PVN grouping remain unchanged.
+\nVersion 1.3.88: Passenger count entries can be edited from the entry options menu, including first and standard class counts, location, train portion, full-and-standing status and notes.\n
+Version 1.3.89: Generated incident reports can now be saved to the active daily / operational log. Saving again updates the existing report for that incident instead of creating a duplicate.
+
+Version 1.3.90: Added a direct pencil edit button to each passenger count entry in the grouped operational log. Tapping it opens the passenger count editor immediately, without the entry options menu.

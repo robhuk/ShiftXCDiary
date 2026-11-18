@@ -234,3 +234,5 @@ main{margin-top:12px}
 
 .passenger-table-wrap{overflow-x:auto;margin:10px 0}.passenger-count-table{width:100%;border-collapse:collapse;font-size:13px}.passenger-count-table th,.passenger-count-table td{padding:8px 9px;border:1px solid #d8dce3;text-align:right;white-space:nowrap}.passenger-count-table th:first-child,.passenger-count-table td:first-child{text-align:left;white-space:normal}.passenger-count-table thead th{background:#0b245b;color:#fff}.passenger-count-table .passenger-grand-total{background:#eaf0ff;font-weight:800}
 .passenger-count-table .full-standing-row{background:#ffe5e7!important;color:#8f001f;font-weight:800}.passenger-count-table .full-standing-row td{border-top:2px solid #c00035;border-bottom:2px solid #c00035}.full-standing-note{margin:8px 0;padding:8px 10px;background:#fff0f1;border-left:4px solid #c00035;border-radius:6px;color:#8f001f;font-weight:800;font-size:.9rem}
+
+.passenger-edit-trigger{margin-left:8px;vertical-align:middle}@media print{.passenger-edit-trigger{display:none!important}}
