@@ -321,3 +321,9 @@ Version 1.3.98: Passenger count PDF output now uses a clean table layout without
 Version 1.3.99: Defect PVN accepts numeric characters only with no maximum length. PVN grouping and report parsing now support PVNs of any length; the field remains optional.
 
 Version 1.3.100: Defect PVN is optional, numeric only, and accepts between one and six digits (maximum six). Unit number remains exactly six digits.
+
+VERSION 1.3.101 – CLOCK SECONDS COLOUR INDICATION
+- Seconds display fades smoothly between red (00–10), orange (11–19) and green (20–59).
+- Hours and minutes retain their existing appearance.
+- The colour transition uses a 1.1-second CSS fade.
+- This is a visual timing aid only; operational dispatch must follow current CrossCountry procedures and local instructions.

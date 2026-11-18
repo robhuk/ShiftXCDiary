@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.3.100', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
+const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.3.101', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
 const $=id=>document.getElementById(id);
 const DEFAULT_COMMISSION_RATES={perScan:0.02,salesPercent:6};
 const COMMISSION_RATE_KEY='uk.co.crosscountry.shiftapp.commissionRates';
@@ -29,7 +29,7 @@ function ledDigits(value){
 function updateClock(){
  const now=new Date(), parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(now);
  const part=type=>parts.find(x=>x.type===type)?.value||'00';
- $('clockHours').innerHTML=ledDigits(part('hour'));$('clockMinutes').innerHTML=ledDigits(part('minute'));$('clockSeconds').innerHTML=ledDigits(part('second'));
+ $('clockHours').innerHTML=ledDigits(part('hour'));$('clockMinutes').innerHTML=ledDigits(part('minute'));const seconds=Number(part('second'));$('clockSeconds').innerHTML=ledDigits(String(seconds).padStart(2,'0'));$('clockSeconds').classList.remove('seconds-red','seconds-orange','seconds-green');$('clockSeconds').classList.add(seconds<=10?'seconds-red':seconds<=19?'seconds-orange':'seconds-green');
  $('clockDate').textContent=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',weekday:'long',day:'2-digit',month:'long',year:'numeric'}).format(now).toUpperCase();
  const zone=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',timeZoneName:'short'}).formatToParts(now).find(x=>x.type==='timeZoneName')?.value||'UK TIME';
  $('clockZone').textContent=zone;

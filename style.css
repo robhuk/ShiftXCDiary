@@ -13,7 +13,7 @@
 .led-digit{display:inline-block;width:auto;height:auto;flex:0 0 auto;font:inherit;color:#d9ed70;letter-spacing:inherit;text-shadow:0 0 2px #d9ed70,0 0 7px #9ebd38}
 .led-digit i{display:none}
 .clock-digits .seconds{font-size:.68em;margin-left:.08em;gap:.08em}
-.clock-digits .seconds .led-digit{color:#e34b3d;text-shadow:0 0 2px #e34b3d,0 0 6px #9f241d}
+.clock-digits .seconds .led-digit{transition:color 1100ms ease-in-out,text-shadow 1100ms ease-in-out}.clock-digits .seconds.seconds-red .led-digit{color:#ef3434;text-shadow:0 0 2px #ef3434,0 0 7px #a51d1d}.clock-digits .seconds.seconds-orange .led-digit{color:#ff941f;text-shadow:0 0 2px #ff941f,0 0 7px #b85a08}.clock-digits .seconds.seconds-green .led-digit{color:#43df72;text-shadow:0 0 2px #43df72,0 0 7px #16853a}
 .clock-digits .led-colon{font-family:inherit;font-style:normal;color:#d9ed70;font-size:.72em;line-height:1;transform:translateY(-.04em);text-shadow:0 0 4px #d9ed70,0 0 8px #9ebd38;margin:0 .02em}
 .clock-brand{display:none}
 .clock-strip{display:flex;justify-content:space-between;gap:8px;padding:5px 4px 4px;color:#fff;font-size:10px;font-weight:850;letter-spacing:1.1px;text-transform:uppercase}
