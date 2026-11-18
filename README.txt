@@ -280,3 +280,5 @@ Version 1.3.56: For Job Numbers REFRESH, ROUTES and OTHER, Add train no longer r
 Version 1.3.59: Incident entries now capture a user-defined incident name / description. The custom name is shown in the operational log, incident update selector, copied entry and shift exports. Older incident records remain supported with their previous numbering.
 
 Version 1.3.69: Added Book on and Book off time fields to shift details, with automatic shift-length calculation (including shifts crossing midnight). Added the Late book off operational log type; it records delay minutes and the new book-off time calculated from the original Book off time.
+
+Version 1.3.73: Added daily ticket scans and ticket sales commission logging (default £0.02 per scan and 6% of sales; editable rates persist on device), plus shift equipment logging for BWV camera and ticket machine set numbers.
