@@ -24,3 +24,7 @@ Version 1.3.93: Passenger count entries can be deleted individually or all toget
 Version 1.3.94: Removed the legacy “Applies to” wording from passenger count entries. New and edited counts use “Train portion”; existing active-shift entries are automatically normalised when loaded.
 
 Version 1.3.95: Passenger count table column heading changed from “Train portion” to “Train” in on-screen grouped tables and plain-text reports. The recorded formation value is retained.
+
+Version 1.3.96: Removed the Train column and Train portion / formation text from grouped passenger count tables and plain-text reports. Station name is shown with First Class and Standard Class counts; underlying formation metadata remains available for editing and other operational notes.
+
+Version 1.3.97: Removed Train portion / Applies to text from passenger count station cells and rows, including full-and-standing row annotations. Station cells now contain only the station name.
