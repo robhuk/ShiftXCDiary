@@ -296,4 +296,6 @@ Version 1.3.82: Removed passenger count totals. Passenger count tables now show 
 
 Version 1.3.84: Passenger count entries now record a note with timestamp and headcode, include front set/back set/whole train in the station table, and highlight full-and-standing rows red with a timestamped headcode note below the table.
 
-Version 1.3.85: Passenger count notes are now displayed visibly underneath the passenger table for the matching train, with timestamp and headcode, rather than only being available inside each entry's expandable details.
+Version 1.3.86: Passenger count notes are now displayed visibly underneath the passenger table for the matching train, with timestamp and headcode, rather than only being available inside each entry's expandable details.
+
+Version 1.3.87: Passenger count entries sharing the same linked headcode are grouped into one report section and one table. The report table includes station, first class, standard class and train portion, with notes and full-and-standing markers underneath.
