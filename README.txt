@@ -331,3 +331,5 @@ VERSION 1.3.101 – CLOCK SECONDS COLOUR INDICATION
 
 VERSION 1.3.102 – MULTIPLE OPERATORS FOR TICKET ACCEPTANCE
 Ticket acceptance now supports selecting multiple train operators when “Multiple” is selected. The entry records and displays all selected operators together. Selecting “Multiple” requires at least one operator to be ticked. Single-operator and custom “Other” selections remain available.
+
+Version 1.3.105: Added a Train Schedule log entry. Paste Tiger / Worldline timetable text and the app extracts HH:MM times and calling points into an on-screen and PDF table.
