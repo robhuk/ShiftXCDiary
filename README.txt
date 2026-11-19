@@ -327,3 +327,7 @@ VERSION 1.3.101 – CLOCK SECONDS COLOUR INDICATION
 - Hours and minutes retain their existing appearance.
 - The colour transition uses a 1.1-second CSS fade.
 - This is a visual timing aid only; operational dispatch must follow current CrossCountry procedures and local instructions.
+
+
+VERSION 1.3.102 – MULTIPLE OPERATORS FOR TICKET ACCEPTANCE
+Ticket acceptance now supports selecting multiple train operators when “Multiple” is selected. The entry records and displays all selected operators together. Selecting “Multiple” requires at least one operator to be ticked. Single-operator and custom “Other” selections remain available.

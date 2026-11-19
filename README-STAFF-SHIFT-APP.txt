@@ -30,3 +30,8 @@ Version 1.3.96: Removed the Train column and Train portion / formation text from
 Version 1.3.98: Removed Train portion / Applies to text from passenger count station cells and rows, including full-and-standing row annotations. Station cells now contain only the station name.
 
 Version 1.3.98: Passenger count PDF output now uses a clean table layout without emojis or action icons; notes and full-and-standing status are shown as plain text.
+
+Version 1.3.102: Ticket acceptance supports multiple operator selection when “Multiple” is chosen.
+
+Version 1.3.103: Delay entries now show a custom classification prompt at submission. NEW adds “New Delay:” to the report, EXISTING adds “Existing delay”, and N/A adds no classification text. Cancelling the prompt leaves the delay unsubmitted.
+\nVersion 1.3.104: Added a 📋 copy control to each passenger count group in the operational log. It copies the complete grouped table as plain text, including station, first class, standard class and full-and-standing markers. The copy icon is only a screen control and is not included in exported reports.\n
