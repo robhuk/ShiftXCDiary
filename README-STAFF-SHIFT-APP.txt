@@ -35,4 +35,3 @@ Version 1.3.102: Ticket acceptance supports multiple operator selection when “
 
 Version 1.3.103: Delay entries now show a custom classification prompt at submission. NEW adds “New Delay:” to the report, EXISTING adds “Existing delay”, and N/A adds no classification text. Cancelling the prompt leaves the delay unsubmitted.
 \nVersion 1.3.104: Added a 📋 copy control to each passenger count group in the operational log. It copies the complete grouped table as plain text, including station, first class, standard class and full-and-standing markers. The copy icon is only a screen control and is not included in exported reports.\n
-Version 1.3.105: Added a Train Schedule log entry. Paste Tiger / Worldline timetable text and the app extracts HH:MM times and calling points into an on-screen and PDF table.
