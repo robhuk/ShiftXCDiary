@@ -237,3 +237,15 @@ main{margin-top:12px}
 
 .passenger-edit-trigger{margin-left:8px;vertical-align:middle}@media print{.passenger-edit-trigger{display:none!important}}
 .delay-classification-options{display:grid;gap:9px;margin:14px 0}.delay-classification-options button{width:100%;text-align:left;white-space:normal;line-height:1.35;min-height:48px}
+
+/* Multi-select related train picker */
+#relatedTrain[multiple],#editRelatedTrain[multiple]{min-height:7.5rem;padding:.45rem;border:1px solid var(--line,#c9cdd3);border-radius:10px;background:#fff;color:#222}#relatedTrain[multiple] option,#editRelatedTrain[multiple] option{padding:.42rem .35rem;white-space:normal} .multi-train-hint{display:block;margin-top:.3rem;line-height:1.35}
+
+
+/* v1.3.106 – persistent floating shortcut for adding a diary log entry */
+.floating-add-entry{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:calc(22px + env(safe-area-inset-bottom));z-index:40;width:62px;height:62px;display:grid;place-items:center;border:0;border-radius:50%;background:linear-gradient(145deg,#0755EF,#061B50);color:#fff;font:400 38px/1 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;box-shadow:0 5px 18px #061B5066,0 0 0 3px #fff;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.floating-add-entry:active{transform:scale(.94)}
+.floating-add-entry:focus-visible{outline:3px solid #F4C542;outline-offset:4px}
+@media(min-width:900px){.floating-add-entry{right:max(28px,calc((100vw - 820px)/2));bottom:30px}}
+@media print{.floating-add-entry{display:none!important}}
+.archive-view-actions{display:flex;gap:8px;margin:0 0 12px}.archive-view-entry-tools .small{min-height:32px;padding:4px 10px;font-size:13px;white-space:nowrap}

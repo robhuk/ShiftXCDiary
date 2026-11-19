@@ -35,3 +35,8 @@ Version 1.3.102: Ticket acceptance supports multiple operator selection when “
 
 Version 1.3.103: Delay entries now show a custom classification prompt at submission. NEW adds “New Delay:” to the report, EXISTING adds “Existing delay”, and N/A adds no classification text. Cancelling the prompt leaves the delay unsubmitted.
 \nVersion 1.3.104: Added a 📋 copy control to each passenger count group in the operational log. It copies the complete grouped table as plain text, including station, first class, standard class and full-and-standing markers. The copy icon is only a screen control and is not included in exported reports.\n
+Version 1.3.105: Related train selection now supports multiple trains/headcodes on operational log entries. All selected headcodes are retained in the saved entry and shown in the operational log and exports. Train Diversion still requires exactly one train; Defect entries retain a single-train selection for unit-specific validation.
+
+Version 1.3.106: Added a floating + shortcut on the diary screen to open Add issue / log entry. The shortcut is excluded from print and report output.
+
+Version 1.3.107: Archived shifts now support editing existing operational log entries and adding new issue / log entries directly to the selected archive. Changes are saved back to that archive without replacing the active shift; cancelling an edit leaves the archive unchanged.

@@ -331,3 +331,7 @@ VERSION 1.3.101 – CLOCK SECONDS COLOUR INDICATION
 
 VERSION 1.3.102 – MULTIPLE OPERATORS FOR TICKET ACCEPTANCE
 Ticket acceptance now supports selecting multiple train operators when “Multiple” is selected. The entry records and displays all selected operators together. Selecting “Multiple” requires at least one operator to be ticked. Single-operator and custom “Other” selections remain available.
+
+Version 1.3.105: Related train selection now supports multiple trains/headcodes on operational log entries. All selected headcodes are retained in the saved entry and shown in the operational log and exports. Train Diversion still requires exactly one train; Defect entries retain a single-train selection for unit-specific validation.
+
+Version 1.3.106: Added a floating + shortcut on the diary screen to open Add issue / log entry. The shortcut is excluded from print and report output.
