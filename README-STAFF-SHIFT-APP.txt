@@ -47,3 +47,7 @@ Version 1.3.108: Fixed archived-shift persistence. Changes to archived entries a
 Version 1.3.110: Late Book Off email generation is now available from the relevant Daily Log entry three-dot menu. Saving a Late Book Off no longer opens the email dialog automatically.
 
 Version 1.3.111: Late Book Off email reason now uses a predefined delay-reason dropdown. Selecting Other reveals a free-text field. Existing custom reasons are preserved as Other, and copy/share actions require a headcode and a selected or entered reason.
+
+Version 1.3.112: Email reports preserve passenger-count tables as nested HTML tables and render grouped defects in a structured table, rather than flattening these groups into text. PDF/print passenger-count tables remain formatted as tables.
+
+Version 1.3.113: Initial Late book off log-entry form now requires a delay reason dropdown with an Other free-text option. The selected reason is saved with the entry, appears in the log and prepopulates the Late Book Off email.
