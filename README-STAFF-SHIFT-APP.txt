@@ -57,3 +57,5 @@ Version 1.3.114: Archived shift view now allows individual operational log entri
 Version 1.3.115: Fixed archive-edit persistence isolation. While editing an archived shift, autosaves and cloud-backup payloads now retain the active shift's own trains and operational log entries; archived edits are saved only to the selected archived record. The current shift is not replaced by archived shift contents.
 
 Version 1.3.116: When generating a Late Book Off email and no headcode is already linked to the entry, the email dialog now offers a dropdown of valid headcodes from the trains recorded on that shift. Selecting a train fills the headcode field and updates the email subject and body. Manual headcode entry remains available.
+
+Version 1.3.117: Archive calendar now starts on Sunday, with date alignment adjusted accordingly. Late Book Off email subject now states '[HEADCODE] delayed by [XX] minutes'.
