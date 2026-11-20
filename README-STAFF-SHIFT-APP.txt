@@ -43,3 +43,7 @@ Version 1.3.107: Archived shifts now support editing existing operational log en
 
 
 Version 1.3.108: Fixed archived-shift persistence. Changes to archived entries and newly added entries are written into the matching archive record, saved to local storage, and read back for verification before the app reports success. The active shift remains separate.
+
+Version 1.3.110: Late Book Off email generation is now available from the relevant Daily Log entry three-dot menu. Saving a Late Book Off no longer opens the email dialog automatically.
+
+Version 1.3.111: Late Book Off email reason now uses a predefined delay-reason dropdown. Selecting Other reveals a free-text field. Existing custom reasons are preserved as Other, and copy/share actions require a headcode and a selected or entered reason.
