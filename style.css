@@ -250,6 +250,7 @@ main{margin-top:12px}
 @media print{.floating-add-entry{display:none!important}}
 .archive-view-actions{display:flex;gap:8px;margin:0 0 12px}.archive-view-entry-tools .small{min-height:32px;padding:4px 10px;font-size:13px;white-space:nowrap}
 
-/* Distinct visual cues in the Add log entry category picker */
-#entryType option[value="Reminder"]{background-color:#fff0a6;color:#624900;font-weight:800}
-#entryType option[value="Incident"],#entryType option[value="Incident Update"]{background-color:#ffe0e3;color:#8f001f;font-weight:800}
+/* Entry type colours matching the supplied menu reference */
+#entryType option[value="Assist"]{background-color:#8fd5ff;color:#073b5b;font-weight:800}
+#entryType option[value="Reminder"]{background-color:#ffe34a;color:#594500;font-weight:800}
+#entryType option[value="Incident"],#entryType option[value="Incident Update"]{background-color:#ff858b;color:#700018;font-weight:800}
