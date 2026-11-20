@@ -40,3 +40,6 @@ Version 1.3.105: Related train selection now supports multiple trains/headcodes 
 Version 1.3.106: Added a floating + shortcut on the diary screen to open Add issue / log entry. The shortcut is excluded from print and report output.
 
 Version 1.3.107: Archived shifts now support editing existing operational log entries and adding new issue / log entries directly to the selected archive. Changes are saved back to that archive without replacing the active shift; cancelling an edit leaves the archive unchanged.
+
+
+Version 1.3.108: Fixed archived-shift persistence. Changes to archived entries and newly added entries are written into the matching archive record, saved to local storage, and read back for verification before the app reports success. The active shift remains separate.

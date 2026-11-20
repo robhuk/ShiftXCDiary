@@ -335,3 +335,6 @@ Ticket acceptance now supports selecting multiple train operators when “Multip
 Version 1.3.105: Related train selection now supports multiple trains/headcodes on operational log entries. All selected headcodes are retained in the saved entry and shown in the operational log and exports. Train Diversion still requires exactly one train; Defect entries retain a single-train selection for unit-specific validation.
 
 Version 1.3.106: Added a floating + shortcut on the diary screen to open Add issue / log entry. The shortcut is excluded from print and report output.
+
+
+Version 1.3.108: Fixed archived-shift persistence. Changes to archived entries and newly added entries are written into the matching archive record, saved to local storage, and read back for verification before the app reports success. The active shift remains separate.
