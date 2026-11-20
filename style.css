@@ -254,3 +254,12 @@ main{margin-top:12px}
 #entryType option[value="Assist"]{background-color:#8fd5ff;color:#073b5b;font-weight:800}
 #entryType option[value="Reminder"]{background-color:#ffe34a;color:#594500;font-weight:800}
 #entryType option[value="Incident"],#entryType option[value="Incident Update"]{background-color:#ff858b;color:#700018;font-weight:800}
+
+/* Clearly coloured Add Log Entry type choices (works consistently on iOS and Android) */
+.entry-type-native{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important;margin:0!important;padding:0!important}
+.entry-type-choices{display:grid;gap:6px;margin-top:8px;max-height:42vh;overflow:auto;padding:2px}
+.entry-type-choice{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:10px 12px;border:1px solid #d8d8d8;border-radius:9px;background:#fff;color:#15213A;text-align:left;font:750 15px system-ui;cursor:pointer}
+.entry-type-choice[aria-selected="true"]{outline:3px solid #0755EF;outline-offset:1px}
+.entry-type-choice.assist{background:#8fd5ff;color:#073b5b;border-color:#65bce9}
+.entry-type-choice.reminder{background:#ffe34a;color:#594500;border-color:#e3c52d}
+.entry-type-choice.incident{background:#ff858b;color:#700018;border-color:#ed626b}
