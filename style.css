@@ -252,9 +252,4 @@ main{margin-top:12px}
 
 /* Distinct visual cues in the Add log entry category picker */
 #entryType option[value="Reminder"]{background-color:#fff0a6;color:#624900;font-weight:800}
-#entryType option[value="Incident"]{background-color:#ffe0e3;color:#8f001f;font-weight:800}
-
-/* Add log entry category picker: visually distinguish incident and reminder choices. */
-#entryType option[value="Incident"],#entryType option[value="Incident Update"]{background:#ffe0e3;color:#8f001f;font-weight:800}
-#entryType option[value="Reminder"]{background:#fff0a8;color:#594500;font-weight:800}
-#entryType option[value=""]{background:#fff;color:#667085}
+#entryType option[value="Incident"],#entryType option[value="Incident Update"]{background-color:#ffe0e3;color:#8f001f;font-weight:800}

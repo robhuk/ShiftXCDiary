@@ -346,3 +346,5 @@ Version 1.3.116: When generating a Late Book Off email and no headcode is alread
 Version 1.3.117: Archive calendar now starts on Sunday, with date alignment adjusted accordingly. Late Book Off email subject now states '[HEADCODE] delayed by [XX] minutes'.
 
 Version 1.3.118: Add log entry category menu is alphabetically ordered; Reminder option highlighted yellow and Add incident option highlighted light red.
+
+Version 1.3.119: Entry type picker now starts with General Note, applies a light red background to Add incident and Update existing incident, and a yellow background to Reminder. Entry detail fields and text boxes remain hidden until an entry type is selected.
