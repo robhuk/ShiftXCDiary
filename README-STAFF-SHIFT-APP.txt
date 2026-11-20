@@ -53,3 +53,7 @@ Version 1.3.112: Email reports preserve passenger-count tables as nested HTML ta
 Version 1.3.113: Initial Late book off log-entry form now requires a delay reason dropdown with an Other free-text option. The selected reason is saved with the entry, appears in the log and prepopulates the Late Book Off email.
 
 Version 1.3.114: Archived shift view now allows individual operational log entries to be deleted with confirmation. New entries and incident updates created while editing an archived shift retain the original archived shift/log date instead of being dated with the current day. Editing an existing archived entry preserves its original timestamp date.
+
+Version 1.3.115: Fixed archive-edit persistence isolation. While editing an archived shift, autosaves and cloud-backup payloads now retain the active shift's own trains and operational log entries; archived edits are saved only to the selected archived record. The current shift is not replaced by archived shift contents.
+
+Version 1.3.116: When generating a Late Book Off email and no headcode is already linked to the entry, the email dialog now offers a dropdown of valid headcodes from the trains recorded on that shift. Selecting a train fills the headcode field and updates the email subject and body. Manual headcode entry remains available.
