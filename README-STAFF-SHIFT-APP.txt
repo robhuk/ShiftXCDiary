@@ -51,3 +51,5 @@ Version 1.3.111: Late Book Off email reason now uses a predefined delay-reason d
 Version 1.3.112: Email reports preserve passenger-count tables as nested HTML tables and render grouped defects in a structured table, rather than flattening these groups into text. PDF/print passenger-count tables remain formatted as tables.
 
 Version 1.3.113: Initial Late book off log-entry form now requires a delay reason dropdown with an Other free-text option. The selected reason is saved with the entry, appears in the log and prepopulates the Late Book Off email.
+
+Version 1.3.114: Archived shift view now allows individual operational log entries to be deleted with confirmation. New entries and incident updates created while editing an archived shift retain the original archived shift/log date instead of being dated with the current day. Editing an existing archived entry preserves its original timestamp date.
