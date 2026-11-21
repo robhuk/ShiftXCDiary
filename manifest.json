@@ -3,7 +3,7 @@
   "name": "Staff Shift App \u2013 Rail Staff Shift Diary",
   "short_name": "Staff Shift App",
   "description": "Offline-ready rail staff shift diary, train workings, incident logs and reports.",
-  "version": "1.3.132",
+  "version": "1.3.142",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
