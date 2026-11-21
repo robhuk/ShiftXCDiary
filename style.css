@@ -263,3 +263,7 @@ main{margin-top:12px}
 .entry-type-choice.assist{background:#8fd5ff;color:#073b5b;border-color:#65bce9}
 .entry-type-choice.reminder{background:#ffe34a;color:#594500;border-color:#e3c52d}
 .entry-type-choice.incident{background:#ff858b;color:#700018;border-color:#ed626b}
+
+/* Purple report earnings options */
+.report-pay-select-label select{border:2px solid #7655b5;background:#f2efff;color:#452b78;border-radius:9px;padding:9px;font-weight:700;min-height:76px}
+.report-pay-select-label option{background:#f2efff;color:#452b78;padding:7px;font-weight:700}
