@@ -268,3 +268,10 @@ main{margin-top:12px}
 .report-pay-select-label select{border:2px solid #7655b5;background:#f2efff;color:#452b78;border-radius:9px;padding:9px;font-weight:700;min-height:76px}
 .report-pay-select-label option{background:#f2efff;color:#452b78;padding:7px;font-weight:700}
 .entry-type-choice.pay{background:#eee7ff;color:#452477;border-color:#b49add}
+
+
+/* Automatic earnings breakdown displayed within the Daily Log */
+.shift-earnings-summary{margin:16px 0;padding:14px;border:1px solid #d7c9ef;border-left:5px solid #7655b5;border-radius:12px;background:#f7f3ff;color:#30234a}
+.shift-earnings-summary h3{margin:0 0 10px;font-size:16px}
+.shift-earnings-summary>div{display:flex;justify-content:space-between;gap:12px;padding:5px 0;border-bottom:1px solid #e7def4}
+.shift-earnings-summary .earnings-total{margin-top:6px;padding-top:10px;border-bottom:0;font-size:17px;font-weight:800;color:#452477}
