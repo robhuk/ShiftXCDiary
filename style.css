@@ -267,3 +267,4 @@ main{margin-top:12px}
 /* Purple report earnings options */
 .report-pay-select-label select{border:2px solid #7655b5;background:#f2efff;color:#452b78;border-radius:9px;padding:9px;font-weight:700;min-height:76px}
 .report-pay-select-label option{background:#f2efff;color:#452b78;padding:7px;font-weight:700}
+.entry-type-choice.pay{background:#eee7ff;color:#452477;border-color:#b49add}
