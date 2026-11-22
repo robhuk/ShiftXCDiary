@@ -283,3 +283,14 @@ main{margin-top:12px}
 .passenger-station-toggle.is-checked .station-tick{background:#16834a;border-color:#16834a;color:#fff}
 .passenger-station-toggle.is-checked>span:first-child{text-decoration:line-through;text-decoration-color:#16834a;text-decoration-thickness:1px}
 .passenger-station-toggle:focus-visible{outline:2px solid #0649F5;outline-offset:2px}
+
+
+/* Archived shift three-dot action menu */
+.archive-record-menu-wrap{position:relative;display:flex;align-items:center;justify-content:flex-end;flex:0 0 auto}
+.archive-shift-menu-trigger{width:40px;height:38px;font-size:25px}
+.archive-shift-menu{position:absolute;right:0;top:calc(100% + 6px);z-index:40;display:grid;gap:3px;min-width:210px;padding:7px;border:1px solid #d7e1f2;border-radius:12px;background:#fff;box-shadow:0 8px 24px rgba(6,27,80,.18)}
+.archive-shift-menu.hidden{display:none}
+.archive-shift-menu button{width:100%;min-height:42px;padding:9px 11px;border:0;border-radius:8px;background:#fff;color:var(--ink);text-align:left;font-size:13px;font-weight:750}
+.archive-shift-menu button:hover,.archive-shift-menu button:focus-visible{background:#f2f5fb;outline:2px solid #d7e1f2}
+.archive-shift-menu .archive-menu-danger{color:#b42335}
+@media(max-width:480px){.archive-record{flex-direction:row;align-items:center}.archive-record-menu-wrap{width:auto}.archive-shift-menu{right:0;min-width:205px}}
