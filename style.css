@@ -113,9 +113,8 @@
 .archive-record-info{display:grid;gap:4px;min-width:0}
 .archive-record-info strong{color:#6f1235;overflow-wrap:anywhere}
 .archive-record-info span{font-size:12px;color:#766a71}
-.archive-record-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;flex:0 0 auto}
-.archive-record-actions button{min-height:36px;padding:7px 10px;font-size:12px}
-@media(max-width:480px){.archive-record{align-items:flex-start;flex-direction:column}.archive-record-actions{width:100%;justify-content:flex-start}.archive-record-actions button{flex:1}.archive-actions{grid-template-columns:1fr}.archive-actions #archiveCurrent{grid-column:auto}}
+.archive-record-menu-wrap{display:flex;align-items:center;justify-content:flex-end;flex:0 0 auto}
+@media(max-width:480px){.archive-record{align-items:center;flex-direction:row}.archive-record-menu-wrap{width:auto}.archive-actions{grid-template-columns:1fr}.archive-actions #archiveCurrent{grid-column:auto}}
 
 .archive-view-dialog{width:min(94vw,680px);max-height:88vh;overflow:hidden}
 .archive-view-dialog form{display:flex;flex-direction:column;max-height:88vh;padding:18px}
@@ -287,7 +286,7 @@ main{margin-top:12px}
 
 /* Archived shift three-dot action menu */
 .archive-record-menu-wrap{position:relative;display:flex;align-items:center;justify-content:flex-end;flex:0 0 auto}
-.archive-shift-menu-trigger{width:40px;height:38px;font-size:25px}
+.archive-shift-menu-trigger{width:28px;height:28px;min-height:28px;padding:0;font-size:19px;border-radius:7px}
 .archive-shift-menu{position:absolute;right:0;top:calc(100% + 6px);z-index:40;display:grid;gap:3px;min-width:210px;padding:7px;border:1px solid #d7e1f2;border-radius:12px;background:#fff;box-shadow:0 8px 24px rgba(6,27,80,.18)}
 .archive-shift-menu.hidden{display:none}
 .archive-shift-menu button{width:100%;min-height:42px;padding:9px 11px;border:0;border-radius:8px;background:#fff;color:var(--ink);text-align:left;font-size:13px;font-weight:750}
