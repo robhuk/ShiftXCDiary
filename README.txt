@@ -1,3 +1,9 @@
+VERSION 1.3.144 – PASSENGER COUNT TABLE GROUPING
+- Consolidates every passenger-count entry for the same normalized headcode into one table.
+- Resolves the headcode consistently from the selected train link, legacy headcode fields, related train IDs, or saved entry text.
+- The same grouping is used by the on-screen operational log and report/PDF exports.
+- Preserves existing shift data and storage identity.
+
 XC ShiftApp – Progressive Web App
 Version: 1.3.54
 Unique app ID: uk.co.crosscountry.shiftapp
