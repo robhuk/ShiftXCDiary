@@ -359,4 +359,4 @@ Version 1.3.118: Add log entry category menu is alphabetically ordered; Reminder
 Version 1.3.120: Entry type picker now starts with General Note, applies a light red background to Add incident and Update existing incident, and a yellow background to Reminder. Entry detail fields and text boxes remain hidden until an entry type is selected.
 
 
-Version 1.3.150: Updated the Lost Property three-dots email action. Subject now uses the format "lost property - HEADCODE - DD/MM/YY". The full report text is copied before the native email target opens; when a photo is present, the native share sheet is used where supported so the image can be attached to the email.
+Version 1.3.151: Updated the Lost Property three-dots email action. Subject now uses the format "lost property - HEADCODE - DD/MM/YY". The full report text is copied before the native email target opens; when a photo is present, the native share sheet is used where supported so the image can be attached to the email.
