@@ -215,11 +215,17 @@ function askDelayOtherReason(){return new Promise(resolve=>{delayOtherResolver=r
 function finishDelayOtherReason(value){$('delayOtherReasonDialog').close();const done=delayOtherResolver;delayOtherResolver=null;if(done)done(value)}
 $('delayOtherReasonSave').addEventListener('click',()=>{const v=$('delayOtherReasonInput').value.trim();if(!v){$('delayOtherReasonInput').focus();return}finishDelayOtherReason(v)});$('delayOtherReasonCancel').addEventListener('click',()=>finishDelayOtherReason(''));$('delayOtherReasonClose').addEventListener('click',()=>finishDelayOtherReason(''));
 async function emailLostProperty(entry){
- const headcode=String(entry.relatedTrainHeadcode||linkedHeadcode(entry)||'NO HEADC0DE').toUpperCase();
- const date=dateDMY($('shiftDate').value||'');
- const subject=`lost property - ${headcode} ${date}`;
+ const headcode=String(entry.relatedTrainHeadcode||linkedHeadcode(entry)||'HEADCODE').toUpperCase();
+ const rawDate=dateDMY($('shiftDate').value||'');
+ const date=rawDate.replace(/\/(\d{4})$/,(_,year)=>`/${year.slice(-2)}`);
+ const subject=`lost property - ${headcode} - ${date}`;
  const body=`Hello,\n\nPlease see the lost property report below.\n\n${entryDetails(entry)}\n\nRegards`;
  const mailto=`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+ // Copy the complete report text before opening the native email/share target.
+ try{
+  if(navigator.clipboard&&window.isSecureContext)await navigator.clipboard.writeText(body);
+  else{const box=document.createElement('textarea');box.value=body;box.style.position='fixed';box.style.opacity='0';document.body.appendChild(box);box.select();document.execCommand('copy');box.remove()}
+ }catch(err){console.warn('Could not copy lost property report text',err)}
  if(entry.photo){
   try{
    const match=String(entry.photo).match(/^data:(image\/[a-zA-Z0-9.+-]+);base64,(.+)$/);
@@ -228,14 +234,14 @@ async function emailLostProperty(entry){
    const ext=match[1].split('/')[1].replace('jpeg','jpg');
    const file=new File([bytes],entry.photoName||`lost-property-${headcode}.${ext}`,{type:match[1]});
    const shareData={title:subject,text:body,files:[file]};
-   if(navigator.canShare&&navigator.canShare({files:[file]})&&navigator.share){await navigator.share(shareData);status('Lost property report and photo shared. Choose your email app to send it.');return}
+   if(navigator.canShare&&navigator.canShare({files:[file]})&&navigator.share){await navigator.share(shareData);status('Lost property report text copied. Choose your email app to open a pre-filled email with the report and photo attached.');return}
   }catch(err){if(err?.name==='AbortError')return;console.warn('Photo sharing unavailable',err)}
   window.location.href=mailto;
-  status('Opening your email client with the lost property report. The photo could not be attached automatically on this device; attach it from the report before sending.');
+  status('Lost property report text copied. Opening your email client; attach the photo from the report before sending.');
   return;
  }
  window.location.href=mailto;
- status('Opening your default email client with the lost property report.');
+ status('Lost property report copied. Opening your default email client with the subject and report populated.');
 }
 async function generateDelayNotificationEmail(entry){const headcode=String(entry.relatedTrainHeadcode||linkedHeadcode(entry)||'').toUpperCase()||'HEADCODE';const minutes=Number(entry.delayMinutes??((String(entry.text||'').match(/Delay:\s*(\d+)/i)||[])[1]||0));const reason=entry.delayReason||((String(entry.text||'').match(/^Reason:\s*(.*)$/mi)||[])[1]||'Not specified');const date=dateDMY($('shiftDate').value);const notes=String(entry.text||'').split('\n').filter(x=>!/^\s*(?:Delay:|Reason:|Control (?:are|are not) aware|(?:NEW|EXISTING) delay)/i.test(x)).join(' ').replace(/^Notes(?:\s*\([^)]*\))?:\s*/i,'').trim();const aware=entry.controlAware===true||/Control are aware/i.test(entry.text||'');const subject=`Delay notification - ${headcode} ${minutes} mins - ${date}`;const body=`Hello,\nNotification of a delay of ${minutes} mins to ${headcode} on ${date} due to ${reason}\n\n${notes?`Notes / nature of delay: ${notes}\n\n`:''}Control ${aware?'are':'are not'} aware of this delay`;const logText=`DELAY NOTIFICATION\n${fmt(entry.timestamp)}\n${entry.text||''}`;try{if(navigator.clipboard&&window.isSecureContext)await navigator.clipboard.writeText(logText);else{const box=document.createElement('textarea');box.value=logText;box.style.position='fixed';box.style.opacity='0';document.body.appendChild(box);box.select();document.execCommand('copy');box.remove()}}catch{}window.location.href=`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;status('Delay log text copied. Opening your default email client.')}
 const DELAY_REASONS=['Signal failure','Points failure','Track fault / infrastructure fault','Train fault','Train crew / staffing issue','Previous train running late','Congestion / late running','Passenger incident','Emergency services incident','Trespass / person on the line','Police incident','Medical emergency','Level crossing incident','Weather conditions','Speed restrictions','Engineering works','Other operational incident'];
