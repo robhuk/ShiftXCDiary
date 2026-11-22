@@ -275,3 +275,11 @@ main{margin-top:12px}
 .shift-earnings-summary h3{margin:0 0 10px;font-size:16px}
 .shift-earnings-summary>div{display:flex;justify-content:space-between;gap:12px;padding:5px 0;border-bottom:1px solid #e7def4}
 .shift-earnings-summary .earnings-total{margin-top:6px;padding-top:10px;border-bottom:0;font-size:17px;font-weight:800;color:#452477}
+
+/* Passenger station check-off control */
+.passenger-station-toggle{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:36px;padding:3px 5px;border:0;border-radius:6px;background:transparent;color:inherit;text-align:left;font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.passenger-station-toggle:active{background:#edf8f0}
+.passenger-station-toggle .station-tick{display:inline-flex;align-items:center;justify-content:center;flex:0 0 23px;width:23px;height:23px;border:1.5px solid #9aa4b2;border-radius:50%;color:transparent;font-weight:900}
+.passenger-station-toggle.is-checked .station-tick{background:#16834a;border-color:#16834a;color:#fff}
+.passenger-station-toggle.is-checked>span:first-child{text-decoration:line-through;text-decoration-color:#16834a;text-decoration-thickness:1px}
+.passenger-station-toggle:focus-visible{outline:2px solid #0649F5;outline-offset:2px}
