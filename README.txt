@@ -1,4 +1,4 @@
-VERSION 1.3.147 – DELAY REPORT CONTROL-AWARE DISPLAY
+VERSION 1.3.148 – DELAY EMAIL NOTES AT BOTTOM
 
 - Tap the station name in a passenger-count table to toggle a green tick. The checked state saves with the passenger-count entry and is reflected in copied tables and PDF exports.
 - Existing local data and storage key are retained; service-worker cache version incremented.
