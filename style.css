@@ -295,3 +295,7 @@ main{margin-top:12px}
 @media(max-width:480px){.archive-record{flex-direction:row;align-items:center}.archive-record-menu-wrap{width:auto}.archive-shift-menu{right:0;min-width:205px}}
 
 .archive-actions-dialog{width:min(440px,calc(100% - 28px));max-height:min(82vh,720px);overflow:auto}.archive-actions-dialog .entry-menu-options{display:grid;gap:9px;margin:16px 0}.archive-actions-dialog .entry-menu-options button{width:100%;min-height:48px;text-align:left;justify-content:flex-start}.archive-view-entry-tools .entry-menu-trigger{width:40px;height:38px;font-size:25px}.archive-view-entry-tools{display:flex;align-items:center;gap:8px}
+
+/* Operational issue categories use the requested orange treatment. */
+.entry-type-choice.operational-orange{background:#fff0df;color:#874000;border-color:#e7a04c}
+.entry-type-choice.pay{background:#eee7ff;color:#452477;border-color:#b49add}
