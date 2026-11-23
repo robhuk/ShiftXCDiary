@@ -299,3 +299,5 @@ main{margin-top:12px}
 /* Operational issue categories use the requested orange treatment. */
 .entry-type-choice.operational-orange{background:#fff0df;color:#874000;border-color:#e7a04c}
 .entry-type-choice.pay{background:#eee7ff;color:#452477;border-color:#b49add}
+
+.photo-source-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:10px 0}.photo-source-actions button{min-height:46px}.photo-source-actions small{grid-column:1/-1}.photo-source-actions .hidden{display:none}
