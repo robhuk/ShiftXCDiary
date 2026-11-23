@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.3.167', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
+const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.3.169', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
 const $=id=>document.getElementById(id);
 const DEFAULT_COMMISSION_RATES={perScan:0.02,salesPercent:6};
 const COMMISSION_RATE_KEY='uk.co.crosscountry.shiftapp.commissionRates';
@@ -118,6 +118,44 @@ $('archiveCalendarDays').addEventListener('click',e=>{const b=e.target.closest('
 function renderArchivedShifts(){
  const list=$('archivedShifts');if(!list)return;const all=state.archivedShifts.slice().sort((a,b)=>String(b.archivedAt||b.updatedAt||'').localeCompare(String(a.archivedAt||a.updatedAt||'')));$('archiveCount').textContent=`${all.length} ${all.length===1?'archived shift':'archived shifts'}`;renderArchiveCalendar();const records=selectedArchiveDate?all.filter(r=>String(r.shift?.date||'').slice(0,10)===selectedArchiveDate):[];const dayTitle=$('archiveDayTitle');if(dayTitle)dayTitle.textContent=selectedArchiveDate?`Shifts on ${dateDMY(selectedArchiveDate)} (${records.length})`:'Select a highlighted day';list.className='archived-shifts '+(records.length?'':'empty');list.innerHTML=records.length?records.map(r=>{const date=dateDMY(r.shift?.date||'');const job=r.shift?.jobNumber||'No turn number';const count=(r.entries?.length||0);const when=r.archivedAt?fmt(r.archivedAt):'Archive date unavailable';return `<article class="archive-record"><div class="archive-record-info"><strong>${esc(date)} · ${esc(job)}</strong><span>${count} ${count===1?'entry':'entries'} · ${esc(when)}</span></div><div class="archive-record-menu-wrap"><button type="button" class="entry-action entry-menu-trigger archive-shift-menu-trigger" data-archive-menu-toggle="${esc(r.archiveId||'')}" aria-label="More options for archived shift" title="More options">⋯</button></div></article>`}).join(''):(selectedArchiveDate?'No archived shifts on this day.':'Select a highlighted calendar day to view its archived shifts.');
 }
+function archiveSearchFields(value,path='',out=[]){
+ if(value===null||value===undefined)return out;
+ if(typeof value==='string'||typeof value==='number'||typeof value==='boolean'){
+  const text=String(value).trim();if(text&&!/^data:image\//i.test(text)&&text.length<12000)out.push({path:path||'Record',text});return out;
+ }
+ if(Array.isArray(value)){value.forEach((item,i)=>archiveSearchFields(item,`${path} ${i+1}`,out));return out}
+ if(typeof value==='object'){Object.entries(value).forEach(([key,item])=>{if(/^(photo|image|thumbnail|blob|base64)$/i.test(key))return;archiveSearchFields(item,path?`${path} · ${key}`:key,out)})}
+ return out;
+}
+function populateArchiveSearchTypes(){
+ const select=$('archiveSearchType');if(!select)return;const current=select.value||'all';const types=[...new Set(state.archivedShifts.flatMap(r=>(r.entries||[]).map(e=>String(e.type||'General Note').trim()).filter(Boolean)))].sort((a,b)=>a.localeCompare(b,'en-GB',{sensitivity:'base'}));
+ select.innerHTML='<option value="all">All entry types</option>'+types.map(t=>`<option value="${esc(t)}">${esc(t)}</option>`).join('');select.value=types.includes(current)?current:'all';
+}
+function searchArchivedRecords(query,typeFilter='all'){
+ const terms=String(query||'').toLocaleLowerCase('en-GB').trim().split(/\s+/).filter(Boolean);
+ if(!terms.length)return [];
+ return state.archivedShifts.map(record=>{
+  const shift=record.shift||{}, date=dateDMY(shift.date||'');
+  let fields;
+  if(typeFilter==='all'){fields=archiveSearchFields(record);fields.push({path:'Shift date',text:date});}
+  else {const selected=(record.entries||[]).filter(e=>String(e.type||'General Note').trim()===typeFilter);if(!selected.length)return null;fields=[];selected.forEach((entry,i)=>{fields.push({path:`Entry ${i+1} · Type`,text:String(entry.type||'General Note')});archiveSearchFields(entry,`Entry ${i+1}`,fields);if(entry.timestamp)fields.push({path:`Entry ${i+1} · Date`,text:fmt(entry.timestamp)});});fields.push({path:'Shift date',text:date});}
+  const haystack=fields.map(x=>`${x.path} ${x.text}`).join(' ').toLocaleLowerCase('en-GB');
+  if(!terms.every(term=>haystack.includes(term)))return null;
+  const matches=[];for(const field of fields){if(terms.some(term=>(field.path+' '+field.text).toLocaleLowerCase('en-GB').includes(term))){const clean=field.text.replace(/\s+/g,' ').trim();if(clean&&!matches.some(x=>x.text===clean))matches.push({path:field.path,text:clean.slice(0,190)});if(matches.length>=3)break}}
+  return {record,matches};
+ }).filter(Boolean).sort((a,b)=>String(b.record.shift?.date||'').localeCompare(String(a.record.shift?.date||''))||String(b.record.archivedAt||'').localeCompare(String(a.record.archivedAt||'')));
+}
+function renderArchiveSearchResults(){
+ const input=$('archiveSearchInput'),filter=$('archiveSearchType'),results=$('archiveSearchResults'),count=$('archiveSearchCount');if(!input||!results||!count)return;
+ const query=input.value.trim(),typeFilter=filter?.value||'all';if(!query){count.textContent='Enter a search term to find archived records.';results.innerHTML=`<p class="muted archive-search-empty">${typeFilter==='all'?'Search covers every saved archived shift, including its train and log details.':`Search will be limited to ${esc(typeFilter)} entries.`}</p>`;return}
+ const found=searchArchivedRecords(query,typeFilter);count.textContent=`${found.length} matching ${found.length===1?'archived shift':'archived shifts'}${typeFilter==='all'?'':` · ${typeFilter}`}`;
+ results.innerHTML=found.length?found.map(({record,matches})=>`<button type="button" class="archive-search-result" data-archive-search-result="${esc(record.archiveId||'')}"><strong>${esc(dateDMY(record.shift?.date||''))} · ${esc(record.shift?.jobNumber||'No turn number')}</strong><span>${(record.entries||[]).length} log entries · ${(record.trains||[]).length} trains</span>${matches.map(m=>`<small><b>${esc(m.path)}:</b> ${esc(m.text)}</small>`).join('')}</button>`).join(''):'<p class="muted archive-search-empty">No archived shifts match that search and entry type. Try another type or choose All entry types.</p>';
+}
+$('archiveSearchOpen').addEventListener('click',()=>{$('archiveSearchInput').value='';populateArchiveSearchTypes();$('archiveSearchType').value='all';renderArchiveSearchResults();$('archiveSearchDialog').showModal();$('archiveSearchInput').focus()});
+$('archiveSearchInput').addEventListener('input',renderArchiveSearchResults);$('archiveSearchType').addEventListener('change',renderArchiveSearchResults);$('archiveSearchDialog').querySelector('form').addEventListener('submit',e=>e.preventDefault());
+function closeArchiveSearch(){$('archiveSearchDialog').close()}
+$('archiveSearchClose').addEventListener('click',closeArchiveSearch);$('archiveSearchDone').addEventListener('click',closeArchiveSearch);
+$('archiveSearchResults').addEventListener('click',e=>{const button=e.target.closest('[data-archive-search-result]');if(!button)return;const record=state.archivedShifts.find(x=>x.archiveId===button.dataset.archiveSearchResult);if(!record)return;closeArchiveSearch();openArchivedShiftReadOnly(record)});
 function downloadJson(filename,data){const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}
 function incidentFallbackNumber(entry){const incidents=state.entries.filter(e=>e.type==='Incident');const index=incidents.findIndex(e=>e.id===entry.id);return entry.incidentNumber||(incidents.reduce((m,e)=>Math.max(m,Number(e.incidentNumber)||0),0)+(index>=0&&!entry.incidentNumber?1:1))}
 function incidentTitle(entry){return String(entry.incidentName||'').trim()||`Incident ${incidentFallbackNumber(entry)}`}
