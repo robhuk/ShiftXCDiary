@@ -42,8 +42,11 @@
 <dialog id="issueDialog"><form method="dialog" id="issueForm"><div class="dialoghead"><h2>Add log entry</h2><button type="button" class="x" id="issueClose" aria-label="Close">×</button></div><div id="entryTypePickerWrap"><label>Entry type<select id="entryType" class="entry-type-native" required>
 <option value="" selected disabled>Select an entry type…</option>
 <option value="General Note">📝 General Note</option>
+<option value="Add shift pay">💷 Add shift pay</option>
 <option value="Assist">🦮♿ Assist</option>
+<option value="Attach Photo to log">📸 Attach Photo to log</option>
 <option value="Control Message">📟 Control Message</option>
+<option value="Crew / Staffing Issue">🪪 Crew / Staffing Issue</option>
 <option value="Defect">🔧 Defect</option>
 <option value="Delay">⏱️ Delay</option>
 <option value="Full and standing">🛑 Full and standing</option>
@@ -53,15 +56,12 @@
 <option value="Lost Property">🧳 Lost Property</option>
 <option value="Passenger Counts">🔢 Passenger Counts</option>
 <option value="Reminder">ℹ️ Reminder</option>
+<option value="Shift equipment">⚙️ Shift equipment</option>
+<option value="Special stop order / not to call">🚦 Special stop order / not to call</option>
 <option value="Ticket acceptance">🎟️ Ticket acceptance</option>
 <option value="Ticket commission">💷 Ticket scans &amp; sales / commission</option>
 <option value="Train cancelled">⛔️ Train cancelled</option>
 <option value="Train Diversion">🚧 Train Diversion</option>
-<option value="Shift equipment">⚙️ Shift equipment</option>
-<option value="Special stop order / not to call">🚦 Special stop order / not to call</option>
-<option value="Crew / Staffing Issue">🪪 Crew / Staffing Issue</option>
-<option value="Attach Photo to log">📸 Attach Photo to log</option>
-<option value="Add shift pay">💷 Add shift pay</option>
 </select><div id="entryTypeChoices" class="entry-type-choices" role="listbox" aria-label="Choose an entry type"></div></label></div><div id="relatedTrainWrap" class="hidden"><label>Related train (optional)<select id="relatedTrain"><option value="">No specific train</option></select></label></div><div id="dynamicFields"></div><label id="descriptionLabel">Information / description<textarea id="description" rows="4" placeholder="Enter details..."></textarea></label><div class="dialogactions"><button type="button" id="issueCancel" class="secondary">Cancel</button><button id="entrySubmit" value="default" class="primary">Add to log</button></div></form></dialog>
 <dialog id="crewStaffingDialog" class="confirm-dialog"><form id="crewStaffingForm"><div class="dialoghead"><h2>🪪 Crew / Staffing Issue</h2><button type="button" class="x" id="crewStaffingClose" aria-label="Close">×</button></div><p class="muted">Select the crew role affected, then describe the staffing issue.</p><label>Train / Headcode<select id="crewStaffingTrain" required><option value="">Select a train / headcode…</option></select></label><label>Crew / staff category<select id="crewStaffingCategory" required><option value="">Select a category…</option><option>Catering Crew</option><option>Cleaner</option><option>Driver</option><option>Train Manager</option><option>Other</option></select></label><label>Issue details<textarea id="crewStaffingText" rows="5" required placeholder="e.g. No catering staff, staff delay, or crew member leaving service early due to disruption…"></textarea></label><div class="dialogactions"><button type="button" class="secondary" id="crewStaffingCancel">Cancel</button><button type="submit" class="primary">Add to log</button></div></form></dialog>
 <dialog id="crewOtherTypeDialog" class="confirm-dialog"><form id="crewOtherTypeForm"><div class="dialoghead"><h2>Other staff type</h2><button type="button" class="x" id="crewOtherTypeClose" aria-label="Close">×</button></div><p class="muted">Enter the type of staff affected.</p><label>Staff type<input id="crewOtherTypeValue" maxlength="100" required></label><div class="dialogactions"><button type="button" class="secondary" id="crewOtherTypeCancel">Cancel</button><button type="submit" class="primary">Save staff type</button></div></form></dialog>

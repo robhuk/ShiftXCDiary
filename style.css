@@ -260,6 +260,7 @@ main{margin-top:12px}
 .entry-type-choices{display:grid;gap:6px;margin-top:8px;max-height:42vh;overflow:auto;padding:2px}
 .entry-type-choice{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:10px 12px;border:1px solid #d8d8d8;border-radius:9px;background:#fff;color:#15213A;text-align:left;font:750 15px system-ui;cursor:pointer}
 .entry-type-choice[aria-selected="true"]{outline:3px solid #0755EF;outline-offset:1px}
+.entry-type-choice.general-note{background:#f8dce8;color:#702342;border-color:#e8b7ca}
 .entry-type-choice.assist{background:#8fd5ff;color:#073b5b;border-color:#65bce9}
 .entry-type-choice.reminder{background:#ffe34a;color:#594500;border-color:#e3c52d}
 .entry-type-choice.incident{background:#ff858b;color:#700018;border-color:#ed626b}
@@ -318,5 +319,6 @@ main{margin-top:12px}
 html,body{touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 body *{-webkit-user-select:none;user-select:none}
 input,textarea,select,[contenteditable="true"],[role="textbox"]{-webkit-user-select:text;user-select:text;-webkit-touch-callout:default;touch-action:manipulation}
-/* Archive search: distinguish Passenger Counts in the entry-type picker. */
-#archiveSearchType option[value="Passenger Counts"]{background-color:#c0c0c0;color:#202020;font-weight:800}
+
+/* v1.3.182 – highlight Passenger Counts in the main Add Log Entry picker */
+.entry-type-choice.passenger-count{background:#D8C2A2;color:#49351F;border-color:#B99B73}
