@@ -309,3 +309,6 @@ main{margin-top:12px}
 .incident-update-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;font-weight:700;color:#7d0028}
 .incident-update-item p{margin:6px 0 0;white-space:normal}
 .incident-update-edit{flex:0 0 auto}
+
+/* Archive search close control: prominent, high-contrast touch target */
+.archive-search-dialog .dialoghead{gap:12px;align-items:center}.archive-search-dialog .dialoghead h2{flex:1;min-width:0}.archive-search-dialog .dialoghead .x{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;padding:0;border:1px solid #e7b4c4;border-radius:50%;background:#fff0f4;color:#A50034;font-size:30px;font-weight:700;line-height:1;cursor:pointer;opacity:1;visibility:visible;position:relative;z-index:2}.archive-search-dialog .dialoghead .x:focus-visible{outline:3px solid #0755EF;outline-offset:2px}
