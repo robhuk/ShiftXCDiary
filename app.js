@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.3.172', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
+const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.3.173', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
 const $=id=>document.getElementById(id);
 const DEFAULT_COMMISSION_RATES={perScan:0.02,salesPercent:6};
 const COMMISSION_RATE_KEY='uk.co.crosscountry.shiftapp.commissionRates';
@@ -134,7 +134,7 @@ function populateArchiveSearchTypes(){
  // Special capture flows save their archived entry under the shorter stored type.
  const options=[...document.querySelectorAll('#entryType option')].filter(o=>o.value&&!o.disabled&&!o.hidden).map(o=>({value:o.value==='Attach Photo to log'?'Photo':o.value,label:o.textContent.trim()}));
  const unique=options.filter((o,i)=>options.findIndex(x=>x.value===o.value)===i);
- select.innerHTML='<option value="all">All entry types</option>'+unique.map(o=>`<option value="${esc(o.value)}">${esc(o.label)}</option>`).join('');
+ select.innerHTML='<option value="__close_filter_menu__">✕ Close menu</option><option value="all">All entry types</option>'+unique.map(o=>`<option value="${esc(o.value)}">${esc(o.label)}</option>`).join('');
  select.value=unique.some(o=>o.value===current)?current:'all';
 }
 function searchArchivedRecords(query,typeFilter='all'){
@@ -157,8 +157,8 @@ function renderArchiveSearchResults(){
  const found=searchArchivedRecords(query,typeFilter);count.textContent=`${found.length} matching ${found.length===1?'archived shift':'archived shifts'}${typeFilter==='all'?'':` · ${typeFilter}`}`;
  results.innerHTML=found.length?found.map(({record,matches})=>`<button type="button" class="archive-search-result" data-archive-search-result="${esc(record.archiveId||'')}"><strong>${esc(dateDMY(record.shift?.date||''))} · ${esc(record.shift?.jobNumber||'No turn number')}</strong><span>${(record.entries||[]).length} log entries · ${(record.trains||[]).length} trains</span>${matches.map(m=>`<small><b>${esc(m.path)}:</b> ${esc(m.text)}</small>`).join('')}</button>`).join(''):'<p class="muted archive-search-empty">No archived shifts match that search and entry type. Try another type or choose All entry types.</p>';
 }
-$('archiveSearchOpen').addEventListener('click',()=>{$('archiveSearchInput').value='';populateArchiveSearchTypes();$('archiveSearchType').value='all';renderArchiveSearchResults();$('archiveSearchDialog').showModal();$('archiveSearchInput').focus()});
-$('archiveSearchInput').addEventListener('input',renderArchiveSearchResults);$('archiveSearchType').addEventListener('change',renderArchiveSearchResults);$('archiveSearchDialog').querySelector('form').addEventListener('submit',e=>e.preventDefault());
+$('archiveSearchOpen').addEventListener('click',()=>{$('archiveSearchInput').value='';populateArchiveSearchTypes();$('archiveSearchType').value='all';archiveSearchLastType='all';renderArchiveSearchResults();$('archiveSearchDialog').showModal();$('archiveSearchInput').focus()});
+$('archiveSearchInput').addEventListener('input',renderArchiveSearchResults);let archiveSearchLastType='all';$('archiveSearchType').addEventListener('change',e=>{const select=e.currentTarget;if(select.value==='__close_filter_menu__'){select.value=archiveSearchLastType;return;}archiveSearchLastType=select.value||'all';renderArchiveSearchResults()});$('archiveSearchDialog').querySelector('form').addEventListener('submit',e=>e.preventDefault());
 function closeArchiveSearch(){$('archiveSearchDialog').close()}
 $('archiveSearchClose').addEventListener('click',closeArchiveSearch);$('archiveSearchDone').addEventListener('click',closeArchiveSearch);
 $('archiveSearchResults').addEventListener('click',e=>{const button=e.target.closest('[data-archive-search-result]');if(!button)return;const record=state.archivedShifts.find(x=>x.archiveId===button.dataset.archiveSearchResult);if(!record)return;closeArchiveSearch();openArchivedShiftReadOnly(record)});

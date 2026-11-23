@@ -373,3 +373,5 @@ Version 1.3.168 – Daily Google Drive backup history
 Version 1.3.168: Added free-text search to Archived shifts & records. Search across archived shift data, operational logs, headcodes, unit and PVN numbers, dates, names and locations. Search results open the matching archived shift.
 
 Version 1.3.172: Added an entry-type dropdown to Archive Search. All entry types is the default; users can filter searches to a specific archived log entry type.
+
+Version 1.3.174: Added a “✕ Close menu” option at the bottom of the Archive Search entry-type picker. Selecting it closes the picker while retaining the current filter.

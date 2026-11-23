@@ -61,3 +61,5 @@ Version 1.3.116: When generating a Late Book Off email and no headcode is alread
 Version 1.3.117: Archive calendar now starts on Sunday, with date alignment adjusted accordingly. Late Book Off email subject now states '[HEADCODE] delayed by [XX] minutes'.
 
 Google Drive daily backup update: deploy the updated contents of cloudflare-worker/src/index.js to the existing Cloudflare Worker. Daily backups are stored under XC ShiftApp Backups/YYYY/MM/ with one dated JSON file per day.
+
+Version 1.3.174: Added a “✕ Close menu” option at the bottom of the Archive Search entry-type picker. Selecting it closes the picker while retaining the current filter.
