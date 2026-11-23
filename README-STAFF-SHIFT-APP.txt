@@ -59,3 +59,5 @@ Version 1.3.115: Fixed archive-edit persistence isolation. While editing an arch
 Version 1.3.116: When generating a Late Book Off email and no headcode is already linked to the entry, the email dialog now offers a dropdown of valid headcodes from the trains recorded on that shift. Selecting a train fills the headcode field and updates the email subject and body. Manual headcode entry remains available.
 
 Version 1.3.117: Archive calendar now starts on Sunday, with date alignment adjusted accordingly. Late Book Off email subject now states '[HEADCODE] delayed by [XX] minutes'.
+
+Google Drive daily backup update: deploy the updated contents of cloudflare-worker/src/index.js to the existing Cloudflare Worker. Daily backups are stored under XC ShiftApp Backups/YYYY/MM/ with one dated JSON file per day.

@@ -360,3 +360,11 @@ Version 1.3.120: Entry type picker now starts with General Note, applies a light
 
 
 Version 1.3.151: Updated the Lost Property three-dots email action. Subject now uses the format "lost property - HEADCODE - DD/MM/YY". The full report text is copied before the native email target opens; when a photo is present, the native share sheet is used where supported so the image can be attached to the email.
+
+
+Version 1.3.167 – Daily Google Drive backup history
+- Google Drive backups now use a year/month folder structure: XC ShiftApp Backups/YYYY/MM/.
+- A separate XC-ShiftApp-Backup-YYYY-MM-DD.json file is kept for each calendar day. Saves on the same day update that day’s file; previous days are never overwritten.
+- When the app opens with Google Drive connected, it checks whether today's backup exists and creates it if needed. Diary changes continue to queue offline and upload when online.
+- Restore selects the newest dated backup and retains compatibility with the original single-file backup.
+- The Cloudflare Worker source must be redeployed for the new dated-file behavior to take effect.
