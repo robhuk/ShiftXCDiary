@@ -2,10 +2,10 @@
   "app_id": "uk.co.crosscountry.shiftapp",
   "product_name": "Staff Shift App",
   "full_name": "Staff Shift App – Rail Staff Shift Diary",
-  "version": "1.3.162",
-  "build": "2026.11.23-009",
+  "version": "1.3.165",
+  "build": "2026.11.23-012",
   "storage_key": "uk.co.crosscountry.shiftapp.shiftdata.v1",
-  "service_worker_cache": "xc-shiftapp-cache-v1.3.162-blank-staff-type-placeholder",
+  "service_worker_cache": "xc-shiftapp-cache-v1.3.165-photo-unit-pvn",
   "manifest": "manifest.json",
   "entry_point": "index.html",
   "language": "en-GB",
@@ -102,6 +102,8 @@
     "Crew / Staffing Issue dropdown opens a dedicated text popup for recording catering, cleaning, staffing delays and early crew release due to disruption.",
     "Attach Photo to log opens a photo capture popup with a required entry title, optional short description and compressed JPEG attachment saved with the operational log entry.",
     "Archived shift options include View archived shift, Export shift PDF and Delete archived shift.",
-    "Add issue / log entry: Crew / Staffing Issue captures a required category (Catering Crew, Cleaner, Driver, Train Manager, Other) and free-text issue details. Photo log entry supports uploading an image from the device with a required title and optional description."
+    "Add issue / log entry: Crew / Staffing Issue captures a required category (Catering Crew, Cleaner, Driver, Train Manager, Other) and free-text issue details. Photo log entry supports uploading an image from the device with a required title and optional description.",
+    "Attach Photo to log: select a required train/headcode from the current shift before attaching a photo; the selected train association is saved with the photo entry and appears in log and exports.",
+    "Attach Photo to log: in addition to the required shift train/headcode, optionally select a unit affected from the selected train and enter a numeric PVN of up to six digits; both are saved with the photo entry and included in log details and exports."
   ]
 }
