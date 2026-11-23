@@ -312,3 +312,11 @@ main{margin-top:12px}
 
 /* Archive search close control: prominent, high-contrast touch target */
 .archive-search-dialog .dialoghead{gap:12px;align-items:center}.archive-search-dialog .dialoghead h2{flex:1;min-width:0}.archive-search-dialog .dialoghead .x{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;padding:0;border:1px solid #e7b4c4;border-radius:50%;background:#fff0f4;color:#A50034;font-size:30px;font-weight:700;line-height:1;cursor:pointer;opacity:1;visibility:visible;position:relative;z-index:2}.archive-search-dialog .dialoghead .x:focus-visible{outline:3px solid #0755EF;outline-offset:2px}
+
+
+/* Main app interaction: prevent accidental text selection and pinch/double-tap zoom. Form controls remain editable/selectable. */
+html,body{touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+body *{-webkit-user-select:none;user-select:none}
+input,textarea,select,[contenteditable="true"],[role="textbox"]{-webkit-user-select:text;user-select:text;-webkit-touch-callout:default;touch-action:manipulation}
+/* Archive search: distinguish Passenger Counts in the entry-type picker. */
+#archiveSearchType option[value="Passenger Counts"]{background-color:#c0c0c0;color:#202020;font-weight:800}

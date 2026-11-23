@@ -63,3 +63,8 @@ Version 1.3.117: Archive calendar now starts on Sunday, with date alignment adju
 Google Drive daily backup update: deploy the updated contents of cloudflare-worker/src/index.js to the existing Cloudflare Worker. Daily backups are stored under XC ShiftApp Backups/YYYY/MM/ with one dated JSON file per day.
 
 Version 1.3.174: Added a “✕ Close menu” option at the bottom of the Archive Search entry-type picker. Selecting it closes the picker while retaining the current filter.
+
+Version 1.3.175: Incident reports now automatically prefill the BWV camera number from the latest Shift equipment entry in the main daily log, when a camera number has been entered. An existing non-empty BWV camera value saved on the incident report remains unchanged.
+
+
+Version 1.3.176: Incident report activity is a dropdown with Assist (ACC or ASST), Passing (PASS) and Working, populated from the linked train activity. Unit number(s) are taken from Trains Worked; one unit is identified as a Single set and two units as a Double set. The incident log / reference number is carried into the report when present. Main app text highlighting and pinch / double-tap zoom are disabled; text fields remain editable and selectable.
