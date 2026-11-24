@@ -322,3 +322,7 @@ input,textarea,select,[contenteditable="true"],[role="textbox"]{-webkit-user-sel
 
 /* v1.3.182 – highlight Passenger Counts in the main Add Log Entry picker */
 .entry-type-choice.passenger-count{background:#D8C2A2;color:#49351F;border-color:#B99B73}
+
+.entry-type-choice.full-standing{background:#CD5C5C;color:#fff;border-color:#B84A4A}
+
+.entry-type-choice.operational-orange{background:#f4a340 !important;color:#3b2508 !important;border-color:#d8871c !important}
