@@ -330,3 +330,13 @@ input,textarea,select,[contenteditable="true"],[role="textbox"]{-webkit-user-sel
 .entry-type-choice.late-book-off{background:#8E44AD !important;color:#fff !important;border-color:#70368A !important}
 
 
+
+/* v1.3.200 – oversized, thumb-friendly XC tally controls */
+.xc-tally-panel{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.xc-tally-class{border:1px solid #ded6da;border-radius:14px;padding:14px;text-align:center;background:#fff;display:flex;flex-direction:column;gap:14px;min-width:0}
+.xc-tally-class strong{font-size:17px;line-height:1.25}
+.xc-tally-controls{display:grid;grid-template-columns:64px minmax(36px,1fr) 64px;align-items:center;gap:8px}
+.xc-tally-controls button{min-height:68px;min-width:64px;font-size:36px;line-height:1;font-weight:900;padding:4px;border-radius:13px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;box-shadow:0 2px 0 rgba(0,0,0,.12)}
+.xc-tally-controls button:active{transform:scale(.96);filter:brightness(.94)}
+.xc-tally-controls output{font-size:32px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1.1;overflow-wrap:anywhere}
+@media(max-width:600px){.xc-tally-panel{grid-template-columns:1fr;gap:12px}.xc-tally-class{padding:14px 16px;gap:12px}.xc-tally-controls{grid-template-columns:76px minmax(60px,1fr) 76px;gap:12px}.xc-tally-controls button{min-height:76px;min-width:76px;font-size:42px;border-radius:15px}.xc-tally-controls output{font-size:36px}}
