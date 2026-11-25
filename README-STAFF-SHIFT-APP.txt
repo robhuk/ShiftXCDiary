@@ -70,3 +70,5 @@ Version 1.3.175: Incident reports now automatically prefill the BWV camera numbe
 Version 1.3.176: Incident report activity is a dropdown with Assist (ACC or ASST), Passing (PASS) and Working, populated from the linked train activity. Unit number(s) are taken from Trains Worked; one unit is identified as a Single set and two units as a Double set. The incident log / reference number is carried into the report when present. Main app text highlighting and pinch / double-tap zoom are disabled; text fields remain editable and selectable.
 
 Version 1.3.180: Changed the Passenger Counts option in the Archive Search entry-type picker to a light brown highlight.
+
+Version 1.3.211: Renamed the archive panel heading to “Archive Shifts / Calendar / search”. No archive, calendar, search, or saved-data behaviour changed.
