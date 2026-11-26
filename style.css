@@ -696,3 +696,12 @@ footer{color:#D7E5FF}
 .archive-calendar-legend .legend-emoji{font-size:12px;line-height:1}
 
 .archive-cal-day.calendar-sb{background:#fff1a8!important;color:#624d00!important;border-color:#e3c64b!important}.archive-calendar-legend .legend-sb{background:#fff1a8}
+
+/* Custom gross pay statement can be collapsed independently. */
+.custom-gross-pay-section>summary{display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;list-style:none;user-select:none;}
+.custom-gross-pay-section>summary::-webkit-details-marker{display:none;}
+.custom-gross-pay-section>summary::before{content:'＋';display:inline-flex;align-items:center;justify-content:center;flex:0 0 24px;width:24px;height:24px;border-radius:7px;background:#fff;border:1px solid var(--line);font-weight:800;color:var(--xc);}
+.custom-gross-pay-section[open]>summary::before{content:'−';}
+.custom-gross-pay-section>summary h4{margin:0;color:var(--xc);font-size:15px;flex:1;}
+.custom-gross-toggle-hint{font-size:11px;color:var(--muted);font-weight:500;}
+.custom-gross-pay-content{padding-top:12px;}
