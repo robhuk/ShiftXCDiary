@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.3.232', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
+const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.3.233', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
 const $=id=>document.getElementById(id);
 const DEFAULT_COMMISSION_RATES={perScan:0.02,salesPercent:6};
 const COMMISSION_RATE_KEY='uk.co.crosscountry.shiftapp.commissionRates';
@@ -153,30 +153,53 @@ function calendarExportData(){
 function calendarExportHtml(data){
  const escHtml=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const offset=new Date(data.year,data.month,1).getDay(),cells=Array(offset).fill('<div class="empty"></div>');
- data.days.forEach(d=>{const items=d.records.map(r=>`<div class="job"><b>${escHtml(r.shift?.jobNumber||'—')}</b><span>${escHtml(r.shift?.bookOn||'—')}–${escHtml(r.shift?.bookOff||'—')}</span></div>`).join('');cells.push(`<div class="day"><strong>${d.day}</strong>${d.codes.length?`<div class="codes">${d.codes.map(escHtml).join(' · ')}</div>`:''}${items}</div>`)});
+ data.days.forEach(d=>{
+  const items=d.records.map(r=>`<div class="job"><b>${escHtml(r.shift?.jobNumber||'—')}</b><span>${escHtml(r.shift?.bookOn||'—')}–${escHtml(r.shift?.bookOff||'—')}</span></div>`).join('');
+  cells.push(`<div class="day"><div class="day-number">${d.day}</div>${d.codes.length?`<div class="codes">${d.codes.map(escHtml).join(' · ')}</div>`:''}<div class="jobs">${items}</div></div>`);
+ });
  while(cells.length%7)cells.push('<div class="empty"></div>');
- const rows=data.days.flatMap(d=>d.records.map(r=>({date:d.key,job:r.shift?.jobNumber||'—',on:r.shift?.bookOn||'—',off:r.shift?.bookOff||'—'})));
- const table=rows.length?rows.map(r=>`<tr><td>${escHtml(new Date(r.date+'T12:00:00').toLocaleDateString('en-GB'))}</td><td>${escHtml(r.job)}</td><td>${escHtml(r.on)}</td><td>${escHtml(r.off)}</td></tr>`).join(''):'<tr><td colspan="4">No archived shifts recorded for this month.</td></tr>';
+ const rowCount=cells.length/7;
  return `<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Shift calendar – ${escHtml(data.title)}</title><style>
- *{box-sizing:border-box}body{font:12px/1.35 Arial,sans-serif;color:#241821;margin:0;padding:22px;background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
- header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid #a50034;padding-bottom:10px;margin-bottom:14px}h1{font-size:23px;margin:0;color:#a50034}header p{margin:3px 0 0;color:#655b62}
- .toolbar{display:flex;justify-content:flex-end;gap:8px;margin-bottom:12px}.toolbar button{border:0;border-radius:6px;padding:9px 14px;background:#a50034;color:white;font-weight:bold}
- .grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}.weekday{background:#a50034;color:#fff;text-align:center;padding:7px;font-weight:bold}.day{border:1px solid #cfc7cc;min-height:82px;padding:5px;overflow:hidden}.day>strong{font-size:13px}.empty{min-height:82px;border:1px solid transparent}.codes{font-weight:bold;color:#8b1740;font-size:10px;margin:2px 0}.job{border-top:1px solid #e7dfe3;margin-top:3px;padding-top:2px;font-size:9px;overflow-wrap:anywhere}.job span{display:block;font-size:9px;color:#4e454a}
- h2{font-size:15px;color:#a50034;margin:18px 0 7px}table{width:100%;border-collapse:collapse;font-size:11px}th{background:#f4e8ed;color:#4a172b;text-align:left}th,td{padding:6px 8px;border:1px solid #d9d1d5}tr{break-inside:avoid}.foot{margin-top:16px;color:#655b62;font-size:9px;text-align:right}
- @page{size:A4 landscape;margin:10mm}@media print{body{padding:0}.toolbar{display:none}.day{min-height:78px}}
+ *{box-sizing:border-box}
+ html,body{margin:0;width:100%;height:100%;font-family:Arial,sans-serif;color:#241821;background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ body{padding:0}
+ .toolbar{display:flex;justify-content:flex-end;gap:8px;padding:8px 12px}
+ .toolbar button{border:0;border-radius:6px;padding:9px 14px;background:#a50034;color:white;font-weight:bold}
+ .page{width:100%;height:calc(100vh - 48px);padding:8px 12px;display:flex;flex-direction:column}
+ header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid #a50034;padding:0 0 7px;margin-bottom:7px;flex:0 0 auto}
+ h1{font-size:21px;margin:0;color:#a50034}header p{font-size:10px;margin:2px 0 0;color:#655b62}
+ .grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));grid-template-rows:8mm repeat(${rowCount},minmax(0,1fr));gap:2px;flex:1;min-height:0}
+ .weekday{background:#a50034;color:#fff;text-align:center;padding:4px;font-weight:bold;font-size:11px}
+ .day{border:1px solid #cfc7cc;min-height:0;padding:3px 4px;overflow:hidden;display:flex;flex-direction:column}
+ .day-number{font-weight:bold;font-size:12px;line-height:1.1}
+ .codes{font-weight:bold;color:#8b1740;font-size:8px;margin:2px 0}
+ .jobs{min-height:0;overflow:hidden}
+ .job{border-top:1px solid #e7dfe3;margin-top:2px;padding-top:2px;font-size:8px;line-height:1.1;overflow-wrap:anywhere}
+ .job b{display:block;color:#a50034;font-size:8.5px}.job span{display:block;font-size:8px;color:#4e454a}
+ .empty{border:1px solid transparent}
+ @page{size:A4 landscape;margin:5mm}
+ @media print{.toolbar{display:none}.page{height:190mm;padding:0}.grid{grid-template-rows:8mm repeat(${rowCount},minmax(0,1fr))}header{margin-bottom:2mm}h1{font-size:18px}.day{padding:2px 3px}.job{font-size:7.5px}.job b{font-size:8px}.job span{font-size:7.5px}}
  </style></head><body><nav class="toolbar"><button onclick="window.print()">Print / Save PDF</button><button onclick="window.close()">Close</button></nav>
- <header><div><h1>STAFF SHIFT APP</h1><p>Monthly shift calendar</p></div><h1>${escHtml(data.title)}</h1></header>
- <div class="grid">${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(x=>`<div class="weekday">${x}</div>`).join('')}${cells.join('')}</div>
- <h2>Shift details</h2><table><thead><tr><th>Date</th><th>Job / turn</th><th>Book on</th><th>Book off</th></tr></thead><tbody>${table}</tbody></table>
- <p class="foot">Generated ${new Date().toLocaleString('en-GB')} · Staff Shift App</p></body></html>`;
+ <main class="page"><header><div><h1>STAFF SHIFT APP</h1><p>Monthly shift calendar</p></div><h1>${escHtml(data.title)}</h1></header>
+ <div class="grid">${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(x=>`<div class="weekday">${x}</div>`).join('')}${cells.join('')}</div></main></body></html>`;
 }
+$('calendarExportMenuButton')?.addEventListener('click',()=>{
+ const menu=$('calendarExportMenu'),button=$('calendarExportMenuButton'),open=menu.hidden;
+ menu.hidden=!open;button.setAttribute('aria-expanded',String(open));
+});
+document.addEventListener('click',e=>{
+ const menu=$('calendarExportMenu'),button=$('calendarExportMenuButton');
+ if(menu&&!menu.hidden&&!menu.contains(e.target)&&!button.contains(e.target)){menu.hidden=true;button.setAttribute('aria-expanded','false')}
+});
 $('exportCalendarPdf')?.addEventListener('click',()=>{
+ const menu=$('calendarExportMenu');if(menu)menu.hidden=true;$('calendarExportMenuButton')?.setAttribute('aria-expanded','false');
  const data=calendarExportData(),w=window.open('','_blank');
  if(!w){status('Allow pop-ups to open the calendar export, then choose Print / Save PDF.');return}
  w.document.open();w.document.write(calendarExportHtml(data));w.document.close();
  status(`Calendar PDF preview opened for ${data.title}. Choose Print / Save PDF.`);
 });
 $('exportCalendarImage')?.addEventListener('click',()=>{
+ const menu=$('calendarExportMenu');if(menu)menu.hidden=true;$('calendarExportMenuButton')?.setAttribute('aria-expanded','false');
  const data=calendarExportData(),canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');
  if(!ctx){status('Image export is not available in this browser.');return}
  const W=1800,cellW=W/7,headH=120,cellH=190,rows=Math.ceil((new Date(data.year,data.month,1).getDay()+data.days.length)/7),H=headH+rows*cellH+100;
