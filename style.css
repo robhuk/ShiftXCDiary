@@ -535,3 +535,9 @@ footer{color:#D7E5FF}
 /* Payday marker on the archive calendar */
 .archive-cal-day.calendar-payday{position:relative;padding-right:13px}
 .archive-cal-day .calendar-payday-icon{position:absolute;top:2px;right:2px;font-size:10px;line-height:1;z-index:1;pointer-events:none}
+
+/* Monthly gross pay estimate */
+.monthly-pay-section{border-color:var(--xc);background:#fbf9fa}.monthly-pay-grid .monthly-pay-total{grid-column:1/-1;background:#fff5f7;border-color:var(--xc)}.monthly-pay-grid .monthly-pay-total strong{color:var(--xc);font-size:22px}.monthly-pay-note{margin:10px 0 0;font-size:12px;line-height:1.45}
+
+/* Safety Brief shift marker */
+#shiftJobNumber.shift-safety-brief{background:#fff1b8!important;border:2px solid #d5a300!important;color:#4b3900!important;font-weight:800!important;box-shadow:inset 0 0 0 1px rgba(213,163,0,.12)}

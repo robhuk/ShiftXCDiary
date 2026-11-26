@@ -1,3 +1,14 @@
+VERSION 1.3.221 – SPARE IS A/R
+
+A/R is the spare shift category. When A/R is entered, the app asks for the original rostered shift length, pre-filled with the configurable average A/R (spare) length (default 08:40). SB (Safety Brief) automatically uses the same configurable length. Legacy SPARE entries remain recognised for pay calculations.
+
+VERSION 1.3.217 – COMMISSION STATEMENT PDF EXPORT
+
+- Added PDF statement export for current pay period, previous pay period and custom date ranges.
+- Statements include date range, payday where applicable, ticket scans, ticket sales, total commission, and itemised commission entries by shift date / job number.
+- Uses the device browser Print / Save as PDF workflow, including iPhone print/share support.
+- App identity and storage key retained. Cloudflare Worker and background service worker files unchanged.
+
 VERSION 1.3.148 – DELAY EMAIL NOTES AT BOTTOM
 
 - Tap the station name in a passenger-count table to toggle a green tick. The checked state saves with the passenger-count entry and is reflected in copied tables and PDF exports.
