@@ -2,8 +2,8 @@
   "app_id": "uk.co.crosscountry.shiftapp",
   "product_name": "Staff Shift App",
   "full_name": "Staff Shift App – Rail Staff Shift Diary",
-  "version": "1.3.235",
-  "build": "2026.11.26-020",
+  "version": "1.3.238",
+  "build": "2026.11.26-238",
   "storage_key": "uk.co.crosscountry.shiftapp.shiftdata.v1",
   "service_worker_cache": "xc-shiftapp-cache-v1.3.213-log-button-full-width",
   "manifest": "manifest.json",
@@ -15,13 +15,13 @@
     "background": "#061B50",
     "surface": "#FFFFFF"
   },
-  "data_policy": "Shift details, trains, timestamped log entries, commission rates, hourly pay rates, calendar leave markers and archived records autosave locally. When the user connects Google Drive, the complete JSON snapshot is backed up through a Cloudflare Worker. Google refresh tokens are stored server-side encrypted; the app stores only an opaque revocable session token. Offline changes queue until connectivity returns. Local data remains available if cloud backup is disconnected or fails.",
+  "data_policy": "Shift details, trains, timestamped log entries, commission rates, hourly pay rates, calendar leave markers, original AL / ALR shift times and archived records autosave locally. When the user connects Google Drive, the complete JSON snapshot is backed up through a Cloudflare Worker. Google refresh tokens are stored server-side encrypted; the app stores only an opaque revocable session token. Offline changes queue until connectivity returns. Local data remains available if cloud backup is disconnected or fails.",
   "update_policy": "The app checks for updates on launch and at most once every 24 hours while open or when returning to the foreground. Updates use a versioned cache and do not clear locally saved shift data.",
   "asset_layout": "PDF exports no longer include a header image; automatic page-number footers remain.",
   "features": [
     "App Settings: moved to a small, discreet button at the bottom of the page; settings dialog and existing controls unchanged.",
     "Shift pay handling: A/R prompts for the original rostered shift length (HH:MM or decimal hours) and uses that duration in monthly gross pay estimates; A/R is the spare shift category and prompts for the original rostered shift length, pre-filled from the configurable average A/R (spare) length (default 08:40); SB (Safety Brief) uses the same configurable length automatically. SB is highlighted yellow in the shift field and archive calendar.",
-    "Pay-period gross pay estimator: calculates estimated gross pay for the current and previous four-week pay periods, displaying the period dates and corresponding payday. Uses saved shift Book on / Book off hours, AL / ALR calendar entries, recorded ticket commission and late book-off pay. ALR weeks count as 35 hours at the standard rate; AL requires the original shift duration. Estimates are before tax and deductions.",
+    "Pay-period gross pay estimator: calculates estimated gross pay for the current and previous four-week pay periods, displaying the period dates and corresponding payday. Uses saved shift Book on / Book off hours, AL / ALR calendar entries, recorded ticket commission and late book-off pay. AL and ALR dates use the original Book On / Book Off times entered by tapping the calendar date; each date is paid at its weekday or Sunday rate. Estimates are before tax and deductions.",
     "Commission / Gross Pay Calculator: export current pay period, previous pay period or custom date-range commission statements using the print / save as PDF workflow; includes totals and itemised saved commission entries.",
     "Operational Log / Occurrences: ‘＋ Add issue / log entry’ spans the full width of the section on desktop and mobile, matching the calendar full-width control.",
     "Shift Actions: full-width ‘Archive today's shift’ button matches the Clear all button and opens the same confirmation and archive workflow as the existing archive control.",
@@ -139,6 +139,7 @@
     "Monthly archive calendar export as landscape PDF or PNG image, including roster codes and a shift detail table with job numbers and Book on / Book off times; RDW (Rest Day Work) calendar code supported.",
     "Calendar PDF/image exports moved into a three-dot overflow menu; PDF is a single full-page A4 landscape monthly calendar with job numbers and shift times inside day cells.",
     "Fixed calendar three-dot export menu visibility/toggle and aligned month navigation to the right immediately beside the three-dot menu.",
-    "Calendar month selector expands across the available screen width with the three-dot export control immediately alongside; monthly landscape A4 PDF places calendar in the top half and a Shifts Worked date/job/Book On/Book Off list in the bottom half."
+    "Calendar month selector expands across the available screen width with the three-dot export control immediately alongside; monthly landscape A4 PDF places calendar in the top half and a Shifts Worked date/job/Book On/Book Off list in the bottom half.",
+    "Tap AL or ALR calendar dates to enter original Book On and Book Off times; calculated leave shift hours feed gross pay and are included in diary backup and restore."
   ]
 }
