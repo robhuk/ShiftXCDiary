@@ -2,8 +2,8 @@
   "app_id": "uk.co.crosscountry.shiftapp",
   "product_name": "Staff Shift App",
   "full_name": "Staff Shift App – Rail Staff Shift Diary",
-  "version": "1.3.222",
-  "build": "2026.11.26-010",
+  "version": "1.3.225",
+  "build": "2026.11.26-012",
   "storage_key": "uk.co.crosscountry.shiftapp.shiftdata.v1",
   "service_worker_cache": "xc-shiftapp-cache-v1.3.213-log-button-full-width",
   "manifest": "manifest.json",
@@ -19,6 +19,7 @@
   "update_policy": "The app checks for updates on launch and at most once every 24 hours while open or when returning to the foreground. Updates use a versioned cache and do not clear locally saved shift data.",
   "asset_layout": "PDF exports no longer include a header image; automatic page-number footers remain.",
   "features": [
+    "App Settings: moved to a small, discreet button at the bottom of the page; settings dialog and existing controls unchanged.",
     "Shift pay handling: A/R prompts for the original rostered shift length (HH:MM or decimal hours) and uses that duration in monthly gross pay estimates; A/R is the spare shift category and prompts for the original rostered shift length, pre-filled from the configurable average A/R (spare) length (default 08:40); SB (Safety Brief) uses the same configurable length automatically. SB is highlighted yellow in the shift field and archive calendar.",
     "Monthly gross pay estimator: calculates estimated pay from saved shift Book on / Book off hours at the standard or Sunday hourly rate in App Settings, adds recorded ticket commission and late book-off pay, counts each calendar week containing ALR as 35 hours at the standard rate, and includes AL where the original rostered shift duration is available, including an A/R-entered duration. SPARE and SB use the configured average spare term length when shift times are not entered. Shows a warning that missing shifts or incorrect input may affect the estimate.",
     "Commission / Gross Pay Calculator: export current pay period, previous pay period or custom date-range commission statements using the print / save as PDF workflow; includes totals and itemised saved commission entries.",
