@@ -558,3 +558,12 @@ footer{color:#D7E5FF}
 .historic-shift-actions{grid-template-columns:1fr 1.4fr}
 .calendar-shift-item{display:block;margin-top:1px}.calendar-shift-times{display:block;font-size:.88em;font-weight:500;opacity:.9;white-space:nowrap}
 @media(max-width:480px){.historic-shift-actions{grid-template-columns:1fr}.historic-shift-table{min-width:560px}}
+
+/* Dedicated previous / missing shift entry popup */
+#historicShiftDialog{width:min(96vw,700px);max-height:90vh;overflow:auto}
+#historicShiftDialog form{padding:18px}
+#historicShiftDialog .historic-shift-table-wrap{max-height:48vh;overflow:auto}
+#historicShiftDialog .historic-shift-actions{grid-template-columns:1fr 1.4fr}
+#historicShiftDialog .dialoghead{gap:10px}
+#historicShiftDialog .dialoghead h2{flex:1;min-width:0}
+@media(max-width:560px){#historicShiftDialog{width:96vw}#historicShiftDialog form{padding:14px}#historicShiftDialog .historic-shift-actions{grid-template-columns:1fr}#historicShiftDialog .historic-shift-table{min-width:560px}}
