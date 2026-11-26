@@ -514,3 +514,23 @@ footer{color:#D7E5FF}
   .collapse-summary{background:#fff}
   .staff-banner{box-shadow:none}
 }
+
+/* v1.3.214 interaction and commission calculator refinements */
+.sectionhead #addTrain{display:block;width:100%;flex:1 1 100%;}
+.commission-calculator-dialog{max-height:min(88vh,820px);overflow-y:auto;}
+.commission-calculator-dialog form{padding:18px;}
+.commission-period-section{margin-top:16px;padding:14px;border:1px solid var(--line);border-radius:13px;background:#f8faff;}
+.commission-period-section h3{margin:0 0 5px;color:var(--xc);font-size:15px;}
+.commission-period-section>p{margin:0 0 11px;}
+.commission-summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.commission-summary-grid>div{padding:10px;border-radius:10px;background:#fff;border:1px solid #e0e7f2;min-width:0;}
+.commission-summary-grid span{display:block;color:var(--muted);font-size:11px;font-weight:650;}
+.commission-summary-grid strong{display:block;margin-top:3px;color:var(--ink);font-size:17px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere;}
+.commission-summary-grid .commission-amount{color:var(--xc);font-size:21px;}
+.commission-no-records{margin:9px 0 0;}
+#commissionRangeCalculate{margin-top:3px;}
+@media(max-width:420px){.commission-calculator-dialog form{padding:14px}.commission-period-section{padding:11px}.commission-summary-grid{gap:7px}.commission-summary-grid strong{font-size:15px}.commission-summary-grid .commission-amount{font-size:19px}}
+
+/* Payday marker on the archive calendar */
+.archive-cal-day.calendar-payday{position:relative;padding-right:13px}
+.archive-cal-day .calendar-payday-icon{position:absolute;top:2px;right:2px;font-size:10px;line-height:1;z-index:1;pointer-events:none}
