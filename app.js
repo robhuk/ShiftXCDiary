@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.3.231', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
+const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.3.232', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
 const $=id=>document.getElementById(id);
 const DEFAULT_COMMISSION_RATES={perScan:0.02,salesPercent:6};
 const COMMISSION_RATE_KEY='uk.co.crosscountry.shiftapp.commissionRates';
@@ -130,7 +130,7 @@ function renderArchiveCalendar(){
  const first=new Date(y,m,1),offset=first.getDay(),days=new Date(y,m+1,0).getDate();const byDate=new Map();state.archivedShifts.forEach(r=>{const d=String(r.shift?.date||'').slice(0,10);if(!/^\d{4}-\d{2}-\d{2}$/.test(d))return;if(!byDate.has(d))byDate.set(d,[]);byDate.get(d).push(r)});
  let html='';for(let i=0;i<offset;i++)html+='<span class="archive-cal-empty"></span>';
  for(let day=1;day<=days;day++){const key=`${y}-${String(m+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`,items=byDate.get(key)||[],dayRaw=calendarCodes[key]||[],dayCodes=Array.isArray(dayRaw)?dayRaw:(dayRaw?[dayRaw]:[]),dayCode=dayCodes[0]||'',jobNumbers=items.map(r=>String(r.shift?.jobNumber||'').trim().toUpperCase()),activityType=jobNumbers.some(j=>['REFRESH','ROUTES'].includes(j)),otherActivity=jobNumbers.includes('OTHER'),hasContent=items.some(r=>(r.entries||[]).length||(r.trains||[]).length||String(r.shift?.notes||'').trim()||String(r.shift?.jobNumber||'').trim());
- const hasARShift=items.some(r=>/^(?:A\/R|AR|SPARE)(?:\s|$)/i.test(String(r.shift?.jobNumber||'').trim()));const codeClass=dayCodes.includes('RD')?'calendar-rd':dayCodes.some(c=>['AL','ALR'].includes(c))?'calendar-al':dayCodes.includes('ZF')?'calendar-zf':'';
+ const hasARShift=items.some(r=>/^(?:A\/R|AR|SPARE)(?:\s|$)/i.test(String(r.shift?.jobNumber||'').trim()));const codeClass=dayCodes.includes('RDW')?'calendar-rdw':dayCodes.includes('RD')?'calendar-rd':dayCodes.some(c=>['AL','ALR'].includes(c))?'calendar-al':dayCodes.includes('ZF')?'calendar-zf':'';
  const payday=isCommissionPayday(key);
  const jobs=items.map(r=>{const raw=String(r.shift?.jobNumber||'').trim().toUpperCase();let label;if(/^A\/R(?:\s|$)/.test(raw)){const supplied=raw.replace(/^A\/R\s*/,'').trim();const rawStart=String(r.shift?.bookOn||'').trim();const start=/^\d{4}$/.test(rawStart)?`${rawStart.slice(0,2)}:${rawStart.slice(2)}`:rawStart;const detail=supplied||start;label=`AR${detail?`<br>${esc(detail)}`:''}`}else if(raw==='RR')label=esc(raw);else{const match=raw.match(/^([A-Z]+)\s*0*(\d+)$/);label=match?`${esc(match[1])}<br>${esc(String(Number(match[2])))}`:esc(raw||'—')}const on=String(r.shift?.bookOn||'').trim(),off=String(r.shift?.bookOff||'').trim(),times=on||off?`<span class="calendar-shift-times">${esc(on||'—')}–${esc(off||'—')}</span>`:'';return `<span class="calendar-shift-item">${label}${times}</span>`}).join('');
  html+=`<button type="button" class="archive-cal-day ${codeClass} ${hasContent?'has-content':''} ${otherActivity&&!activityType?'activity-blue':''} ${activityType?'activity-yellow':''} ${items.length?'has-archive':''} ${hasARShift?'ar-shift':''} ${payday?'calendar-payday':''} ${selectedArchiveDate===key?'selected':''}" data-cal-date="${key}" aria-label="${day}${payday?' payday':''} ${dayCode?dayCode+' ':''}${items.length} archived shift(s)">${day}${payday?'<span class="calendar-payday-icon" aria-hidden="true">💷</span>':''}${(items.length||dayCode)?`<small>${dayCodes.length?`<span class="calendar-code">${dayCodes.map(c=>esc(c)).join(' · ')}</span>`:''}${jobs}</small>`:''}</button>`;
@@ -139,6 +139,55 @@ function renderArchiveCalendar(){
 }
 $('archiveCalPrev').addEventListener('click',()=>{archiveCalendarMonth=new Date(archiveCalendarMonth.getFullYear(),archiveCalendarMonth.getMonth()-1,1);renderArchiveCalendar()});
 $('archiveCalNext').addEventListener('click',()=>{archiveCalendarMonth=new Date(archiveCalendarMonth.getFullYear(),archiveCalendarMonth.getMonth()+1,1);renderArchiveCalendar()});
+
+function calendarExportData(){
+ const y=archiveCalendarMonth.getFullYear(),m=archiveCalendarMonth.getMonth();
+ const monthEnd=new Date(y,m+1,0);
+ const keyFor=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+ const byDate=new Map();
+ state.archivedShifts.forEach(r=>{const d=String(r.shift?.date||'').slice(0,10);if(!/^\d{4}-\d{2}-\d{2}$/.test(d))return;if(!byDate.has(d))byDate.set(d,[]);byDate.get(d).push(r)});
+ const days=[];
+ for(let day=1;day<=monthEnd.getDate();day++){const key=keyFor(new Date(y,m,day)),records=(byDate.get(key)||[]).slice().sort((a,b)=>String(a.shift?.bookOn||'').localeCompare(String(b.shift?.bookOn||''))),raw=calendarCodes[key]||[],codes=Array.isArray(raw)?raw:(raw?[raw]:[]);days.push({key,day,codes,records})}
+ return {year:y,month:m,title:archiveCalendarMonth.toLocaleDateString('en-GB',{month:'long',year:'numeric'}),days};
+}
+function calendarExportHtml(data){
+ const escHtml=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const offset=new Date(data.year,data.month,1).getDay(),cells=Array(offset).fill('<div class="empty"></div>');
+ data.days.forEach(d=>{const items=d.records.map(r=>`<div class="job"><b>${escHtml(r.shift?.jobNumber||'—')}</b><span>${escHtml(r.shift?.bookOn||'—')}–${escHtml(r.shift?.bookOff||'—')}</span></div>`).join('');cells.push(`<div class="day"><strong>${d.day}</strong>${d.codes.length?`<div class="codes">${d.codes.map(escHtml).join(' · ')}</div>`:''}${items}</div>`)});
+ while(cells.length%7)cells.push('<div class="empty"></div>');
+ const rows=data.days.flatMap(d=>d.records.map(r=>({date:d.key,job:r.shift?.jobNumber||'—',on:r.shift?.bookOn||'—',off:r.shift?.bookOff||'—'})));
+ const table=rows.length?rows.map(r=>`<tr><td>${escHtml(new Date(r.date+'T12:00:00').toLocaleDateString('en-GB'))}</td><td>${escHtml(r.job)}</td><td>${escHtml(r.on)}</td><td>${escHtml(r.off)}</td></tr>`).join(''):'<tr><td colspan="4">No archived shifts recorded for this month.</td></tr>';
+ return `<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Shift calendar – ${escHtml(data.title)}</title><style>
+ *{box-sizing:border-box}body{font:12px/1.35 Arial,sans-serif;color:#241821;margin:0;padding:22px;background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid #a50034;padding-bottom:10px;margin-bottom:14px}h1{font-size:23px;margin:0;color:#a50034}header p{margin:3px 0 0;color:#655b62}
+ .toolbar{display:flex;justify-content:flex-end;gap:8px;margin-bottom:12px}.toolbar button{border:0;border-radius:6px;padding:9px 14px;background:#a50034;color:white;font-weight:bold}
+ .grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}.weekday{background:#a50034;color:#fff;text-align:center;padding:7px;font-weight:bold}.day{border:1px solid #cfc7cc;min-height:82px;padding:5px;overflow:hidden}.day>strong{font-size:13px}.empty{min-height:82px;border:1px solid transparent}.codes{font-weight:bold;color:#8b1740;font-size:10px;margin:2px 0}.job{border-top:1px solid #e7dfe3;margin-top:3px;padding-top:2px;font-size:9px;overflow-wrap:anywhere}.job span{display:block;font-size:9px;color:#4e454a}
+ h2{font-size:15px;color:#a50034;margin:18px 0 7px}table{width:100%;border-collapse:collapse;font-size:11px}th{background:#f4e8ed;color:#4a172b;text-align:left}th,td{padding:6px 8px;border:1px solid #d9d1d5}tr{break-inside:avoid}.foot{margin-top:16px;color:#655b62;font-size:9px;text-align:right}
+ @page{size:A4 landscape;margin:10mm}@media print{body{padding:0}.toolbar{display:none}.day{min-height:78px}}
+ </style></head><body><nav class="toolbar"><button onclick="window.print()">Print / Save PDF</button><button onclick="window.close()">Close</button></nav>
+ <header><div><h1>STAFF SHIFT APP</h1><p>Monthly shift calendar</p></div><h1>${escHtml(data.title)}</h1></header>
+ <div class="grid">${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(x=>`<div class="weekday">${x}</div>`).join('')}${cells.join('')}</div>
+ <h2>Shift details</h2><table><thead><tr><th>Date</th><th>Job / turn</th><th>Book on</th><th>Book off</th></tr></thead><tbody>${table}</tbody></table>
+ <p class="foot">Generated ${new Date().toLocaleString('en-GB')} · Staff Shift App</p></body></html>`;
+}
+$('exportCalendarPdf')?.addEventListener('click',()=>{
+ const data=calendarExportData(),w=window.open('','_blank');
+ if(!w){status('Allow pop-ups to open the calendar export, then choose Print / Save PDF.');return}
+ w.document.open();w.document.write(calendarExportHtml(data));w.document.close();
+ status(`Calendar PDF preview opened for ${data.title}. Choose Print / Save PDF.`);
+});
+$('exportCalendarImage')?.addEventListener('click',()=>{
+ const data=calendarExportData(),canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');
+ if(!ctx){status('Image export is not available in this browser.');return}
+ const W=1800,cellW=W/7,headH=120,cellH=190,rows=Math.ceil((new Date(data.year,data.month,1).getDay()+data.days.length)/7),H=headH+rows*cellH+100;
+ canvas.width=W;canvas.height=H;ctx.fillStyle='#ffffff';ctx.fillRect(0,0,W,H);
+ ctx.fillStyle='#a50034';ctx.font='bold 42px Arial';ctx.fillText('STAFF SHIFT APP',40,55);ctx.font='bold 38px Arial';ctx.fillText(data.title,40,105);
+ ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach((d,i)=>{ctx.fillStyle='#a50034';ctx.fillRect(i*cellW,headH,cellW-3,42);ctx.fillStyle='#fff';ctx.font='bold 24px Arial';ctx.fillText(d,i*cellW+14,headH+29)});
+ const offset=new Date(data.year,data.month,1).getDay();
+ for(let i=0;i<rows*7;i++){const x=(i%7)*cellW,y=headH+42+Math.floor(i/7)*cellH,day=i-offset+1;ctx.strokeStyle='#cfc7cc';ctx.lineWidth=2;ctx.strokeRect(x+1,y,cellW-4,cellH-3);if(day<1||day>data.days.length)continue;const d=data.days[day-1];ctx.fillStyle='#241821';ctx.font='bold 27px Arial';ctx.fillText(String(day),x+12,y+34);let yy=y+62;if(d.codes.length){ctx.fillStyle='#8b1740';ctx.font='bold 18px Arial';ctx.fillText(d.codes.join(' · '),x+12,yy);yy+=27}d.records.forEach(r=>{ctx.fillStyle='#a50034';ctx.font='bold 18px Arial';ctx.fillText(String(r.shift?.jobNumber||'—').slice(0,18),x+12,yy);yy+=22;ctx.fillStyle='#4e454a';ctx.font='16px Arial';ctx.fillText(`${r.shift?.bookOn||'—'}–${r.shift?.bookOff||'—'}`,x+12,yy);yy+=27})}
+ const link=document.createElement('a');link.download=`Shift-Calendar-${data.year}-${String(data.month+1).padStart(2,'0')}.png`;link.href=canvas.toDataURL('image/png');link.click();status(`Calendar image exported for ${data.title}.`);
+});
+
 $('archiveCalendarDays').addEventListener('click',e=>{const b=e.target.closest('[data-cal-date]');if(!b)return;selectedArchiveDate=b.dataset.calDate;renderArchivedShifts();const panel=$('archiveDayList');if(panel)panel.open=true;});
 $('addCalendarCode')?.addEventListener('click',()=>{const promptDate=selectedArchiveDate||nowLocal();const raw=calendarCodes[promptDate]||[];const existing=Array.isArray(raw)?raw:(raw?[raw]:[]);document.querySelectorAll('input[name="calendarCodeType"]').forEach(x=>x.checked=existing.includes(x.value));$('calendarDateMode').value='range';$('calendarCodeStart').value=promptDate;$('calendarCodeEnd').value=promptDate;$('calendarIndividualDates').innerHTML=`<label>Date 1<input type="date" class="calendar-individual-date" value="${promptDate}"></label>`;$('calendarRangeFields').hidden=false;$('calendarMultipleFields').hidden=true;$('calendarCodeDialog').showModal()});
 $('calendarDateMode')?.addEventListener('change',e=>{const multi=e.target.value==='multiple';$('calendarRangeFields').hidden=multi;$('calendarMultipleFields').hidden=!multi});
