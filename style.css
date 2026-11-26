@@ -652,3 +652,45 @@ footer{color:#D7E5FF}
 .archive-calendar-head .calendar-more-button{width:100%;min-width:0!important;padding:5px 0!important}
 .archive-calendar{width:100%;box-sizing:border-box}
 @media(max-width:480px){.archive-calendar-head{grid-template-columns:36px minmax(0,1fr) 36px 36px!important;gap:4px!important}}
+
+
+/* v1.3.242 — compact inline RDW checkbox in Shift Details */
+.rdw-inline-option{
+  display:flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:7px!important;
+  width:fit-content!important;
+  max-width:100%;
+  margin:8px 0!important;
+  padding:0!important;
+  font-size:14px!important;
+  line-height:1.25!important;
+  font-weight:500!important;
+}
+.rdw-inline-option input[type="checkbox"]{
+  flex:0 0 auto!important;
+  width:16px!important;
+  height:16px!important;
+  min-width:16px!important;
+  margin:0!important;
+  padding:0!important;
+}
+.rdw-inline-option span{display:inline!important}
+
+/* v1.3.243 — RDW shift marker and complete calendar key */
+.archive-cal-day .calendar-shift-item{position:relative}
+.archive-cal-day .calendar-rdw-icon{display:inline-block;font-size:10px;line-height:1;margin-left:3px;vertical-align:1px}
+.archive-calendar-legend{display:flex;flex-wrap:wrap;align-items:center;gap:7px 12px;margin:9px 0 0;font-size:.76rem}
+.archive-calendar-legend .legend-item{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.archive-calendar-legend .legend-swatch{display:inline-block;width:10px;height:10px;border-radius:3px;border:1px solid rgba(0,0,0,.18);flex:0 0 10px}
+.archive-calendar-legend .legend-archived{background:#C8102E}
+.archive-calendar-legend .legend-refresh{background:#f2d35e}
+.archive-calendar-legend .legend-other{background:#8bbce8}
+.archive-calendar-legend .legend-rd{background:#c9e8c5}
+.archive-calendar-legend .legend-rdw{background:#ffe0b2}
+.archive-calendar-legend .legend-al{background:#a66bd1}
+.archive-calendar-legend .legend-zf{background:#d9eaf7}
+.archive-calendar-legend .legend-ar{background:#f4b7c4}
+.archive-calendar-legend .legend-emoji{font-size:12px;line-height:1}
