@@ -621,3 +621,16 @@ footer{color:#D7E5FF}
 .pay-period-gross-card h4{margin:0 0 5px;font-size:15px;color:var(--ink,#20212a)}
 .pay-period-gross-card>p{margin:0 0 10px;font-size:12px}
 .pay-period-gross-card .monthly-pay-note{margin-top:10px}
+
+/* v1.3.230: A/R (spare) shifts are highlighted light red in the archive calendar */
+.archive-cal-day.ar-shift,
+.archive-cal-day.has-content.ar-shift,
+.archive-cal-day.activity-yellow.ar-shift,
+.archive-cal-day.activity-blue.ar-shift{
+  background:#f8d7da !important;
+  color:#721c24 !important;
+  border-color:#e6aeb4 !important;
+  font-weight:800;
+}
+.archive-cal-day.ar-shift .calendar-code,
+.archive-cal-day.ar-shift .calendar-shift-times{color:#721c24 !important}
