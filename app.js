@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.3.233', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
+const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.3.234', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
 const $=id=>document.getElementById(id);
 const DEFAULT_COMMISSION_RATES={perScan:0.02,salesPercent:6};
 const COMMISSION_RATE_KEY='uk.co.crosscountry.shiftapp.commissionRates';
@@ -183,23 +183,32 @@ function calendarExportHtml(data){
  <main class="page"><header><div><h1>STAFF SHIFT APP</h1><p>Monthly shift calendar</p></div><h1>${escHtml(data.title)}</h1></header>
  <div class="grid">${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(x=>`<div class="weekday">${x}</div>`).join('')}${cells.join('')}</div></main></body></html>`;
 }
-$('calendarExportMenuButton')?.addEventListener('click',()=>{
- const menu=$('calendarExportMenu'),button=$('calendarExportMenuButton'),open=menu.hidden;
- menu.hidden=!open;button.setAttribute('aria-expanded',String(open));
-});
-document.addEventListener('click',e=>{
- const menu=$('calendarExportMenu'),button=$('calendarExportMenuButton');
- if(menu&&!menu.hidden&&!menu.contains(e.target)&&!button.contains(e.target)){menu.hidden=true;button.setAttribute('aria-expanded','false')}
-});
+const calendarMenuButton=$('calendarExportMenuButton'),calendarMenu=$('calendarExportMenu');
+if(calendarMenuButton&&calendarMenu){
+ calendarMenuButton.addEventListener('click',e=>{
+  e.preventDefault();e.stopPropagation();
+  const willOpen=calendarMenu.hasAttribute('hidden');
+  if(willOpen){calendarMenu.removeAttribute('hidden');calendarMenu.style.display='block';}
+  else{calendarMenu.setAttribute('hidden','');calendarMenu.style.display='none';}
+  calendarMenuButton.setAttribute('aria-expanded',String(willOpen));
+ });
+ calendarMenu.addEventListener('click',e=>e.stopPropagation());
+ document.addEventListener('click',e=>{
+  if(!calendarMenu.contains(e.target)&&!calendarMenuButton.contains(e.target)){
+   calendarMenu.setAttribute('hidden','');calendarMenu.style.display='none';
+   calendarMenuButton.setAttribute('aria-expanded','false');
+  }
+ });
+}
 $('exportCalendarPdf')?.addEventListener('click',()=>{
- const menu=$('calendarExportMenu');if(menu)menu.hidden=true;$('calendarExportMenuButton')?.setAttribute('aria-expanded','false');
+ const menu=$('calendarExportMenu');if(menu){menu.setAttribute('hidden','');menu.style.display='none';}$('calendarExportMenuButton')?.setAttribute('aria-expanded','false');
  const data=calendarExportData(),w=window.open('','_blank');
  if(!w){status('Allow pop-ups to open the calendar export, then choose Print / Save PDF.');return}
  w.document.open();w.document.write(calendarExportHtml(data));w.document.close();
  status(`Calendar PDF preview opened for ${data.title}. Choose Print / Save PDF.`);
 });
 $('exportCalendarImage')?.addEventListener('click',()=>{
- const menu=$('calendarExportMenu');if(menu)menu.hidden=true;$('calendarExportMenuButton')?.setAttribute('aria-expanded','false');
+ const menu=$('calendarExportMenu');if(menu){menu.setAttribute('hidden','');menu.style.display='none';}$('calendarExportMenuButton')?.setAttribute('aria-expanded','false');
  const data=calendarExportData(),canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');
  if(!ctx){status('Image export is not available in this browser.');return}
  const W=1800,cellW=W/7,headH=120,cellH=190,rows=Math.ceil((new Date(data.year,data.month,1).getDay()+data.days.length)/7),H=headH+rows*cellH+100;

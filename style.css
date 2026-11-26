@@ -634,3 +634,12 @@ footer{color:#D7E5FF}
 }
 .archive-cal-day.ar-shift .calendar-code,
 .archive-cal-day.ar-shift .calendar-shift-times{color:#721c24 !important}
+
+/* v1.3.234 — keep month navigation directly beside the calendar overflow menu */
+.archive-calendar-head{display:flex;align-items:center;justify-content:flex-end!important;gap:7px!important}
+.archive-calendar-head strong{flex:0 0 auto;text-align:center;min-width:112px}
+.calendar-export-menu{flex:0 0 auto;margin-left:0!important}
+.calendar-export-dropdown[hidden]{display:none!important}
+.calendar-export-dropdown:not([hidden]){display:block!important}
+.calendar-export-dropdown{z-index:9999!important;min-width:185px}
+.calendar-export-dropdown button{cursor:pointer;white-space:nowrap}
