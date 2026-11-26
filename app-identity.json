@@ -2,8 +2,8 @@
   "app_id": "uk.co.crosscountry.shiftapp",
   "product_name": "Staff Shift App",
   "full_name": "Staff Shift App – Rail Staff Shift Diary",
-  "version": "1.3.238",
-  "build": "2026.11.26-238",
+  "version": "1.3.239",
+  "build": "2026.11.26-239",
   "storage_key": "uk.co.crosscountry.shiftapp.shiftdata.v1",
   "service_worker_cache": "xc-shiftapp-cache-v1.3.213-log-button-full-width",
   "manifest": "manifest.json",
@@ -140,6 +140,7 @@
     "Calendar PDF/image exports moved into a three-dot overflow menu; PDF is a single full-page A4 landscape monthly calendar with job numbers and shift times inside day cells.",
     "Fixed calendar three-dot export menu visibility/toggle and aligned month navigation to the right immediately beside the three-dot menu.",
     "Calendar month selector expands across the available screen width with the three-dot export control immediately alongside; monthly landscape A4 PDF places calendar in the top half and a Shifts Worked date/job/Book On/Book Off list in the bottom half.",
-    "Tap AL or ALR calendar dates to enter original Book On and Book Off times; calculated leave shift hours feed gross pay and are included in diary backup and restore."
+    "Tap AL or ALR calendar dates to enter original Book On and Book Off times; calculated leave shift hours feed gross pay and are included in diary backup and restore.",
+    "Pay summary: displays annual leave (AL), rostered annual leave (ALR) and a combined total annual leave pay amount, with hours and pay values shown separately; included within estimated gross pay without double-counting."
   ]
 }
