@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.3.234', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
+const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.3.235', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
 const $=id=>document.getElementById(id);
 const DEFAULT_COMMISSION_RATES={perScan:0.02,salesPercent:6};
 const COMMISSION_RATE_KEY='uk.co.crosscountry.shiftapp.commissionRates';
@@ -158,30 +158,50 @@ function calendarExportHtml(data){
   cells.push(`<div class="day"><div class="day-number">${d.day}</div>${d.codes.length?`<div class="codes">${d.codes.map(escHtml).join(' · ')}</div>`:''}<div class="jobs">${items}</div></div>`);
  });
  while(cells.length%7)cells.push('<div class="empty"></div>');
+ const shiftRows=data.days.flatMap(d=>d.records.map(r=>({date:d.key,job:r.shift?.jobNumber||'—',on:r.shift?.bookOn||'—',off:r.shift?.bookOff||'—'})));
+ const rowsHtml=shiftRows.length?shiftRows.map(r=>`<tr><td>${escHtml(new Date(r.date+'T12:00:00').toLocaleDateString('en-GB'))}</td><td>${escHtml(r.job)}</td><td>${escHtml(r.on)}</td><td>${escHtml(r.off)}</td></tr>`).join(''):'<tr><td colspan="4">No shifts recorded for this month.</td></tr>';
  const rowCount=cells.length/7;
  return `<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Shift calendar – ${escHtml(data.title)}</title><style>
  *{box-sizing:border-box}
  html,body{margin:0;width:100%;height:100%;font-family:Arial,sans-serif;color:#241821;background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
  body{padding:0}
  .toolbar{display:flex;justify-content:flex-end;gap:8px;padding:8px 12px}
- .toolbar button{border:0;border-radius:6px;padding:9px 14px;background:#a50034;color:white;font-weight:bold}
+ .toolbar button{border:0;border-radius:6px;padding:9px 14px;background:#a50034;color:#fff;font-weight:bold}
  .page{width:100%;height:calc(100vh - 48px);padding:8px 12px;display:flex;flex-direction:column}
- header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid #a50034;padding:0 0 7px;margin-bottom:7px;flex:0 0 auto}
- h1{font-size:21px;margin:0;color:#a50034}header p{font-size:10px;margin:2px 0 0;color:#655b62}
- .grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));grid-template-rows:8mm repeat(${rowCount},minmax(0,1fr));gap:2px;flex:1;min-height:0}
- .weekday{background:#a50034;color:#fff;text-align:center;padding:4px;font-weight:bold;font-size:11px}
- .day{border:1px solid #cfc7cc;min-height:0;padding:3px 4px;overflow:hidden;display:flex;flex-direction:column}
- .day-number{font-weight:bold;font-size:12px;line-height:1.1}
- .codes{font-weight:bold;color:#8b1740;font-size:8px;margin:2px 0}
+ header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid #a50034;padding:0 0 6px;margin-bottom:5px;flex:0 0 auto}
+ h1{font-size:19px;margin:0;color:#a50034}header p{font-size:9px;margin:2px 0 0;color:#655b62}
+ .calendar-area{height:49%;min-height:0;display:flex;flex-direction:column}
+ .grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));grid-template-rows:7mm repeat(${rowCount},minmax(0,1fr));gap:2px;flex:1;min-height:0}
+ .weekday{background:#a50034;color:#fff;text-align:center;padding:3px;font-weight:bold;font-size:10px}
+ .day{border:1px solid #cfc7cc;min-height:0;padding:2px 3px;overflow:hidden;display:flex;flex-direction:column}
+ .day-number{font-weight:bold;font-size:10px;line-height:1.1}
+ .codes{font-weight:bold;color:#8b1740;font-size:7px;margin:1px 0}
  .jobs{min-height:0;overflow:hidden}
- .job{border-top:1px solid #e7dfe3;margin-top:2px;padding-top:2px;font-size:8px;line-height:1.1;overflow-wrap:anywhere}
- .job b{display:block;color:#a50034;font-size:8.5px}.job span{display:block;font-size:8px;color:#4e454a}
+ .job{border-top:1px solid #e7dfe3;margin-top:1px;padding-top:1px;font-size:7px;line-height:1.05;overflow-wrap:anywhere}
+ .job b{display:block;color:#a50034;font-size:7.5px}.job span{display:block;font-size:7px;color:#4e454a}
  .empty{border:1px solid transparent}
+ .shift-list{height:48%;min-height:0;margin-top:5px;display:flex;flex-direction:column}
+ h2{font-size:12px;color:#a50034;margin:0 0 4px;border-bottom:1px solid #d8cbd1;padding-bottom:3px}
+ table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:8.5px}
+ th{background:#f4e8ed;color:#4a172b;text-align:left;font-size:8px}
+ th,td{padding:3px 6px;border:1px solid #d9d1d5}
+ tbody tr:nth-child(even){background:#faf7f8}
+ .shift-table-wrap{overflow:hidden;min-height:0;flex:1}
  @page{size:A4 landscape;margin:5mm}
- @media print{.toolbar{display:none}.page{height:190mm;padding:0}.grid{grid-template-rows:8mm repeat(${rowCount},minmax(0,1fr))}header{margin-bottom:2mm}h1{font-size:18px}.day{padding:2px 3px}.job{font-size:7.5px}.job b{font-size:8px}.job span{font-size:7.5px}}
+ @media print{
+  .toolbar{display:none}
+  .page{height:190mm;padding:0}
+  header{margin-bottom:3mm}
+  .calendar-area{height:49%;flex:0 0 49%}
+  .shift-list{height:48%;flex:0 0 48%;margin-top:3mm}
+  .day{padding:1.5px 2px}
+  .job{font-size:6.5px}.job b{font-size:7px}.job span{font-size:6.5px}
+  table{font-size:8px}th{font-size:7.5px}th,td{padding:2px 5px}
+ }
  </style></head><body><nav class="toolbar"><button onclick="window.print()">Print / Save PDF</button><button onclick="window.close()">Close</button></nav>
  <main class="page"><header><div><h1>STAFF SHIFT APP</h1><p>Monthly shift calendar</p></div><h1>${escHtml(data.title)}</h1></header>
- <div class="grid">${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(x=>`<div class="weekday">${x}</div>`).join('')}${cells.join('')}</div></main></body></html>`;
+ <section class="calendar-area"><div class="grid">${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(x=>`<div class="weekday">${x}</div>`).join('')}${cells.join('')}</div></section>
+ <section class="shift-list"><h2>Shifts worked</h2><div class="shift-table-wrap"><table><thead><tr><th style="width:18%">Date</th><th style="width:42%">Job / turn</th><th style="width:20%">Book on</th><th style="width:20%">Book off</th></tr></thead><tbody>${rowsHtml}</tbody></table></div></section></main></body></html>`;
 }
 const calendarMenuButton=$('calendarExportMenuButton'),calendarMenu=$('calendarExportMenu');
 if(calendarMenuButton&&calendarMenu){

@@ -643,3 +643,12 @@ footer{color:#D7E5FF}
 .calendar-export-dropdown:not([hidden]){display:block!important}
 .calendar-export-dropdown{z-index:9999!important;min-width:185px}
 .calendar-export-dropdown button{cursor:pointer;white-space:nowrap}
+
+/* v1.3.235 — full-width month selector with adjacent export menu */
+.archive-calendar-head{width:100%;display:grid!important;grid-template-columns:42px minmax(0,1fr) 42px 42px!important;align-items:center;gap:5px!important;box-sizing:border-box}
+.archive-calendar-head>strong{min-width:0!important;width:100%;text-align:center!important;white-space:nowrap}
+.archive-calendar-head>button{width:100%;min-width:0;padding-left:4px!important;padding-right:4px!important}
+.archive-calendar-head .calendar-export-menu{width:100%;margin:0!important;justify-self:stretch}
+.archive-calendar-head .calendar-more-button{width:100%;min-width:0!important;padding:5px 0!important}
+.archive-calendar{width:100%;box-sizing:border-box}
+@media(max-width:480px){.archive-calendar-head{grid-template-columns:36px minmax(0,1fr) 36px 36px!important;gap:4px!important}}

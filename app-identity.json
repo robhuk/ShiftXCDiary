@@ -2,8 +2,8 @@
   "app_id": "uk.co.crosscountry.shiftapp",
   "product_name": "Staff Shift App",
   "full_name": "Staff Shift App – Rail Staff Shift Diary",
-  "version": "1.3.234",
-  "build": "2026.11.26-019",
+  "version": "1.3.235",
+  "build": "2026.11.26-020",
   "storage_key": "uk.co.crosscountry.shiftapp.shiftdata.v1",
   "service_worker_cache": "xc-shiftapp-cache-v1.3.213-log-button-full-width",
   "manifest": "manifest.json",
@@ -138,6 +138,7 @@
     "Previous / missing shifts: App Settings includes a dedicated 🫥 Missing shift button that opens a custom popup with an editable multi-row table for date, shift number, Book on and Book off; saved rows are added to the archive calendar and gross pay calculations with the historic shift note.",
     "Monthly archive calendar export as landscape PDF or PNG image, including roster codes and a shift detail table with job numbers and Book on / Book off times; RDW (Rest Day Work) calendar code supported.",
     "Calendar PDF/image exports moved into a three-dot overflow menu; PDF is a single full-page A4 landscape monthly calendar with job numbers and shift times inside day cells.",
-    "Fixed calendar three-dot export menu visibility/toggle and aligned month navigation to the right immediately beside the three-dot menu."
+    "Fixed calendar three-dot export menu visibility/toggle and aligned month navigation to the right immediately beside the three-dot menu.",
+    "Calendar month selector expands across the available screen width with the three-dot export control immediately alongside; monthly landscape A4 PDF places calendar in the top half and a Shifts Worked date/job/Book On/Book Off list in the bottom half."
   ]
 }
