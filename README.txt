@@ -393,3 +393,6 @@ Version 1.3.175: Incident reports now automatically prefill the BWV camera numbe
 Version 1.3.176: Incident report activity is a dropdown with Assist (ACC or ASST), Passing (PASS) and Working, populated from the linked train activity. Unit number(s) are taken from Trains Worked; one unit is identified as a Single set and two units as a Double set. The incident log / reference number is carried into the report when present. Main app text highlighting and pinch / double-tap zoom are disabled; text fields remain editable and selectable.
 
 Version 1.3.180: Changed the Passenger Counts option in the Archive Search entry-type picker to a light brown highlight.
+
+
+Version 1.3.250: Voice note recording now has a prominent elapsed-time timer and a clear-recording button. A reminder states the two-minute maximum; recording stops automatically at 02:00. Timer text is green through 60 seconds, orange from 61–90 seconds, and red from 91–120 seconds (including the 91-second transition so no second is uncoloured).

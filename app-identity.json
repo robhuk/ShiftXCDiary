@@ -2,7 +2,7 @@
   "app_id": "uk.co.crosscountry.shiftapp",
   "product_name": "Staff Shift App",
   "full_name": "Staff Shift App – Rail Staff Shift Diary",
-  "version": "1.3.249",
+  "version": "1.3.250",
   "build": "2026.11.27-049",
   "storage_key": "uk.co.crosscountry.shiftapp.shiftdata.v1",
   "service_worker_cache": "xc-shiftapp-cache-v1.3.213-log-button-full-width",
@@ -142,6 +142,7 @@
     "Calendar month selector expands across the available screen width with the three-dot export control immediately alongside; monthly landscape A4 PDF places calendar in the top half and a Shifts Worked date/job/Book On/Book Off list in the bottom half.",
     "Tap AL or ALR calendar dates to enter original Book On and Book Off times; calculated leave shift hours feed gross pay and are included in diary backup and restore.",
     "Pay summary: displays annual leave (AL), rostered annual leave (ALR) and a combined total annual leave pay amount, with hours and pay values shown separately; included within estimated gross pay without double-counting.",
-    "Voice notes: record timestamped audio with a title and short description from the entry type dropdown; audio is saved in the local shift diary and can be downloaded to the device."
+    "Voice notes: record timestamped audio with a title and short description from the entry type dropdown; audio is saved in the local shift diary and can be downloaded to the device.",
+    "Voice note recorder includes a prominent elapsed timer, two-minute automatic stop, clear-recording control, and green/orange/red time warning colours."
   ]
 }

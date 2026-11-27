@@ -706,3 +706,12 @@ footer{color:#D7E5FF}
 .custom-gross-pay-content{padding-top:12px;}
 
 .voice-recorder-controls{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:12px 0}.voice-note-preview{display:block;width:100%;margin:10px 0}.voice-note-attachment{display:grid;gap:8px;margin:10px 0;padding:10px;background:#f6f7fa;border-radius:10px}.voice-note-attachment audio{width:100%;max-width:100%}.voice-note-download{display:inline-flex;justify-content:center;align-items:center;text-decoration:none;padding:9px 12px;border-radius:8px}
+
+/* Voice note recording limit and elapsed-time display. */
+.voice-note-limit-reminder{margin:12px 0 8px;padding:10px 12px;border:1px solid #e3b84b;border-radius:9px;background:#fff8df;color:#624d00;font-size:13px;text-align:center}
+.voice-note-timer{font-size:clamp(42px,10vw,58px);font-weight:850;line-height:1.15;letter-spacing:2px;text-align:center;font-variant-numeric:tabular-nums;margin:8px auto 12px;padding:10px 16px;border-radius:12px;background:#f1f3f5;border:2px solid currentColor;max-width:260px}
+.voice-note-timer.timer-green{color:#16803b;background:#eaf8ee}
+.voice-note-timer.timer-orange{color:#c56a00;background:#fff3e2}
+.voice-note-timer.timer-red{color:#c62828;background:#ffebee}
+.voice-note-timer.timer-idle{color:#536170;background:#f1f3f5}
+.voice-recorder-controls #voiceNoteClear{margin-left:auto}
