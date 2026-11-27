@@ -1,3 +1,5 @@
+Version 1.3.281 (27 November 2026): Customer Service Issues / Diary now uses DDMMYY-000-XCCS references, supports export to the main daily log as Customer service issue, groups edit/share/export/delete actions under the three-dot menu, and opens full records in a custom pop-up with an X close button.
+
 VERSION 1.3.275 – REMOVE GRID REFERENCES FROM LOCATION TOOLS
 
 - Removed OS grid reference fields from access point results and search matching in the location tools.

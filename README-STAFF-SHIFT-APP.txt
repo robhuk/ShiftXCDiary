@@ -1,3 +1,5 @@
+Version 1.3.281 (27 November 2026): Customer Service Issues / Diary now uses DDMMYY-000-XCCS references, supports export to the main daily log as Customer service issue, groups edit/share/export/delete actions under the three-dot menu, and opens full records in a custom pop-up with an X close button.
+
 Staff Shift App v1.3.65
 
 Upload the CONTENTS of this folder to the existing GitHub Pages repository to retain the same app URL and locally saved shift records. The application retains its original APP_ID and local storage keys intentionally for data compatibility. Existing Cloudflare Worker and Google Drive settings are unchanged.
