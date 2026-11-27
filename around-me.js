@@ -30,8 +30,44 @@ function mapNhdRows(rows,code){if(!rows.length)return[];const header=rows[0].map
 function openNhdDb(){return new Promise((resolve,reject)=>{const req=indexedDB.open('shift-diary-around-me-nhd',1);req.onupgradeneeded=()=>req.result.createObjectStore('regions',{keyPath:'code'});req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);});}
 async function getNhdCache(code){try{const db=await openNhdDb();return await new Promise((res,rej)=>{const r=db.transaction('regions').objectStore('regions').get(code);r.onsuccess=()=>res(r.result||null);r.onerror=()=>rej(r.error);});}catch{return null;}}
 async function putNhdCache(code,records){const db=await openNhdDb();return new Promise((res,rej)=>{const tx=db.transaction('regions','readwrite');tx.objectStore('regions').put({code,records,savedAt:new Date().toISOString()});tx.oncomplete=()=>res(true);tx.onerror=()=>rej(tx.error);});}
-async function loadNhdRegion(force=false){const code=$('aroundNhdRegion').value,region=NHD_REGIONS.find(x=>x[0]===code);$('aroundNhdStatus').textContent=`Loading ${region?.[1]||code} (${code})…`;try{if(!force){const cached=await getNhdCache(code);if(cached){nhdRecords=nhdRecords.filter(x=>x.region!==code).concat(cached.records);$('aroundNhdStatus').textContent=`${cached.records.length.toLocaleString()} ${code} access point records available offline · saved ${new Date(cached.savedAt).toLocaleDateString()}`;render();return;}}const response=await fetch(NHD_BASE+code+'/coreData.csv',{cache:'no-store'});if(!response.ok)throw Error('Source returned '+response.status);const records=mapNhdRows(parseCSV(await response.text()),code);if(!records.length)throw Error('No usable coordinate records were found.');await putNhdCache(code,records);nhdRecords=nhdRecords.filter(x=>x.region!==code).concat(records);$('aroundNhdStatus').textContent=`${records.length.toLocaleString()} ${code} access point records downloaded and saved on this device for offline use.`;}catch(e){const cached=await getNhdCache(code);if(cached){nhdRecords=nhdRecords.filter(x=>x.region!==code).concat(cached.records);$('aroundNhdStatus').textContent=`Offline: using saved ${code} access point data (${cached.records.length.toLocaleString()} records).`;}else $('aroundNhdStatus').textContent=`Could not load ${code} data. Connect to the internet and try again. ${e.message}`;}render();}
-async function loadAllNhd(){if(!confirm('Download all enabled access point regions? This may use substantial mobile data and storage.'))return;let ok=0,failed=[];for(const [code,name] of NHD_REGIONS){$('aroundNhdRegion').value=code;$('aroundNhdStatus').textContent=`Downloading ${name} (${code})…`;const before=nhdRecords.length;await loadNhdRegion(true);if(nhdRecords.length>before)ok++;else failed.push(code);} $('aroundNhdStatus').textContent=`Finished: ${ok} regions loaded${failed.length?'; unavailable: '+failed.join(', '):''}. ${nhdRecords.length.toLocaleString()} access point records loaded.`;}
+async function loadCachedAllNhd(){
+ const loaded=[];
+ for(const [code] of NHD_REGIONS){
+  const cached=await getNhdCache(code);
+  if(cached?.records?.length)loaded.push(...cached.records);
+ }
+ nhdRecords=loaded;
+ $('aroundNhdStatus').textContent=loaded.length
+  ? `${loaded.length.toLocaleString()} access point records from all saved UK regions are available${navigator.onLine?'':' offline'}. Use Update all to refresh the data.`
+  : 'No access point data is saved yet. Tap Update all to download every UK region.';
+ render();
+}
+async function loadAllNhd(){
+ if(!confirm('Update access point data for all UK regions? This may use substantial mobile data and storage.'))return;
+ const button=$('aroundNhdLoadAll');if(button){button.disabled=true;button.textContent='⏳ Updating all UK regions…';}
+ let ok=0,failed=[];const merged=[];
+ try{
+  for(const [code,name] of NHD_REGIONS){
+   $('aroundNhdStatus').textContent=`Updating ${name} (${code})…`;
+   try{
+    const response=await fetch(NHD_BASE+code+'/coreData.csv',{cache:'no-store'});
+    if(!response.ok)throw Error('Source returned '+response.status);
+    const records=mapNhdRows(parseCSV(await response.text()),code);
+    if(!records.length)throw Error('No usable coordinate records were found.');
+    await putNhdCache(code,records);merged.push(...records);ok++;
+   }catch(error){
+    const cached=await getNhdCache(code);
+    if(cached?.records?.length){merged.push(...cached.records);failed.push(`${code} (using saved data)`);}
+    else failed.push(code);
+   }
+  }
+  nhdRecords=merged;
+  $('aroundNhdStatus').textContent=`${ok} of ${NHD_REGIONS.length} regions updated${failed.length?'; unavailable or using saved data: '+failed.join(', '):''}. ${nhdRecords.length.toLocaleString()} access point records from across the UK are loaded.`;
+  render();
+ }finally{
+  if(button){button.disabled=false;button.textContent='🔄 Update all access point data (UK)';}
+ }
+}
 let baseDataPromise=null;
 async function loadBaseData(){
  if(crossings.length&&stations.length){render();return true;}
@@ -57,7 +93,8 @@ async function loadBaseData(){
  return baseDataPromise;
 }
 function currentData(){return mode==='crossings'?crossings:mode==='stations'?stations:nhdRecords;}
-function render(){if(!activeDialog?.open)return;const q=$('aroundSearch').value.trim().toLowerCase(),rad=$('aroundRadius').value,lim=Number($('aroundLimit').value);let arr=currentData().map(x=>({...x,d:position?hav(position.lat,position.lon,x.lat,x.lon):null}));arr=arr.filter(x=>{const hay=mode==='crossings'?[x.name,x.uid,x.elr,x.type,x.route,x.region].join(' '):mode==='stations'?[x.name,x.code].join(' '):[x.name,x.id,x.elr,x.itemCode,x.mileage,x.region].join(' ');return !q||hay.toLowerCase().includes(q)});if(position){arr.sort((a,b)=>a.d-b.d);if(rad!=='all')arr=arr.filter(x=>x.d<=Number(rad)*(getDistanceUnit()==='mi'?1609.344:1000));}arr=arr.slice(0,lim);visibleItems=arr;$('aroundResultHeading').textContent=mode==='crossings'?'Nearest level crossings':mode==='stations'?'Nearest railway stations':'Nearest access points';$('aroundResultCount').textContent=position?`${arr.length} shown`:mode==='nhd'?`${nhdRecords.length.toLocaleString()} access point records loaded · GPS needed`:'GPS needed for distance sorting';if(!arr.length){$('aroundResults').innerHTML=`<div class="empty">${mode==='nhd'&&!nhdRecords.length?'Select a region and download access point data to begin.':'No matching records in this search radius.'}</div>`;drawMap([]);return;}$('aroundResults').innerHTML=arr.map(x=>{let detail='',emoji=mode==='crossings'?'🚧':mode==='stations'?'🚉':'📍';if(mode==='crossings')detail=`UID ${esc(x.uid)} · ${esc(x.type||'Type unknown')} · ${esc(x.status||'Status unknown')}<br>ELR ${esc(x.elr||'—')} · ${esc(x.route||'—')} · Risk ${esc(x.risk||'—')}`;else if(mode==='stations')detail=`CRS ${esc(x.code||'—')}`;else detail=`Hazard ID ${esc(x.id||'—')} · ELR ${esc(x.elr||'—')} · Mileage ${esc(x.mileage||'—')}<br>Item ${esc(x.itemCode||'—')} · Region ${esc(x.region)}<br>Last updated ${esc(x.updated||'Not supplied')}`;return `<article class="around-result" data-map-index="${visibleItems.indexOf(x)}" role="group" tabindex="0" aria-label="Show ${esc(x.name)} on map"><div class="around-result-icon">${emoji}</div><div class="around-result-main"><strong>${esc(x.name)}</strong><div class="around-result-meta">${detail}</div><div class="around-result-links"><a target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${x.lat},${x.lon}">Google Maps ↗</a><a target="_blank" rel="noopener" href="https://maps.apple.com/?daddr=${x.lat},${x.lon}">Apple Maps ↗</a></div></div><div class="around-distance">${x.d===null?'—':fmt(x.d)}</div></article>`;}).join('');drawMap(arr);}
+function deviceMapsLink(x){const coords=`${x.lat},${x.lon}`,label=encodeURIComponent(x.name||'Railway access point');const ua=navigator.userAgent||'',ios=/iPhone|iPad|iPod/i.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);return ios?`maps://?daddr=${coords}&q=${label}`:`geo:${coords}?q=${coords}(${label})`;}
+function render(){if(!activeDialog?.open)return;const q=$('aroundSearch').value.trim().toLowerCase(),rad=$('aroundRadius').value,lim=Number($('aroundLimit').value);let arr=currentData().map(x=>({...x,d:position?hav(position.lat,position.lon,x.lat,x.lon):null}));arr=arr.filter(x=>{const hay=mode==='crossings'?[x.name,x.uid,x.elr,x.type,x.route,x.region].join(' '):mode==='stations'?[x.name,x.code].join(' '):[x.name,x.id,x.elr,x.itemCode,x.mileage,x.region].join(' ');return !q||hay.toLowerCase().includes(q)});if(position){arr.sort((a,b)=>a.d-b.d);if(rad!=='all')arr=arr.filter(x=>x.d<=Number(rad)*(getDistanceUnit()==='mi'?1609.344:1000));}arr=arr.slice(0,lim);visibleItems=arr;$('aroundResultHeading').textContent=mode==='crossings'?'Nearest level crossings':mode==='stations'?'Nearest railway stations':'Nearest access points';$('aroundResultCount').textContent=position?`${arr.length} shown`:mode==='nhd'?`${nhdRecords.length.toLocaleString()} access point records loaded · GPS needed`:'GPS needed for distance sorting';if(!arr.length){$('aroundResults').innerHTML=`<div class="empty">${mode==='nhd'&&!nhdRecords.length?'No access point data loaded. Use Update all at the bottom of this page to download all UK regions.':'No matching records in this search radius.'}</div>`;drawMap([]);return;}$('aroundResults').innerHTML=arr.map(x=>{let detail='',emoji=mode==='crossings'?'🚧':mode==='stations'?'🚉':'📍';if(mode==='crossings')detail=`UID ${esc(x.uid)} · ${esc(x.type||'Type unknown')} · ${esc(x.status||'Status unknown')}<br>ELR ${esc(x.elr||'—')} · ${esc(x.route||'—')} · Risk ${esc(x.risk||'—')}`;else if(mode==='stations')detail=`CRS ${esc(x.code||'—')}`;else detail=`Hazard ID ${esc(x.id||'—')} · ELR ${esc(x.elr||'—')} · Mileage ${esc(x.mileage||'—')}<br>Item ${esc(x.itemCode||'—')} · Region ${esc(x.region)}<br>Last updated ${esc(x.updated||'Not supplied')}`;const mapAction=mode==='nhd'?`<div class="around-result-links"><a class="open-device-maps" href="${deviceMapsLink(x)}">📍 Open in Maps</a></div>`:`<div class="around-result-links"><a target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${x.lat},${x.lon}">Google Maps ↗</a><a target="_blank" rel="noopener" href="https://maps.apple.com/?daddr=${x.lat},${x.lon}">Apple Maps ↗</a></div>`;return `<article class="around-result" data-map-index="${visibleItems.indexOf(x)}" role="group" tabindex="0" aria-label="${mode==='nhd'?'Access point':'Show '+esc(x.name)+' on map'}"><div class="around-result-icon">${emoji}</div><div class="around-result-main"><strong>${esc(x.name)}</strong><div class="around-result-meta">${detail}</div>${mapAction}</div><div class="around-distance">${x.d===null?'—':fmt(x.d)}</div></article>`;}).join('');drawMap(arr);}
 let locating=false;
 function locate(){
  const dialog=activeDialog;
@@ -83,7 +120,7 @@ function locate(){
 function numberedPin(number){return L.divIcon({className:'',html:`<div style="width:30px;height:30px;background:#A50034;border:2px solid #fff;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 2px 6px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center"><span style="transform:rotate(45deg);color:#fff;font-size:13px;font-weight:800;line-height:1">${number}</span></div>`,iconSize:[34,34],iconAnchor:[17,30],popupAnchor:[0,-28]});}
 function mapPopup(x,number){if(mode==='crossings')return `<strong>${number}. ${esc(x.name)}</strong><br>UID ${esc(x.uid||'—')} · ${esc(x.type||'Type unknown')}<br>ELR ${esc(x.elr||'—')} · ${esc(x.route||'—')}`;if(mode==='stations')return `<strong>${number}. ${esc(x.name)}</strong><br>CRS ${esc(x.code||'—')}`;return `<strong>${number}. ${esc(x.name)}</strong><br>Hazard ID ${esc(x.id||'—')} · ELR ${esc(x.elr||'—')} · Mileage ${esc(x.mileage||'—')}`;}
 function drawMap(items=visibleItems){
- if(!map)return;
+ if(mode==='nhd'||!map)return;
  visibleItems=Array.isArray(items)?items:visibleItems;
  markers.forEach(m=>map.removeLayer(m));markers=[];resultMarkers=[];
  if(position)markers.push(L.circleMarker([position.lat,position.lon],{radius:8,color:'#1769aa',fillColor:'#42a5f5',fillOpacity:1}).addTo(map).bindPopup('Your GPS location'));
@@ -94,8 +131,8 @@ function drawMap(items=visibleItems){
  if(position)map.setView([position.lat,position.lon],13);
  else if(visibleItems.length)map.fitBounds(visibleItems.map(x=>[x.lat,x.lon]),{padding:[20,20]});
 }
-function initMap(){if(!window.L||mapReady)return;try{map=L.map($('aroundMap'),{scrollWheelZoom:false}).setView([54.5,-2.5],6);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map);mapReady=true;drawMap();}catch(err){console.warn('Around me map unavailable:',err);$('aroundResultCount').textContent='Map unavailable; list results are still available.';}}
-function setMode(next){mode=next;$('aroundNhdControls').hidden=mode!=='nhd';$('aroundSearch').placeholder=mode==='crossings'?'Search crossing name, UID or ELR…':mode==='stations'?'Search station name or CRS code…':'Search access point name, ID, ELR or item code…';render();if(mode==='nhd'&&!nhdRecords.length)loadNhdRegion(false);}
+function initMap(){if(mode==='nhd'||!window.L||mapReady)return;try{map=L.map(activeDialog?.querySelector('#aroundMap'),{scrollWheelZoom:false}).setView([54.5,-2.5],6);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map);mapReady=true;drawMap();}catch(err){console.warn('Around me map unavailable:',err);$('aroundResultCount').textContent='Map unavailable; list results are still available.';}}
+function setMode(next){mode=next;$('aroundSearch').placeholder=mode==='crossings'?'Search crossing name, UID or ELR…':mode==='stations'?'Search station name or CRS code…':'Search access point name, ID, ELR or item code…';render();if(mode==='nhd')loadCachedAllNhd();}
 function openAround(selectedMode){
   try{
     updateRadiusLabels();
@@ -107,6 +144,8 @@ function openAround(selectedMode){
     }
     activeDialog.style.display='block';
     setMode(selectedMode);
+    // Access-point results use the device's mapping app rather than an embedded map.
+    const mapPanel=activeDialog.querySelector('#aroundMap');if(mapPanel)mapPanel.style.display=selectedMode==='nhd'?'none':'';
     // Each dedicated page owns its own map element; recreate Leaflet when changing pages.
     if(map){try{map.remove();}catch(e){}}
     map=null;mapReady=false;markers=[];resultMarkers=[];visibleItems=[];
@@ -146,8 +185,7 @@ updateRadiusLabels();
  bindClick(page.querySelector('#aroundMeClose'),()=>{try{if(page.open)page.close();else page.removeAttribute('open');}catch(e){page.removeAttribute('open');}});
  bindClick(page.querySelector('#aroundLocate'),locate);
  bindClick(page.querySelector('#aroundFind'),locate);
- bindClick(page.querySelector('#aroundNhdLoad'),()=>loadNhdRegion(true));
- bindClick(page.querySelector('#aroundNhdLoadAll'),loadAllNhd);
+ if(page.dataset.pageMode==='nhd')bindClick(page.querySelector('#aroundNhdLoadAll'),loadAllNhd);
  page.querySelector('#aroundRadius')?.addEventListener('change',render);
  page.querySelector('#aroundLimit')?.addEventListener('change',render);
  page.querySelector('#aroundSearch')?.addEventListener('input',render);

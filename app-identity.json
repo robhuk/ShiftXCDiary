@@ -2,10 +2,10 @@
   "app_id": "uk.co.crosscountry.shiftapp",
   "product_name": "Staff Shift App",
   "full_name": "Staff Shift App – Rail Staff Shift Diary",
-  "version": "1.3.286",
+  "version": "1.3.288",
   "build": "2026.11.27-bold-form-prompts",
   "storage_key": "uk.co.crosscountry.shiftapp.shiftdata.v1",
-  "service_worker_cache": "xc-shiftapp-cache-v1.3.285-cs-export-cleanup",
+  "service_worker_cache": "xc-shiftapp-cache-v1.3.288-access-points-all-regions",
   "manifest": "manifest.json",
   "entry_point": "index.html",
   "language": "en-GB",
@@ -155,8 +155,12 @@
     "Customer Service Issues / Diary entries are included in the main app cloud and manual backups; customer service edits queue cloud sync, and restore imports those diary records."
   ],
   "releaseNotes": [
+    "v1.3.287: Access-point results now provide one Open in Maps action that launches the device mapping app; the embedded access-point map and provider-specific map links are removed. Crossing and station map behaviour is unchanged.",
     "v1.3.278: Corrected the Lost Property email action label from 'Email list property' to 'Email Lost Property'.",
     "v1.3.279: Added the Customer Service Issues / Diary page, accessible from a button at the bottom of the main screen. Diary records remain in separate local storage.",
     "v1.3.286: Customer Service Issues / Diary records are included alongside the main shift diary in daily Google Drive backups and manual JSON backups. Diary edits queue the next cloud backup, and restoring a backup restores the Customer Service diary too."
+  ],
+  "release_notes": [
+    "v1.3.288: Access points now load and display cached records from all UK regions together, with no region selector. The Update all access point data button is retained at the bottom of the Access Points page."
   ]
 }

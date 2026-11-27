@@ -114,3 +114,5 @@ When exporting a Customer Service diary entry to the main daily log, the export 
 Version 1.3.286: Customer Service Issues / Diary records are now included in the same Google Drive cloud backup and manual JSON backup as the main Staff Shift App. Diary edits queue the next cloud backup; restoring a backup restores the diary records too.
 
 Version 1.3.286: Customer Service Issues / Diary records are now included in the same Google Drive cloud backup and manual JSON backup as the main Staff Shift App. Diary edits queue the next cloud backup; restoring a backup restores the diary records too.
+
+Version 1.3.287: Access-point results now show one Open in Maps action. On iPhone/iPad it opens Apple Maps; on Android it uses a geo: link to open an available mapping app. The embedded access-point map and separate Google/Apple links are hidden for access points only; crossing and station map behaviour is unchanged.

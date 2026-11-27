@@ -758,6 +758,8 @@ footer{color:#D7E5FF}
 .around-result-meta{font-size:11px;color:#6c6267;line-height:1.45;margin-top:4px;overflow-wrap:anywhere}
 .around-result-links{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}
 .around-result-links a{font-size:11px;text-decoration:none;color:#a50034;border:1px solid #e5d3db;padding:5px 8px;border-radius:7px}
+.around-result-links a.open-device-maps{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:8px 13px;font-size:13px;font-weight:700;background:#a50034;color:#fff;border:1px solid #a50034;border-radius:9px;text-decoration:none;-webkit-tap-highlight-color:transparent}
+.around-result-links a.open-device-maps:active{background:#7f0028;border-color:#7f0028;color:#fff}
 .around-distance{font-size:12px;font-weight:800;color:#a50034;white-space:nowrap}
 .around-notice{font-size:11px;line-height:1.5;margin:12px 0 2px}
 @media(max-width:420px){.around-me-tabs button{font-size:10px}.around-me-location{align-items:flex-start}.around-nhd-actions{grid-template-columns:1fr}.around-me-dialog{padding:12px}}
@@ -828,3 +830,7 @@ footer{color:#D7E5FF}
 
 /* Unique lost-property reference shown in the live log only. */
 .lost-property-reference{display:inline-block;margin-left:6px;padding:2px 6px;border-radius:6px;background:#fff1d6;color:#754500;font-size:.88em;letter-spacing:.02em;white-space:nowrap}
+
+/* Access point all-region updater stays at the bottom of its page. */
+.around-nhd-update-bottom{display:grid;gap:10px;margin:18px 0 4px;padding-top:14px;border-top:1px solid var(--line,#ddd)}
+.around-nhd-update-bottom button{width:100%;min-height:48px}

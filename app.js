@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.3.286', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
+const APP_ID='uk.co.crosscountry.shiftapp', VERSION='1.3.288', STORE='uk.co.crosscountry.shiftapp.shiftdata.v1', UPDATE_CHECK_KEY='uk.co.crosscountry.shiftapp.lastUpdateCheck';
 const CUSTOMER_SERVICE_STORE='feedbackIncidentLog.v1';
 function getCustomerServiceEntries(){try{const value=JSON.parse(localStorage.getItem(CUSTOMER_SERVICE_STORE)||'[]');return Array.isArray(value)?value:[]}catch{return []}}
 const $=id=>document.getElementById(id);
