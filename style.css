@@ -807,3 +807,6 @@ footer{color:#D7E5FF}
 .station-lookup-card-simple{padding:12px 14px}
 .station-lookup-card-simple .station-lookup-card-top{align-items:center}
 .station-lookup-card-simple .station-lookup-result-main strong{font-size:1rem}
+
+/* Ensure Station Lookup is hidden after closing in older mobile webviews */
+#stationLookupDialog:not([open]){display:none}
