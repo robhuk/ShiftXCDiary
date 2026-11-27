@@ -823,3 +823,6 @@ footer{color:#D7E5FF}
 /* Station Lookup uses an in-page overlay rather than the native modal dialog layer to avoid iOS WebKit focus / scroll lock getting stuck after closing. */
 .station-lookup-overlay .station-lookup-dialog{pointer-events:auto}
 @media(max-width:520px){.station-lookup-overlay{align-items:center;padding:8px}.station-lookup-dialog{max-height:94dvh!important;width:100%!important}.station-lookup-results{-webkit-overflow-scrolling:touch;overscroll-behavior:contain}}
+
+/* Unique lost-property reference shown in the live log only. */
+.lost-property-reference{display:inline-block;margin-left:6px;padding:2px 6px;border-radius:6px;background:#fff1d6;color:#754500;font-size:.88em;letter-spacing:.02em;white-space:nowrap}
