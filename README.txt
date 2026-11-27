@@ -396,3 +396,8 @@ Version 1.3.180: Changed the Passenger Counts option in the Archive Search entry
 
 
 Version 1.3.250: Voice note recording now has a prominent elapsed-time timer and a clear-recording button. A reminder states the two-minute maximum; recording stops automatically at 02:00. Timer text is green through 60 seconds, orange from 61–90 seconds, and red from 91–120 seconds (including the 91-second transition so no second is uncoloured).
+
+Version 1.3.251: Fixed voice-note clearing so an in-progress recorder is invalidated before it can deliver delayed audio data; clearing now reliably removes the preview and resets the recorder. Fixed voice-note attachment so the recording is retained until the shift log save is confirmed, added save-in-progress protection and clearer failure feedback, and reduced recording bitrate to improve local-storage reliability.
+
+
+Version 1.3.252: Reworked the voice-note Clear recording action to hard-reset the recorder state, invalidate delayed microphone/recording callbacks, stop all microphone tracks, discard buffered audio, revoke the preview URL, detach and reload the audio element, and reset the timer and controls. The clear action is explicitly prevented from triggering form submission. Added a fresh service-worker cache version so installed PWAs receive the corrected files.
