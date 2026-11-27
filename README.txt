@@ -403,7 +403,7 @@ Version 1.3.251: Fixed voice-note clearing so an in-progress recorder is invalid
 Version 1.3.252: Reworked the voice-note Clear recording action to hard-reset the recorder state, invalidate delayed microphone/recording callbacks, stop all microphone tracks, discard buffered audio, revoke the preview URL, detach and reload the audio element, and reset the timer and controls. The clear action is explicitly prevented from triggering form submission. Added a fresh service-worker cache version so installed PWAs receive the corrected files.
 
 
-VERSION 1.3.259 – FRIENDLIER UK STATION LOOKUP
+VERSION 1.3.260 – FRIENDLIER UK STATION LOOKUP
 - Redesigned station results as clear, touch-friendly directory cards with prominent CRS codes.
 - Added expandable station details using only the bundled station name, CRS code and coordinates.
 - Added direct map links, improved search relevance, a clear-search control and clearer no-results / unavailable states.
