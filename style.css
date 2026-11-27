@@ -816,3 +816,7 @@ footer{color:#D7E5FF}
 .around-me-page .dialoghead h2{font-size:20px}
 .around-me-page .around-map{height:260px}
 @media(max-width:520px){.around-me-page{width:calc(100% - 12px);height:96vh;max-height:96vh;padding:12px;border-radius:14px}.around-me-page .around-map{height:220px}}
+
+/* Reliable visibility for dedicated location screens in installed browsers */
+.around-me-page:not([open]){display:none}
+.around-me-page[open]{display:block}

@@ -40,7 +40,11 @@ function openAround(selectedMode){
   try{
     mode=selectedMode;
     activeDialog=pageDialog(selectedMode);
-    if(!activeDialog.open){if(typeof activeDialog.showModal==='function')activeDialog.showModal();else activeDialog.setAttribute('open','');}
+    if(!activeDialog.open){
+      try{if(typeof activeDialog.showModal==='function')activeDialog.showModal();else activeDialog.setAttribute('open','');}
+      catch(openError){activeDialog.setAttribute('open','');}
+    }
+    activeDialog.style.display='block';
     setMode(selectedMode);
     // Each dedicated page owns its own map element; recreate Leaflet when changing pages.
     if(map){try{map.remove();}catch(e){}}
@@ -52,22 +56,25 @@ function openAround(selectedMode){
     locate();
   }catch(err){console.error('Could not open location page:',err);const status=$('aroundGpsStatus');if(status)status.textContent='Could not open this page. Please close and try again.';}
 }
-// Use delegated click handling so the buttons continue to work if the diary re-renders its page.
-document.addEventListener('click',e=>{
-  const button=e.target.closest('#openCrossings,#openStations,#openAccessPoints,#aroundMeClose,#aroundLocate,#aroundFind,#aroundNhdLoad,#aroundNhdLoadAll');
-  if(!button)return;
-  if(button.id==='openCrossings'){e.preventDefault();openAround('crossings');}
-  else if(button.id==='openStations'){e.preventDefault();openAround('stations');}
-  else if(button.id==='openAccessPoints'){e.preventDefault();openAround('nhd');}
-  else if(button.id==='aroundMeClose'){e.preventDefault();activeDialog?.close();activeDialog?.removeAttribute('open');}
-  else if(button.id==='aroundLocate'||button.id==='aroundFind'){e.preventDefault();locate();}
-  else if(button.id==='aroundNhdLoad'){e.preventDefault();loadNhdRegion(true);}
-  else if(button.id==='aroundNhdLoadAll'){e.preventDefault();loadAllNhd();}
-},true);
+// Bind each launcher directly. This avoids missed delegated clicks in installed mobile PWAs.
+function bindClick(el,fn){if(el)el.addEventListener('click',e=>{e.preventDefault();fn(e);});}
+bindClick(document.getElementById('openCrossings'),()=>openAround('crossings'));
+bindClick(document.getElementById('openStations'),()=>openAround('stations'));
+bindClick(document.getElementById('openAccessPoints'),()=>openAround('nhd'));
+
 ['crossingsPageDialog','stationsPageDialog','accessPointsPageDialog'].forEach(id=>{
  const page=document.getElementById(id);
- page.addEventListener('click',e=>{if(e.target===page)page.close();});
- page.addEventListener('close',()=>{if(activeDialog===page)activeDialog=null;});
+ if(!page)return;
+ bindClick(page.querySelector('#aroundMeClose'),()=>{try{if(page.open)page.close();else page.removeAttribute('open');}catch(e){page.removeAttribute('open');}});
+ bindClick(page.querySelector('#aroundLocate'),locate);
+ bindClick(page.querySelector('#aroundFind'),locate);
+ bindClick(page.querySelector('#aroundNhdLoad'),()=>loadNhdRegion(true));
+ bindClick(page.querySelector('#aroundNhdLoadAll'),loadAllNhd);
+ page.querySelector('#aroundRadius')?.addEventListener('change',render);
+ page.querySelector('#aroundLimit')?.addEventListener('change',render);
+ page.querySelector('#aroundSearch')?.addEventListener('input',render);
+ page.addEventListener('click',e=>{if(e.target===page){try{page.close();}catch(e){page.removeAttribute('open');}}});
+ page.addEventListener('cancel',e=>{e.preventDefault();try{page.close();}catch(err){page.removeAttribute('open');}});
+ page.addEventListener('close',()=>{page.style.display='';if(activeDialog===page)activeDialog=null;});
 });
-['aroundRadius','aroundLimit'].forEach(id=>$(id).addEventListener('change',render));$('aroundSearch').addEventListener('input',render);
 })();
