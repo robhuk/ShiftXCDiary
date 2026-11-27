@@ -2,10 +2,10 @@
   "app_id": "uk.co.crosscountry.shiftapp",
   "product_name": "Staff Shift App",
   "full_name": "Staff Shift App – Rail Staff Shift Diary",
-  "version": "1.3.253",
+  "version": "1.3.255",
   "build": "2026.11.27-Shift-Tools-Reference",
   "storage_key": "uk.co.crosscountry.shiftapp.shiftdata.v1",
-  "service_worker_cache": "xc-shiftapp-cache-v1.3.253-shift-tools-reference",
+  "service_worker_cache": "xc-shiftapp-cache-v1.3.255-shift-tools-reference-nearest-buttons",
   "manifest": "manifest.json",
   "entry_point": "index.html",
   "language": "en-GB",
@@ -144,6 +144,6 @@
     "Pay summary: displays annual leave (AL), rostered annual leave (ALR) and a combined total annual leave pay amount, with hours and pay values shown separately; included within estimated gross pay without double-counting.",
     "Voice notes: record timestamped audio with a title and short description from the entry type dropdown; audio is saved in the local shift diary and can be downloaded to the device.",
     "Voice note recorder includes a prominent elapsed timer, two-minute automatic stop, clear-recording control, and green/orange/red time warning colours.",
-    "Shift Tools / Reference: a collapsed-by-default bottom-of-page expandable menu containing Around me. Around me searches nearby level crossings, stations and regional NHD access-point records using device GPS, with distance sorting, radius filters, an interactive map, directions and locally cached NHD data."
+    "Shift Tools / Reference: a collapsed-by-default bottom-of-page expandable menu with separate Crossings, Stations and Access points buttons. Each opens the location finder directly in the selected category, using device GPS, distance sorting, radius filters, an interactive map, directions and locally cached access point data."
   ]
 }

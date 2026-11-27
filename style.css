@@ -721,6 +721,8 @@ footer{color:#D7E5FF}
 .shift-tools-reference{margin-top:14px;border-top:2px solid #a50034}
 .shift-tools-reference .collapse-summary{display:flex;align-items:center;gap:9px}
 .shift-tools-reference .collapse-summary h2{flex:1}
+.shift-tools-buttons{display:grid;grid-template-columns:1fr;gap:8px;margin:10px 0 4px}
+.shift-tools-buttons button{min-height:46px;text-align:left;padding-left:16px}
 .around-me-menu-note{font-size:12px;line-height:1.45;margin:8px 2px 0}
 .around-me-dialog{width:min(760px,calc(100% - 22px));max-width:760px;max-height:92vh;overflow:auto;padding:16px}
 .around-me-dialog::backdrop{background:rgba(5,15,30,.66)}

@@ -44,8 +44,12 @@
   <summary class="collapse-summary"><h2>🧭 Shift Tools / Reference</h2><span class="muted">Additional tools</span><span class="collapse-indicator">⌄</span></summary>
   <div class="collapse-content">
     <p class="muted">Useful location tools and railway reference information. More shift tools can be added here in future.</p>
-    <button type="button" class="secondary full" id="openAroundMe">🧭 Around me</button>
-    <p class="muted around-me-menu-note">Find nearby level crossings, railway stations and National Hazard Directory (NHD) access-point records using your phone's GPS.</p>
+    <div class="shift-tools-buttons" aria-label="Shift tools and reference">
+      <button type="button" class="secondary full" id="openCrossings">🚧 Nearest Crossings</button>
+      <button type="button" class="secondary full" id="openStations">🚉 Nearest Stations</button>
+      <button type="button" class="secondary full" id="openAccessPoints">📍 Nearest Access Points</button>
+    </div>
+    <p class="muted around-me-menu-note">Find nearby locations using your phone's GPS. Further shift tools and reference guides can be added here.</p>
   </div>
 </details>
 </main>
@@ -58,7 +62,7 @@
   <div class="around-me-tabs" role="group" aria-label="Location type">
     <button type="button" class="active" data-around-mode="crossings">🚧 Crossings</button>
     <button type="button" data-around-mode="stations">🚉 Stations</button>
-    <button type="button" data-around-mode="nhd">📍 NHD access points</button>
+    <button type="button" data-around-mode="nhd">📍 Access points</button>
   </div>
   <div class="around-me-location">
     <div><strong id="aroundGpsTitle">Your location</strong><small id="aroundGpsStatus">GPS location not yet acquired</small></div>
@@ -66,13 +70,13 @@
   </div>
   <button type="button" class="primary full" id="aroundFind">⌖ FIND NEAREST</button>
   <div id="aroundNhdControls" class="around-controls" hidden>
-    <label>NHD region
+    <label>Access point region
       <select id="aroundNhdRegion">
         <option value="QF">North and East (QF)</option><option value="QE">East Coast (QE)</option><option value="QL">Scotland (QL)</option><option value="QM">East Midlands (QM)</option><option value="QR">London North West North (QR)</option><option value="QS">London North West South (QS)</option><option value="QT">Anglia (QT)</option><option value="QK">Kent (QK)</option><option value="QU">Sussex (QU)</option><option value="QC">Wales (QC)</option><option value="QW">Wessex (QW)</option><option value="QD">Western (QD)</option>
       </select>
     </label>
     <div class="around-nhd-actions"><button type="button" class="secondary" id="aroundNhdLoad">Download / update region</button><button type="button" class="secondary" id="aroundNhdLoadAll">Download all UK regions</button></div>
-    <small id="aroundNhdStatus" class="muted">NHD data has not been downloaded yet.</small>
+    <small id="aroundNhdStatus" class="muted">Access point data has not been downloaded yet.</small>
   </div>
   <div class="around-controls">
     <label>Search radius<select id="aroundRadius"><option value="1">1 km</option><option value="5">5 km</option><option value="10" selected>10 km</option><option value="25">25 km</option><option value="all">All distances</option></select></label>
@@ -82,7 +86,7 @@
   <div id="aroundMap" class="around-map"></div>
   <div class="around-results-heading"><strong id="aroundResultHeading">Nearest level crossings</strong><small id="aroundResultCount">Waiting for GPS</small></div>
   <div id="aroundResults" class="around-results"><div class="empty">Allow location access, then tap FIND NEAREST.</div></div>
-  <div class="notice around-notice"><strong>Safety and accuracy:</strong> This is a proximity reference tool only. GPS accuracy varies. A nearby result does not confirm your exact position, provide operational authority, or establish permission to access railway infrastructure. NHD records must be checked against authorised Network Rail systems and applicable safety arrangements.</div>
+  <div class="notice around-notice"><strong>Safety and accuracy:</strong> This is a proximity reference tool only. GPS accuracy varies. A nearby result does not confirm your exact position, provide operational authority, or establish permission to access railway infrastructure. Access point records must be checked against authorised railway information systems and applicable safety arrangements.</div>
 </dialog>
 
 <dialog id="driveBackupDialog" class="confirm-dialog drive-backup-dialog"><form method="dialog"><div class="dialoghead"><h2>⚙️ App settings</h2><button type="button" class="x" id="driveSettingsClose" aria-label="Close">×</button></div><section class="backup-section historic-shifts-section"><h3>🗓️ Previous / missing shifts</h3><p class="muted">Add shifts that were missed from your diary. Enter them in a dedicated form and add them to the calendar and gross pay estimate.</p><button type="button" id="historicShiftPopupOpen" class="secondary full">🫥 Missing shift</button></section><section class="backup-section"><h3>💷 Commission rates</h3><p class="muted">Set the rates used to calculate your ticket commission. These settings are included in local and Google Drive backups and restored when importing.</p><div class="dynamic-grid"><label>Commission per scan (£)<input id="settingsCommissionPerScan" type="number" min="0" step="0.001" value="0.02"></label><label>Ticket sales commission (%)<input id="settingsCommissionSalesRate" type="number" min="0" step="0.1" value="6"></label></div><div class="archive-actions"><button id="saveCommissionSettings" class="primary" type="button">Save commission rates</button></div><p id="commissionSettingsStatus" class="muted" role="status">Current rates: £0.020 per scan and 6% of ticket sales.</p></section><section class="backup-section"><h3>💷 Hourly pay rates</h3><p class="muted">Set your hourly rate for Monday to Saturday and Sunday. The estimated shift pay uses the shift date and book-on / book-off times.</p><div class="dynamic-grid"><label>Monday–Saturday (£ / hour)<input id="settingsWeekdayRate" type="number" min="0" step="0.01" value="22.62"></label><label>Sunday (£ / hour)<input id="settingsSundayRate" type="number" min="0" step="0.01" value="40.70"></label></div><div class="archive-actions"><button id="savePayRates" class="primary" type="button">Save hourly rates</button></div><label>Average spare / Safety Brief length<input id="settingsSpareTermLength" type="time" step="60" value="08:40"></label><p class="muted">Used for SPARE and SB shifts when Book on / Book off times are not entered. Default: 8 hours 40 minutes.</p><p id="payRatesStatus" class="muted" role="status">Default rates: £22.62 Monday–Saturday, £40.70 Sunday and 08:40 spare / Safety Brief length.</p></section><section class="backup-section"><h3>📱 Local backup</h3><p class="muted">Your diary is automatically saved on this device whenever you make a change. Export a JSON copy to keep a separate backup, or import a previous backup to restore your diary and archived shifts.</p><div class="archive-actions local-backup-actions"><button id="exportRecords" class="secondary" type="button">⬇️ Export local backup</button><button id="importRecords" class="secondary" type="button">⬆️ Import local backup</button><input id="importRecordsFile" type="file" accept=".json,application/json" class="hidden"></div></section><section class="backup-section"><h3>☁️ Google Drive backup</h3><p class="muted">Automatically backs up your complete shift diary and archive after every change. The secure service renews Google access in the background. Offline changes are queued until you reconnect.</p><p class="muted drive-service-edit-row"><button id="driveWorkerEditToggle" class="subtle-footer-link" type="button" aria-expanded="false" aria-controls="driveWorkerEditor">Edit service URL</button></p><div id="driveWorkerEditor" class="hidden"><label>Secure backup service URL <input id="driveWorkerUrl" type="url" inputmode="url" autocomplete="url" placeholder="https://your-worker.your-account.workers.dev"></label><div class="archive-actions"><button id="driveWorkerSave" class="secondary" type="button">Save service address</button></div></div><div class="archive-actions"><button id="driveConnect" class="primary" type="button">Connect Google Drive</button><button id="driveBackupNow" class="secondary" type="button" disabled>Back up now</button><button id="driveRestore" class="secondary" type="button" disabled>Import from cloud</button><button id="driveDisconnect" class="secondary" type="button">Disconnect</button></div><p class="muted">Connection: <strong id="driveBackupBadge">Not connected</strong></p><p id="driveBackupStatus" class="muted" role="status" aria-live="polite">Drive backup is not configured.</p></section></form></dialog>
