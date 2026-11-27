@@ -53,10 +53,6 @@ function render(){
   </article>`;
  }).join('');
 }
-function open(){
- if(!dialog.open){if(dialog.showModal)dialog.showModal();else dialog.setAttribute('open','');}
- load().then(()=>{render();search.focus();});
-}
 function closeLookup(){
  try{
   if(typeof dialog.requestClose==='function')dialog.requestClose();
@@ -90,6 +86,11 @@ dialog.addEventListener('click',e=>{if(e.target===dialog)closeLookup();});
 dialog.addEventListener('cancel',e=>{e.preventDefault();closeLookup();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&dialog.hasAttribute('open'))closeLookup();},true);
 search.addEventListener('input',render);
+// Directory cards are informational only. Keep taps inside the lookup and allow native vertical scrolling.
+results.addEventListener('click',e=>{
+ const card=e.target.closest('.station-lookup-card');
+ if(card){e.preventDefault();e.stopPropagation();}
+});
 // Keep the Station Lookup launcher only in Shift Tools / Reference.
 document.addEventListener('DOMContentLoaded',()=>{
  const canonical=document.querySelector('#shiftToolsReference #openStationLookup');

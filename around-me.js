@@ -3,7 +3,7 @@ let activeDialog=null;
 const $=id=>activeDialog?.querySelector('#'+id)||document.getElementById(id);
 const pageDialog=mode=>document.getElementById(mode==='crossings'?'crossingsPageDialog':mode==='stations'?'stationsPageDialog':'accessPointsPageDialog');
 if(!pageDialog('crossings')||!pageDialog('stations')||!pageDialog('nhd'))return;
-let mode='crossings',crossings=[],stations=[],nhdRecords=[],position=null,accuracy=null,map=null,markers=[],mapReady=false;
+let mode='crossings',crossings=[],stations=[],nhdRecords=[],position=null,accuracy=null,map=null,markers=[],resultMarkers=[],mapReady=false,visibleItems=[];
 const NHD_BASE='https://raw.githubusercontent.com/infrastructureclub/nr-national-hazard-directory/main/data/';
 const NHD_REGIONS=[['QE','East Coast'],['QF','North and East'],['QL','Scotland'],['QM','East Midlands'],['QR','London North West North'],['QS','London North West South'],['QT','Anglia'],['QK','Kent'],['QU','Sussex'],['QC','Wales'],['QW','Wessex'],['QD','Western']];
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -57,11 +57,43 @@ async function loadBaseData(){
  return baseDataPromise;
 }
 function currentData(){return mode==='crossings'?crossings:mode==='stations'?stations:nhdRecords;}
-function render(){if(!activeDialog?.open)return;const q=$('aroundSearch').value.trim().toLowerCase(),rad=$('aroundRadius').value,lim=Number($('aroundLimit').value);let arr=currentData().map(x=>({...x,d:position?hav(position.lat,position.lon,x.lat,x.lon):null}));arr=arr.filter(x=>{const hay=mode==='crossings'?[x.name,x.uid,x.elr,x.type,x.route,x.region].join(' '):mode==='stations'?[x.name,x.code].join(' '):[x.name,x.id,x.elr,x.itemCode,x.mileage,x.grid,x.region].join(' ');return !q||hay.toLowerCase().includes(q)});if(position){arr.sort((a,b)=>a.d-b.d);if(rad!=='all')arr=arr.filter(x=>x.d<=Number(rad)*(getDistanceUnit()==='mi'?1609.344:1000));}arr=arr.slice(0,lim);$('aroundResultHeading').textContent=mode==='crossings'?'Nearest level crossings':mode==='stations'?'Nearest railway stations':'Nearest access points';$('aroundResultCount').textContent=position?`${arr.length} shown`:mode==='nhd'?`${nhdRecords.length.toLocaleString()} access point records loaded · GPS needed`:'GPS needed for distance sorting';if(!arr.length){$('aroundResults').innerHTML=`<div class="empty">${mode==='nhd'&&!nhdRecords.length?'Select a region and download access point data to begin.':'No matching records in this search radius.'}</div>`;drawMap([]);return;}$('aroundResults').innerHTML=arr.map(x=>{let detail='',emoji=mode==='crossings'?'🚧':mode==='stations'?'🚉':'📍';if(mode==='crossings')detail=`UID ${esc(x.uid)} · ${esc(x.type||'Type unknown')} · ${esc(x.status||'Status unknown')}<br>ELR ${esc(x.elr||'—')} · ${esc(x.route||'—')} · Risk ${esc(x.risk||'—')}`;else if(mode==='stations')detail=`CRS ${esc(x.code||'—')}`;else detail=`Hazard ID ${esc(x.id||'—')} · ELR ${esc(x.elr||'—')} · Mileage ${esc(x.mileage||'—')}<br>Item ${esc(x.itemCode||'—')} · Region ${esc(x.region)} · Grid ${esc(x.grid||'—')}<br>Last updated ${esc(x.updated||'Not supplied')}`;return `<article class="around-result"><div class="around-result-icon">${emoji}</div><div class="around-result-main"><strong>${esc(x.name)}</strong><div class="around-result-meta">${detail}</div><div class="around-result-links"><a target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${x.lat},${x.lon}">Google Maps ↗</a><a target="_blank" rel="noopener" href="https://maps.apple.com/?daddr=${x.lat},${x.lon}">Apple Maps ↗</a></div></div><div class="around-distance">${x.d===null?'—':fmt(x.d)}</div></article>`;}).join('');drawMap(arr);}
-function locate(){if(!navigator.geolocation){$('aroundGpsStatus').textContent='GPS is not supported by this browser.';return;}$('aroundGpsStatus').textContent='Requesting GPS location…';navigator.geolocation.getCurrentPosition(p=>{position={lat:p.coords.latitude,lon:p.coords.longitude};accuracy=p.coords.accuracy;$('aroundGpsTitle').textContent='Location acquired';$('aroundGpsStatus').textContent=`Accuracy approximately ${Math.round(accuracy)} m`;render();if(map){map.setView([position.lat,position.lon],14);drawMap();}},e=>{$('aroundGpsStatus').textContent=({1:'Location permission denied. Enable it in browser settings.',2:'Current location unavailable. Try again outdoors.',3:'GPS request timed out. Try again.'}[e.code]||'Could not obtain GPS location');},{enableHighAccuracy:true,timeout:20000,maximumAge:30000});}
+function render(){if(!activeDialog?.open)return;const q=$('aroundSearch').value.trim().toLowerCase(),rad=$('aroundRadius').value,lim=Number($('aroundLimit').value);let arr=currentData().map(x=>({...x,d:position?hav(position.lat,position.lon,x.lat,x.lon):null}));arr=arr.filter(x=>{const hay=mode==='crossings'?[x.name,x.uid,x.elr,x.type,x.route,x.region].join(' '):mode==='stations'?[x.name,x.code].join(' '):[x.name,x.id,x.elr,x.itemCode,x.mileage,x.grid,x.region].join(' ');return !q||hay.toLowerCase().includes(q)});if(position){arr.sort((a,b)=>a.d-b.d);if(rad!=='all')arr=arr.filter(x=>x.d<=Number(rad)*(getDistanceUnit()==='mi'?1609.344:1000));}arr=arr.slice(0,lim);visibleItems=arr;$('aroundResultHeading').textContent=mode==='crossings'?'Nearest level crossings':mode==='stations'?'Nearest railway stations':'Nearest access points';$('aroundResultCount').textContent=position?`${arr.length} shown`:mode==='nhd'?`${nhdRecords.length.toLocaleString()} access point records loaded · GPS needed`:'GPS needed for distance sorting';if(!arr.length){$('aroundResults').innerHTML=`<div class="empty">${mode==='nhd'&&!nhdRecords.length?'Select a region and download access point data to begin.':'No matching records in this search radius.'}</div>`;drawMap([]);return;}$('aroundResults').innerHTML=arr.map(x=>{let detail='',emoji=mode==='crossings'?'🚧':mode==='stations'?'🚉':'📍';if(mode==='crossings')detail=`UID ${esc(x.uid)} · ${esc(x.type||'Type unknown')} · ${esc(x.status||'Status unknown')}<br>ELR ${esc(x.elr||'—')} · ${esc(x.route||'—')} · Risk ${esc(x.risk||'—')}`;else if(mode==='stations')detail=`CRS ${esc(x.code||'—')}`;else detail=`Hazard ID ${esc(x.id||'—')} · ELR ${esc(x.elr||'—')} · Mileage ${esc(x.mileage||'—')}<br>Item ${esc(x.itemCode||'—')} · Region ${esc(x.region)} · Grid ${esc(x.grid||'—')}<br>Last updated ${esc(x.updated||'Not supplied')}`;return `<article class="around-result" data-map-index="${visibleItems.indexOf(x)}" role="group" tabindex="0" aria-label="Show ${esc(x.name)} on map"><div class="around-result-icon">${emoji}</div><div class="around-result-main"><strong>${esc(x.name)}</strong><div class="around-result-meta">${detail}</div><div class="around-result-links"><a target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${x.lat},${x.lon}">Google Maps ↗</a><a target="_blank" rel="noopener" href="https://maps.apple.com/?daddr=${x.lat},${x.lon}">Apple Maps ↗</a></div></div><div class="around-distance">${x.d===null?'—':fmt(x.d)}</div></article>`;}).join('');drawMap(arr);}
+let locating=false;
+function locate(){
+ const dialog=activeDialog;
+ if(!dialog?.open)return;
+ if(!navigator.geolocation){$('aroundGpsStatus').textContent='GPS is not supported by this browser.';return;}
+ if(locating)return;
+ locating=true;
+ $('aroundGpsStatus').textContent='Requesting GPS location…';
+ navigator.geolocation.getCurrentPosition(p=>{
+  locating=false;
+  if(activeDialog!==dialog||!dialog.open)return;
+  position={lat:p.coords.latitude,lon:p.coords.longitude};accuracy=p.coords.accuracy;
+  $('aroundGpsTitle').textContent='Location acquired';
+  $('aroundGpsStatus').textContent=`Accuracy approximately ${Math.round(accuracy)} m`;
+  render();
+  if(map){map.invalidateSize();map.setView([position.lat,position.lon],14,{animate:false});drawMap();}
+ },e=>{
+  locating=false;
+  if(activeDialog!==dialog||!dialog.open)return;
+  $('aroundGpsStatus').textContent=({1:'Location permission denied. Enable it in browser settings.',2:'Current location unavailable. Try again outdoors.',3:'GPS request timed out. Try again.'}[e.code]||'Could not obtain GPS location');
+ },{enableHighAccuracy:true,timeout:20000,maximumAge:30000});
+}
 function numberedPin(number){return L.divIcon({className:'',html:`<div style="width:30px;height:30px;background:#A50034;border:2px solid #fff;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 2px 6px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center"><span style="transform:rotate(45deg);color:#fff;font-size:13px;font-weight:800;line-height:1">${number}</span></div>`,iconSize:[34,34],iconAnchor:[17,30],popupAnchor:[0,-28]});}
 function mapPopup(x,number){if(mode==='crossings')return `<strong>${number}. ${esc(x.name)}</strong><br>UID ${esc(x.uid||'—')} · ${esc(x.type||'Type unknown')}<br>ELR ${esc(x.elr||'—')} · ${esc(x.route||'—')}`;if(mode==='stations')return `<strong>${number}. ${esc(x.name)}</strong><br>CRS ${esc(x.code||'—')}`;return `<strong>${number}. ${esc(x.name)}</strong><br>Hazard ID ${esc(x.id||'—')} · ELR ${esc(x.elr||'—')} · Mileage ${esc(x.mileage||'—')}`;}
-function drawMap(items){if(!map)return;markers.forEach(m=>map.removeLayer(m));markers=[];if(position)markers.push(L.circleMarker([position.lat,position.lon],{radius:8,color:'#1769aa',fillColor:'#42a5f5',fillOpacity:1}).addTo(map).bindPopup('Your GPS location'));(items||[]).forEach((x,index)=>{const number=index+1,marker=L.marker([x.lat,x.lon],{icon:numberedPin(number)}).bindPopup(mapPopup(x,number));markers.push(marker.addTo(map));});if(position)map.setView([position.lat,position.lon],13);else if(items?.length)map.fitBounds(items.map(x=>[x.lat,x.lon]),{padding:[20,20]});}
+function drawMap(items=visibleItems){
+ if(!map)return;
+ visibleItems=Array.isArray(items)?items:visibleItems;
+ markers.forEach(m=>map.removeLayer(m));markers=[];resultMarkers=[];
+ if(position)markers.push(L.circleMarker([position.lat,position.lon],{radius:8,color:'#1769aa',fillColor:'#42a5f5',fillOpacity:1}).addTo(map).bindPopup('Your GPS location'));
+ (visibleItems||[]).forEach((x,index)=>{
+  const number=index+1,marker=L.marker([x.lat,x.lon],{icon:numberedPin(number)}).bindPopup(mapPopup(x,number));
+  resultMarkers[index]=marker;markers.push(marker.addTo(map));
+ });
+ if(position)map.setView([position.lat,position.lon],13);
+ else if(visibleItems.length)map.fitBounds(visibleItems.map(x=>[x.lat,x.lon]),{padding:[20,20]});
+}
 function initMap(){if(!window.L||mapReady)return;try{map=L.map($('aroundMap'),{scrollWheelZoom:false}).setView([54.5,-2.5],6);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map);mapReady=true;drawMap();}catch(err){console.warn('Around me map unavailable:',err);$('aroundResultCount').textContent='Map unavailable; list results are still available.';}}
 function setMode(next){mode=next;$('aroundNhdControls').hidden=mode!=='nhd';$('aroundSearch').placeholder=mode==='crossings'?'Search crossing name, UID or ELR…':mode==='stations'?'Search station name or CRS code…':'Search access point name, ID, ELR or item code…';render();if(mode==='nhd'&&!nhdRecords.length)loadNhdRegion(false);}
 function openAround(selectedMode){
@@ -77,7 +109,7 @@ function openAround(selectedMode){
     setMode(selectedMode);
     // Each dedicated page owns its own map element; recreate Leaflet when changing pages.
     if(map){try{map.remove();}catch(e){}}
-    map=null;mapReady=false;markers=[];
+    map=null;mapReady=false;markers=[];resultMarkers=[];visibleItems=[];
     initMap();
     if(!crossings.length||!stations.length)loadBaseData();
     render();
@@ -119,6 +151,22 @@ updateRadiusLabels();
  page.querySelector('#aroundRadius')?.addEventListener('change',render);
  page.querySelector('#aroundLimit')?.addEventListener('change',render);
  page.querySelector('#aroundSearch')?.addEventListener('input',render);
+ const resultsEl=page.querySelector('#aroundResults');
+ const focusResult=(e)=>{
+  const card=e.target.closest('.around-result[data-map-index]');
+  if(!card||!resultsEl?.contains(card)||e.target.closest('a'))return;
+  const index=Number(card.dataset.mapIndex),item=visibleItems[index],marker=resultMarkers[index];
+  if(!item||!marker||!map)return;
+  e.preventDefault();
+  try{map.invalidateSize();map.setView([item.lat,item.lon],Math.max(map.getZoom(),15),{animate:false});marker.openPopup();}
+  catch(err){console.warn('Could not focus selected station/location on map:',err);}
+ };
+ resultsEl?.addEventListener('click',focusResult);
+ resultsEl?.addEventListener('keydown',e=>{
+  if((e.key==='Enter'||e.key===' ')&&e.target.matches('.around-result[data-map-index]')){
+   e.preventDefault();focusResult(e);
+  }
+ });
  page.addEventListener('click',e=>{if(e.target===page){try{page.close();}catch(e){page.removeAttribute('open');}}});
  page.addEventListener('cancel',e=>{e.preventDefault();try{page.close();}catch(err){page.removeAttribute('open');}});
  page.addEventListener('close',()=>{page.style.display='';if(activeDialog===page)activeDialog=null;});
