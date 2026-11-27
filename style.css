@@ -761,7 +761,7 @@ footer{color:#D7E5FF}
 @media(max-width:420px){.around-me-tabs button{font-size:10px}.around-me-location{align-items:flex-start}.around-nhd-actions{grid-template-columns:1fr}.around-me-dialog{padding:12px}}
 
 /* UK Station Lookup – directory-style results */
-.station-lookup-dialog{width:min(680px,calc(100% - 22px));max-width:680px;max-height:92vh;overflow:hidden;padding:16px;display:flex;flex-direction:column}
+.station-lookup-dialog:not([open]){display:none!important}.station-lookup-dialog[open]{display:flex;width:min(680px,calc(100% - 22px));max-width:680px;max-height:92vh;overflow:hidden;padding:16px;flex-direction:column}
 .station-lookup-dialog::backdrop{background:rgba(5,15,30,.68)}
 .station-lookup-dialog .dialoghead{flex:0 0 auto;background:#fff;z-index:4;padding:4px 0 10px}
 .station-lookup-dialog .dialoghead h2{margin:0;font-size:19px}
