@@ -94,7 +94,10 @@
   <div class="dialoghead"><h2>🔎 UK Station Lookup</h2><button type="button" class="x" id="stationLookupClose" aria-label="Close">×</button></div>
   <p class="muted">Search the station list by station name or three-letter CRS code.</p>
   <label class="station-lookup-label" for="stationLookupSearch">Station name or CRS code</label>
-  <input id="stationLookupSearch" class="station-lookup-search" type="search" placeholder="e.g. Newcastle or NCL" autocomplete="off" autocapitalize="characters" spellcheck="false">
+  <div class="station-lookup-search-row">
+    <input id="stationLookupSearch" class="station-lookup-search" type="search" placeholder="e.g. Newcastle or NCL" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-describedby="stationLookupStatus">
+    <button type="button" class="station-lookup-clear" id="stationLookupClear" aria-label="Clear station search" title="Clear search">×</button>
+  </div>
   <div class="station-lookup-status" id="stationLookupStatus" role="status" aria-live="polite">Loading UK station list…</div>
   <div class="station-lookup-results" id="stationLookupResults"><div class="empty">Enter a station name or CRS code to search.</div></div>
 </dialog>

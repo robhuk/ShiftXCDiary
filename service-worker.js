@@ -1,4 +1,4 @@
-const CACHE='xc-shiftapp-cache-v1.3.258-station-lookup';
+const CACHE='xc-shiftapp-cache-v1.3.259-station-lookup-friendly';
 const ASSETS=['./','./index.html','./style.css','./app.js','./around-me.js','./station-lookup.js','./crossings.json','./stations.json','./manifest.json','./app-identity.json','./shiftapp-logo.png','./staff-shift-banner.jpg','./icon-48.png','./icon-72.png','./icon-96.png','./icon-144.png','./icon-192.png','./icon-256.png','./icon-512.png'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('xc-shiftapp-cache-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});

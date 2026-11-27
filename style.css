@@ -760,19 +760,38 @@ footer{color:#D7E5FF}
 .around-notice{font-size:11px;line-height:1.5;margin:12px 0 2px}
 @media(max-width:420px){.around-me-tabs button{font-size:10px}.around-me-location{align-items:flex-start}.around-nhd-actions{grid-template-columns:1fr}.around-me-dialog{padding:12px}}
 
-/* UK Station Lookup */
-.station-lookup-dialog{width:min(680px,calc(100% - 22px));max-width:680px;max-height:92vh;overflow:auto;padding:16px}
-.station-lookup-dialog::backdrop{background:rgba(5,15,30,.66)}
-.station-lookup-dialog .dialoghead{position:sticky;top:-16px;background:#fff;z-index:4;padding:4px 0 10px}
+/* UK Station Lookup – directory-style results */
+.station-lookup-dialog{width:min(680px,calc(100% - 22px));max-width:680px;max-height:92vh;overflow:hidden;padding:16px;display:flex;flex-direction:column}
+.station-lookup-dialog::backdrop{background:rgba(5,15,30,.68)}
+.station-lookup-dialog .dialoghead{flex:0 0 auto;background:#fff;z-index:4;padding:4px 0 10px}
 .station-lookup-dialog .dialoghead h2{margin:0;font-size:19px}
-.station-lookup-label{display:block;font-size:12px;font-weight:700;color:#62565c;margin:12px 0 5px}
-.station-lookup-search{width:100%;box-sizing:border-box;border:1px solid #d9d0d5;border-radius:10px;padding:13px 12px;background:#fff;color:#292126;font:inherit;font-size:16px}
-.station-lookup-status{font-size:11px;color:#71666b;margin:8px 2px}
-.station-lookup-results{max-height:58vh;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
-.station-lookup-result{display:flex;align-items:center;gap:10px;border:1px solid #e4dfe2;border-radius:11px;padding:11px;margin:7px 0;background:#fff}
+.station-lookup-dialog>p.muted{margin:0 0 12px;font-size:12px}
+.station-lookup-label{display:block;font-size:12px;font-weight:750;color:#62565c;margin:2px 0 6px}
+.station-lookup-search-row{display:flex;align-items:center;gap:7px}
+.station-lookup-search{flex:1;min-width:0;width:100%;box-sizing:border-box;border:1.5px solid #cfc4ca;border-radius:11px;padding:13px 12px;background:#fff;color:#292126;font:inherit;font-size:16px;min-height:48px}
+.station-lookup-search:focus{outline:3px solid rgba(165,0,52,.16);border-color:#a50034}
+.station-lookup-clear{flex:0 0 46px;width:46px;height:46px;border:1px solid #e1d7dc;border-radius:11px;background:#f8f4f6;color:#a50034;font-size:25px;line-height:1;cursor:pointer}
+.station-lookup-status{flex:0 0 auto;font-size:12px;font-weight:650;color:#71666b;margin:10px 2px 8px;min-height:16px}
+.station-lookup-results{flex:1 1 auto;min-height:100px;max-height:58vh;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:1px 3px 8px 1px}
+.station-lookup-card{border:1px solid #e4dce1;border-radius:13px;margin:0 0 9px;background:#fff;box-shadow:0 1px 3px rgba(25,10,18,.045);overflow:hidden}
+.station-lookup-card-top{display:flex;align-items:center;gap:11px;padding:13px}
+.station-lookup-station-icon{display:flex;align-items:center;justify-content:center;flex:0 0 39px;width:39px;height:39px;border-radius:11px;background:#f7eef2;font-size:20px}
 .station-lookup-result-main{flex:1;min-width:0}
-.station-lookup-result-main strong{display:block;font-size:14px;line-height:1.3}
-.station-lookup-result-main small{display:block;color:#71666b;font-size:11px;margin-top:4px}
-.station-lookup-crs{flex:0 0 auto;min-width:42px;text-align:center;border-radius:8px;padding:7px 6px;background:#f4edf0;color:#a50034;font-weight:850;font-size:13px;letter-spacing:.4px}
-.station-lookup-map{flex:0 0 auto;text-decoration:none;color:#a50034;border:1px solid #e5d3db;border-radius:8px;padding:7px 9px;font-size:11px;font-weight:700}
-@media(max-width:420px){.station-lookup-dialog{padding:12px}.station-lookup-result{gap:7px;padding:9px}.station-lookup-map{padding:7px;font-size:10px}}
+.station-lookup-result-main strong{display:block;font-size:15px;line-height:1.3;color:#241c20;overflow-wrap:anywhere}
+.station-lookup-subtitle{display:block;color:#7a7075;font-size:11px;margin-top:4px}
+.station-lookup-crs{flex:0 0 auto;min-width:48px;text-align:center;border-radius:9px;padding:8px 7px;background:#a50034;color:#fff;font-weight:850;font-size:13px;letter-spacing:.7px}
+.station-lookup-details{border-top:1px solid #f0e9ed;background:#fdfbfc}
+.station-lookup-details summary{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 13px;color:#a50034;font-size:12px;font-weight:750;cursor:pointer;list-style:none}
+.station-lookup-details summary::-webkit-details-marker{display:none}
+.station-lookup-details summary span{font-size:16px;transition:transform .15s}
+.station-lookup-details[open] summary span{transform:rotate(45deg)}
+.station-lookup-detail-grid{display:grid;grid-template-columns:minmax(75px,.6fr) minmax(0,1.4fr);gap:8px;padding:2px 13px 11px}
+.station-lookup-detail-grid>div{min-width:0;background:#f5f1f3;border-radius:8px;padding:8px}
+.station-lookup-detail-grid small{display:block;color:#766b71;font-size:10px;margin-bottom:4px}
+.station-lookup-detail-grid b{display:block;color:#30262b;font-size:12px;overflow-wrap:anywhere}
+.station-lookup-map{display:flex;align-items:center;justify-content:center;gap:6px;margin:0 13px 12px;text-decoration:none;color:#a50034;border:1px solid #e5cbd5;border-radius:9px;padding:10px;font-size:12px;font-weight:750;background:#fff}
+.station-lookup-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;min-height:180px;padding:20px 14px;text-align:center;border:1px dashed #dcd0d6;border-radius:13px;background:#fcfafb;color:#71666b}
+.station-lookup-empty-icon{font-size:28px}
+.station-lookup-empty strong{font-size:14px;color:#30262b}
+.station-lookup-empty span{font-size:12px;line-height:1.5;max-width:340px}
+@media(max-width:420px){.station-lookup-dialog{padding:12px}.station-lookup-dialog .dialoghead{padding-top:2px}.station-lookup-card-top{gap:8px;padding:11px}.station-lookup-result-main strong{font-size:14px}.station-lookup-results{max-height:60vh}}
