@@ -121,3 +121,6 @@ Version 1.3.290 – Fixed location maps
 - Nearest Access Points now displays an embedded reference map with numbered markers.
 - Access point, crossing and station maps use a fixed zoom level and do not support map zooming, dragging, or scrolling gestures.
 - Map zoom controls are hidden; result lists and Open in Maps links remain available.
+
+
+Version 1.3.291 – Location map zoom reduced by approximately 25% on access points, level crossings and railway stations. Maps remain fixed and non-interactive.

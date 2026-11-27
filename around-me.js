@@ -128,11 +128,11 @@ function drawMap(items=visibleItems){
   const number=index+1,marker=L.marker([x.lat,x.lon],{icon:numberedPin(number)}).bindPopup(mapPopup(x,number));
   resultMarkers[index]=marker;markers.push(marker.addTo(map));
  });
- if(position)map.setView([position.lat,position.lon],13,{animate:false});
- else if(visibleItems.length)map.setView([visibleItems[0].lat,visibleItems[0].lon],13,{animate:false});
- else map.setView([54.5,-2.5],6,{animate:false});
+ if(position)map.setView([position.lat,position.lon],12.5,{animate:false});
+ else if(visibleItems.length)map.setView([visibleItems[0].lat,visibleItems[0].lon],12.5,{animate:false});
+ else map.setView([54.5,-2.5],5.5,{animate:false});
 }
-function initMap(){if(!window.L||mapReady)return;try{map=L.map(activeDialog?.querySelector('#aroundMap'),{zoomControl:false,scrollWheelZoom:false,doubleClickZoom:false,boxZoom:false,keyboard:false,dragging:false,touchZoom:false,tap:false,zoomSnap:0.5,zoomDelta:0.5}).setView([54.5,-2.5],6);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map);mapReady=true;drawMap();}catch(err){console.warn('Around me map unavailable:',err);$('aroundResultCount').textContent='Map unavailable; list results are still available.';}}
+function initMap(){if(!window.L||mapReady)return;try{map=L.map(activeDialog?.querySelector('#aroundMap'),{zoomControl:false,scrollWheelZoom:false,doubleClickZoom:false,boxZoom:false,keyboard:false,dragging:false,touchZoom:false,tap:false,zoomSnap:0.5,zoomDelta:0.5}).setView([54.5,-2.5],5.5);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map);mapReady=true;drawMap();}catch(err){console.warn('Around me map unavailable:',err);$('aroundResultCount').textContent='Map unavailable; list results are still available.';}}
 function setMode(next){mode=next;$('aroundSearch').placeholder=mode==='crossings'?'Search crossing name, UID or ELR…':mode==='stations'?'Search station name or CRS code…':'Search access point name, ID, ELR or item code…';render();}
 function openAround(selectedMode){
   try{

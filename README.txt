@@ -456,3 +456,6 @@ Version 1.3.287: Access-point results now show one Open in Maps action. On iPhon
 
 
 Version 1.3.289: Access Points now combines records from all saved UK regions instead of filtering by a selected region. Removed the region selector and single-region download control. Kept the Update all access point data button and moved it to the bottom of the Access Points page. Existing per-region IndexedDB caches are retained and loaded together; Update all refreshes each UK region and falls back to saved data where a region cannot be reached.
+
+
+Version 1.3.291 – Location map zoom reduced by approximately 25% on access points, level crossings and railway stations. Maps remain fixed and non-interactive.
