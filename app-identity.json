@@ -2,10 +2,10 @@
   "app_id": "uk.co.crosscountry.shiftapp",
   "product_name": "Staff Shift App",
   "full_name": "Staff Shift App – Rail Staff Shift Diary",
-  "version": "1.3.269",
-  "build": "2026.11.27-numbered-pins-all-maps",
+  "version": "1.3.270",
+  "build": "2026.11.27-button-reliability",
   "storage_key": "uk.co.crosscountry.shiftapp.shiftdata.v1",
-  "service_worker_cache": "xc-shiftapp-cache-v1.3.269-numbered-pins-all-maps",
+  "service_worker_cache": "xc-shiftapp-cache-v1.3.270-button-reliability",
   "manifest": "manifest.json",
   "entry_point": "index.html",
   "language": "en-GB",
@@ -20,7 +20,7 @@
   "asset_layout": "PDF exports no longer include a header image; automatic page-number footers remain.",
   "features": [
     "Integrated UK station CRS entry: station-location fields across train routes, passenger counts, incidents, lost property and report forms accept station names or three-letter CRS codes; selecting a station stores and displays the canonical Station Name [CRS] format in reports. Uses the existing offline stations.json directory and preserves non-station free-text locations.",
-    "Shift Tools / Reference: nearest Crossings, Stations and Access Points buttons now open the selected finder directly, request GPS automatically, and show nearby results; list results remain available if map tiles are unavailable. All three maps use numbered pins corresponding to the ordered results list; GPS location remains a separate blue marker.",
+    "Shift Tools / Reference: nearest Crossings, Stations and Access Points buttons now open the selected finder directly, request GPS automatically, and show nearby results; list results remain available if map tiles are unavailable. All three maps use numbered pins corresponding to the ordered results list; GPS location remains a separate blue marker. Data loading now refreshes the visible results after the offline station and crossing datasets finish loading; GPS denial does not prevent the finder pages or results lists from opening.",
     "App Settings: moved to a small, discreet button at the bottom of the page; settings dialog and existing controls unchanged.",
     "Shift pay handling: A/R prompts for the original rostered shift length (HH:MM or decimal hours) and uses that duration in monthly gross pay estimates; A/R is the spare shift category and prompts for the original rostered shift length, pre-filled from the configurable average A/R (spare) length (default 08:40); SB (Safety Brief) uses the same configurable length automatically. SB is highlighted yellow in the shift field and archive calendar.",
     "Pay-period gross pay estimator: calculates estimated gross pay for the current and previous four-week pay periods, displaying the period dates and corresponding payday. Uses saved shift Book on / Book off hours, AL / ALR calendar entries, recorded ticket commission and late book-off pay. AL and ALR dates use the original Book On / Book Off times entered by tapping the calendar date; each date is paid at its weekday or Sunday rate. Estimates are before tax and deductions.",
@@ -146,7 +146,7 @@
     "Pay summary: displays annual leave (AL), rostered annual leave (ALR) and a combined total annual leave pay amount, with hours and pay values shown separately; included within estimated gross pay without double-counting.",
     "Voice notes: record timestamped audio with a title and short description from the entry type dropdown; audio is saved in the local shift diary and can be downloaded to the device.",
     "Voice note recorder includes a prominent elapsed timer, two-minute automatic stop, clear-recording control, and green/orange/red time warning colours.",
-    "Shift Tools / Reference: a collapsed-by-default bottom-of-page expandable menu with separate Crossings, Stations and Access points buttons. Each opens the location finder directly in the selected category, using device GPS, distance sorting, radius filters, an interactive map, directions and locally cached access point data.",
+    "Shift Tools / Reference: a collapsed-by-default bottom-of-page expandable menu with separate Crossings, Stations and Access points buttons. Each opens the location finder directly in the selected category, using device GPS, distance sorting, radius filters, an interactive map, directions and locally cached access point data. Data loading now refreshes the visible results after the offline station and crossing datasets finish loading; GPS denial does not prevent the finder pages or results lists from opening.",
     "UK Station Lookup results redesigned as a touch-friendly station directory: clearer station cards, prominent CRS codes, expandable basic details, coordinate-based map links, improved match ranking, clear-search control and clearer empty states. Uses only station name, CRS code and coordinates from the bundled station dataset."
   ]
 }

@@ -409,3 +409,10 @@ VERSION 1.3.260 – FRIENDLIER UK STATION LOOKUP
 - Added direct map links, improved search relevance, a clear-search control and clearer no-results / unavailable states.
 - Preserved the existing station dataset, nearest-location tools, local shift storage and app identity.
 - Incremented the app and service-worker cache version; saved shift data is not cleared.
+
+VERSION 1.3.270 – BUTTON RELIABILITY
+- Corrected the main application script and web manifest version so they match the package and service-worker cache version.
+- Added explicit button types to avoid accidental form submission from non-submit controls.
+- Location finder button actions now report unexpected failures rather than silently stopping.
+- Crossing and station result lists now refresh when their bundled data finishes loading; list results do not depend on a successful GPS permission response.
+- Preserved the existing local storage key and all saved shift / archive data.
