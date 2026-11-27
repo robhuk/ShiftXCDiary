@@ -1,3 +1,9 @@
+VERSION 1.3.275 – REMOVE GRID REFERENCES FROM LOCATION TOOLS
+
+- Removed OS grid reference fields from access point results and search matching in the location tools.
+- Easting/northing source coordinates remain internal for converting access point locations to map coordinates; they are not displayed as grid references.
+- App ID and local shift-data storage key retained.
+
 VERSION 1.3.221 – SPARE IS A/R
 
 A/R is the spare shift category. When A/R is entered, the app asks for the original rostered shift length, pre-filled with the configurable average A/R (spare) length (default 08:40). SB (Safety Brief) automatically uses the same configurable length. Legacy SPARE entries remain recognised for pay calculations.

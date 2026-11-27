@@ -53,38 +53,42 @@ function render(){
   </article>`;
  }).join('');
 }
+let previousFocus=null;
 function closeLookup(){
- // Use close(), not requestClose(): requestClose() dispatches a cancel event,
- // and this dialog's cancel handler also closes it. Calling requestClose()
- // from that handler can recurse indefinitely on supported browsers.
- try{if(dialog.open&&typeof dialog.close==='function')dialog.close();}catch(e){}
- // Fallback for browsers/webviews with incomplete <dialog> support.
- dialog.removeAttribute('open');
+ if(dialog.hidden)return;
+ dialog.hidden=true;
+ dialog.setAttribute('aria-hidden','true');
  hideLookupFocus();
+ const target=previousFocus&&document.contains(previousFocus)?previousFocus:document.getElementById('openStationLookup');
+ previousFocus=null;
+ if(target){try{target.focus({preventScroll:true})}catch(e){target.focus()}}
 }
 function hideLookupFocus(){
  if(document.activeElement&&dialog.contains(document.activeElement))document.activeElement.blur();
 }
 function open(){
- dialog.style.removeProperty('display');
- if(!dialog.open){
-  if(typeof dialog.showModal==='function'){
-   try{dialog.showModal();}catch(e){dialog.setAttribute('open','');}
-  }else dialog.setAttribute('open','');
- }
- load().then(()=>{render();try{search.focus({preventScroll:true});}catch(e){search.focus();}});
+ previousFocus=document.activeElement;
+ dialog.hidden=false;
+ dialog.setAttribute('aria-hidden','false');
+ load().then(()=>{
+  if(dialog.hidden)return;
+  render();
+  try{search.focus({preventScroll:true})}catch(e){search.focus()}
+ });
 }
 document.addEventListener('click',e=>{
  const b=e.target.closest('#openStationLookup,#stationLookupClose,#stationLookupClear');
- if(!b)return;
- if(b.id==='openStationLookup'){e.preventDefault();open();}
- else if(b.id==='stationLookupClose'){e.preventDefault();e.stopPropagation();closeLookup();}
- else if(b.id==='stationLookupClear'){e.preventDefault();e.stopPropagation();search.value='';render();search.focus();}
+ if(b){
+  if(b.id==='openStationLookup'){e.preventDefault();open();}
+  else if(b.id==='stationLookupClose'){e.preventDefault();e.stopPropagation();closeLookup();}
+  else if(b.id==='stationLookupClear'){e.preventDefault();e.stopPropagation();search.value='';render();search.focus();}
+  return;
+ }
+ if(e.target===dialog&&!dialog.hidden)closeLookup();
 },true);
-dialog.addEventListener('click',e=>{if(e.target===dialog)closeLookup();});
-dialog.addEventListener('cancel',e=>{e.preventDefault();closeLookup();});
-dialog.addEventListener('close',hideLookupFocus);
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&dialog.hasAttribute('open'))closeLookup();},true);
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape'&&!dialog.hidden){e.preventDefault();e.stopPropagation();closeLookup();}
+},true);
 search.addEventListener('input',render);
 // Directory cards are informational only. Keep taps inside the lookup and allow native vertical scrolling.
 results.addEventListener('click',e=>{
@@ -94,9 +98,7 @@ results.addEventListener('click',e=>{
 // Keep the Station Lookup launcher only in Shift Tools / Reference.
 document.addEventListener('DOMContentLoaded',()=>{
  const canonical=document.querySelector('#shiftToolsReference #openStationLookup');
- document.querySelectorAll('#openStationLookup').forEach(button=>{
-  if(button!==canonical)button.remove();
- });
+ document.querySelectorAll('#openStationLookup').forEach(button=>{if(button!==canonical)button.remove()});
 });
 load();
 })();
