@@ -56,14 +56,65 @@
 <button id="floatingAddEntry" class="floating-add-entry" type="button" aria-label="Add issue or log entry" title="Add issue / log entry">＋</button>
 <footer class="app-footer"><button id="installBtn" class="install-footer hidden" type="button">Install app</button><button type="button" id="driveSettingsOpen" class="settings-footer-button">⚙️ App settings</button><span id="version" class="footer-version"></span></footer>
 
-<dialog id="aroundMeDialog" class="confirm-dialog around-me-dialog">
-  <div class="dialoghead"><h2>🧭 Around me</h2><button type="button" class="x" id="aroundMeClose" aria-label="Close">×</button></div>
+<dialog id="crossingsPageDialog" class="confirm-dialog around-me-dialog around-me-page" data-page-mode="crossings">
+  <div class="dialoghead"><h2>🚧 Nearest Crossings</h2><button type="button" class="x" id="aroundMeClose" aria-label="Close">×</button></div>
   <p class="muted">Find nearby railway locations using your current GPS position.</p>
-  <div class="around-me-tabs" role="group" aria-label="Location type">
-    <button type="button" class="active" data-around-mode="crossings">🚧 Crossings</button>
-    <button type="button" data-around-mode="stations">🚉 Stations</button>
-    <button type="button" data-around-mode="nhd">📍 Access points</button>
+  <div class="around-me-location">
+    <div><strong id="aroundGpsTitle">Your location</strong><small id="aroundGpsStatus">GPS location not yet acquired</small></div>
+    <button type="button" class="secondary" id="aroundLocate">📍 Locate me</button>
   </div>
+  <button type="button" class="primary full" id="aroundFind">⌖ FIND NEAREST</button>
+  <div id="aroundNhdControls" class="around-controls" hidden>
+    <label>Access point region
+      <select id="aroundNhdRegion">
+        <option value="QF">North and East (QF)</option><option value="QE">East Coast (QE)</option><option value="QL">Scotland (QL)</option><option value="QM">East Midlands (QM)</option><option value="QR">London North West North (QR)</option><option value="QS">London North West South (QS)</option><option value="QT">Anglia (QT)</option><option value="QK">Kent (QK)</option><option value="QU">Sussex (QU)</option><option value="QC">Wales (QC)</option><option value="QW">Wessex (QW)</option><option value="QD">Western (QD)</option>
+      </select>
+    </label>
+    <div class="around-nhd-actions"><button type="button" class="secondary" id="aroundNhdLoad">Download / update region</button><button type="button" class="secondary" id="aroundNhdLoadAll">Download all UK regions</button></div>
+    <small id="aroundNhdStatus" class="muted">Access point data has not been downloaded yet.</small>
+  </div>
+  <div class="around-controls">
+    <label>Search radius<select id="aroundRadius"><option value="1">1 km</option><option value="5">5 km</option><option value="10" selected>10 km</option><option value="25">25 km</option><option value="all">All distances</option></select></label>
+    <label>Results<select id="aroundLimit"><option>5</option><option selected>10</option><option>20</option><option>50</option></select></label>
+  </div>
+  <input id="aroundSearch" class="around-search" type="search" placeholder="Search name, ELR or reference…" autocomplete="off">
+  <div id="aroundMap" class="around-map"></div>
+  <div class="around-results-heading"><strong id="aroundResultHeading">Nearest level crossings</strong><small id="aroundResultCount">Waiting for GPS</small></div>
+  <div id="aroundResults" class="around-results"><div class="empty">Allow location access, then tap FIND NEAREST.</div></div>
+  <div class="notice around-notice"><strong>Safety and accuracy:</strong> This is a proximity reference tool only. GPS accuracy varies. A nearby result does not confirm your exact position, provide operational authority, or establish permission to access railway infrastructure. Access point records must be checked against authorised railway information systems and applicable safety arrangements.</div>
+</dialog>
+
+<dialog id="stationsPageDialog" class="confirm-dialog around-me-dialog around-me-page" data-page-mode="stations">
+  <div class="dialoghead"><h2>🚉 Nearest Stations</h2><button type="button" class="x" id="aroundMeClose" aria-label="Close">×</button></div>
+  <p class="muted">Find nearby railway locations using your current GPS position.</p>
+  <div class="around-me-location">
+    <div><strong id="aroundGpsTitle">Your location</strong><small id="aroundGpsStatus">GPS location not yet acquired</small></div>
+    <button type="button" class="secondary" id="aroundLocate">📍 Locate me</button>
+  </div>
+  <button type="button" class="primary full" id="aroundFind">⌖ FIND NEAREST</button>
+  <div id="aroundNhdControls" class="around-controls" hidden>
+    <label>Access point region
+      <select id="aroundNhdRegion">
+        <option value="QF">North and East (QF)</option><option value="QE">East Coast (QE)</option><option value="QL">Scotland (QL)</option><option value="QM">East Midlands (QM)</option><option value="QR">London North West North (QR)</option><option value="QS">London North West South (QS)</option><option value="QT">Anglia (QT)</option><option value="QK">Kent (QK)</option><option value="QU">Sussex (QU)</option><option value="QC">Wales (QC)</option><option value="QW">Wessex (QW)</option><option value="QD">Western (QD)</option>
+      </select>
+    </label>
+    <div class="around-nhd-actions"><button type="button" class="secondary" id="aroundNhdLoad">Download / update region</button><button type="button" class="secondary" id="aroundNhdLoadAll">Download all UK regions</button></div>
+    <small id="aroundNhdStatus" class="muted">Access point data has not been downloaded yet.</small>
+  </div>
+  <div class="around-controls">
+    <label>Search radius<select id="aroundRadius"><option value="1">1 km</option><option value="5">5 km</option><option value="10" selected>10 km</option><option value="25">25 km</option><option value="all">All distances</option></select></label>
+    <label>Results<select id="aroundLimit"><option>5</option><option selected>10</option><option>20</option><option>50</option></select></label>
+  </div>
+  <input id="aroundSearch" class="around-search" type="search" placeholder="Search name, ELR or reference…" autocomplete="off">
+  <div id="aroundMap" class="around-map"></div>
+  <div class="around-results-heading"><strong id="aroundResultHeading">Nearest level crossings</strong><small id="aroundResultCount">Waiting for GPS</small></div>
+  <div id="aroundResults" class="around-results"><div class="empty">Allow location access, then tap FIND NEAREST.</div></div>
+  <div class="notice around-notice"><strong>Safety and accuracy:</strong> This is a proximity reference tool only. GPS accuracy varies. A nearby result does not confirm your exact position, provide operational authority, or establish permission to access railway infrastructure. Access point records must be checked against authorised railway information systems and applicable safety arrangements.</div>
+</dialog>
+
+<dialog id="accessPointsPageDialog" class="confirm-dialog around-me-dialog around-me-page" data-page-mode="nhd">
+  <div class="dialoghead"><h2>📍 Nearest Access Points</h2><button type="button" class="x" id="aroundMeClose" aria-label="Close">×</button></div>
+  <p class="muted">Find nearby railway locations using your current GPS position.</p>
   <div class="around-me-location">
     <div><strong id="aroundGpsTitle">Your location</strong><small id="aroundGpsStatus">GPS location not yet acquired</small></div>
     <button type="button" class="secondary" id="aroundLocate">📍 Locate me</button>
