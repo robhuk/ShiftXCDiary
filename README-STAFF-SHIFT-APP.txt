@@ -124,3 +124,4 @@ Version 1.3.290 – Fixed location maps
 
 
 Version 1.3.291 – Location map zoom reduced by approximately 25% on access points, level crossings and railway stations. Maps remain fixed and non-interactive.
+\nVersion 1.3.292 – Form question and field labels are bold in operational log and report outputs; recorded answers remain standard weight.\n
