@@ -704,3 +704,5 @@ footer{color:#D7E5FF}
 .custom-gross-pay-section>summary h4{margin:0;color:var(--xc);font-size:15px;flex:1;}
 .custom-gross-toggle-hint{font-size:11px;color:var(--muted);font-weight:500;}
 .custom-gross-pay-content{padding-top:12px;}
+
+.voice-recorder-controls{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:12px 0}.voice-note-preview{display:block;width:100%;margin:10px 0}.voice-note-attachment{display:grid;gap:8px;margin:10px 0;padding:10px;background:#f6f7fa;border-radius:10px}.voice-note-attachment audio{width:100%;max-width:100%}.voice-note-download{display:inline-flex;justify-content:center;align-items:center;text-decoration:none;padding:9px 12px;border-radius:8px}
