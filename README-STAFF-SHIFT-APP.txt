@@ -72,3 +72,7 @@ Version 1.3.176: Incident report activity is a dropdown with Assist (ACC or ASST
 Version 1.3.180: Changed the Passenger Counts option in the Archive Search entry-type picker to a light brown highlight.
 
 Version 1.3.211: Renamed the archive panel heading to “Archive Shifts / Calendar / search”. No archive, calendar, search, or saved-data behaviour changed.
+
+
+SHIFT TOOLS / REFERENCE (v1.3.253)
+A collapsed-by-default Shift Tools / Reference menu is positioned at the bottom of the diary page. It currently contains Around me, which uses phone GPS to search the included level-crossing and railway-station datasets and downloadable regional National Hazard Directory (NHD) access-point records. NHD regions are saved locally in IndexedDB after download for subsequent offline searches. Map tiles and directions require an internet connection; GPS requires location permission and a secure HTTPS origin. NHD is reference information only and is not permission to access railway infrastructure. Verify information through authorised railway systems and applicable safety arrangements.
