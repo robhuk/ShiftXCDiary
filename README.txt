@@ -432,3 +432,22 @@ Version 1.3.278: Corrected the Lost Property three-dots menu label from 'Email l
 Version 1.3.279: Added the supplied Customer Service Issues / Diary as a separate offline page, launched by a full-width button at the bottom of the main screen. Its records use their own local-storage key and remain separate from shift records. A Back to Staff Shift App link returns to the main screen.
 
 Version 1.3.280: Added “Catering issue” and “Crew/Staffing issue” to the Nature of complaint / incident dropdown on the Customer Service Issues / Diary page. Existing diary entries and stored data are unchanged.
+
+
+Version 1.3.283: Added an option in the operational log entry three-dot menu to share Incident entries to the Customer Service Issues / Diary. Transfers the incident details, date, linked headcode, incident title, report details and updates, assigns a DDMMYY-000-XCCS diary reference, and prevents duplicate sharing of the same source incident.
+
+
+Version 1.3.284 – Form prompt formatting
+- Form questions and field labels are bold across the main app and Customer Service Issues / Diary.
+- Entered values and responses remain standard-weight text.
+- Operational log and report field labels are bolded where recognised; response text remains regular.
+
+
+Version 1.3.284 – Bold form prompts and regular-weight responses
+- Question labels are bold across the main Staff Shift App forms and the Customer Service Issues / Diary.
+- Text entered into inputs, text areas and selectors remains standard-weight.
+- Recognised field labels and report section headings are bold in operational log displays and printed incident reports; response text remains regular-weight.
+
+Version 1.3.286: Customer Service Issues / Diary records are now included in the same Google Drive cloud backup and manual JSON backup as the main Staff Shift App. Diary edits queue the next cloud backup; restoring a backup restores the diary records too.
+
+Version 1.3.286: Customer Service Issues / Diary records are now included in the same Google Drive cloud backup and manual JSON backup as the main Staff Shift App. Diary edits queue the next cloud backup; restoring a backup restores the diary records too.
