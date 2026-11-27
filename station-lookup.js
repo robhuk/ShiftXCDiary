@@ -90,5 +90,12 @@ dialog.addEventListener('click',e=>{if(e.target===dialog)closeLookup();});
 dialog.addEventListener('cancel',e=>{e.preventDefault();closeLookup();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&dialog.hasAttribute('open'))closeLookup();},true);
 search.addEventListener('input',render);
+// Keep the Station Lookup launcher only in Shift Tools / Reference.
+document.addEventListener('DOMContentLoaded',()=>{
+ const canonical=document.querySelector('#shiftToolsReference #openStationLookup');
+ document.querySelectorAll('#openStationLookup').forEach(button=>{
+  if(button!==canonical)button.remove();
+ });
+});
 load();
 })();
