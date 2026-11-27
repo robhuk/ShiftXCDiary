@@ -802,3 +802,8 @@ footer{color:#D7E5FF}
 .station-input-option{display:flex;align-items:center;gap:9px;width:100%;min-height:46px;padding:9px 10px;border:0;border-radius:8px;background:#fff;text-align:left;color:#292126;font:inherit;cursor:pointer}
 .station-input-option:active,.station-input-option[aria-selected="true"]{background:#fff0f4}
 .station-input-option-icon{font-size:18px}.station-input-option-name{flex:1;min-width:0;font-weight:650}.station-input-option b{flex:0 0 auto;background:#f4e8ed;color:#a50034;border-radius:7px;padding:5px 8px;font-size:13px;letter-spacing:.6px}
+
+/* Station lookup: concise name and CRS-only results */
+.station-lookup-card-simple{padding:12px 14px}
+.station-lookup-card-simple .station-lookup-card-top{align-items:center}
+.station-lookup-card-simple .station-lookup-result-main strong{font-size:1rem}

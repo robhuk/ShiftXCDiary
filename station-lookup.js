@@ -43,20 +43,13 @@ function render(){
   results.innerHTML='<div class="station-lookup-empty"><span class="station-lookup-empty-icon">🚉</span><strong>No stations found</strong><span>Try another spelling or search using the station’s three-letter CRS code.</span></div>';
   return;
  }
- results.innerHTML=shown.map(({x},i)=>{
-  const code=codeOf(x),hasCoords=Number.isFinite(Number(x.lat))&&Number.isFinite(Number(x.lon));
-  const coords=hasCoords?`${Number(x.lat).toFixed(5)}, ${Number(x.lon).toFixed(5)}`:'Not available in station data';
-  return `<article class="station-lookup-card">
+ results.innerHTML=shown.map(({x})=>{
+  const code=codeOf(x);
+  return `<article class="station-lookup-card station-lookup-card-simple">
    <div class="station-lookup-card-top">
-    <span class="station-lookup-station-icon" aria-hidden="true">🚉</span>
-    <div class="station-lookup-result-main"><strong>${esc(x.name)}</strong><span class="station-lookup-subtitle">UK railway station</span></div>
+    <div class="station-lookup-result-main"><strong>${esc(x.name)}</strong></div>
     <span class="station-lookup-crs" aria-label="CRS code ${esc(code)}">${esc(code)}</span>
    </div>
-   <details class="station-lookup-details">
-    <summary>Station details <span aria-hidden="true">＋</span></summary>
-    <div class="station-lookup-detail-grid"><div><small>CRS code</small><b>${esc(code)}</b></div><div><small>Coordinates</small><b>${esc(coords)}</b></div></div>
-    <a class="station-lookup-map" href="${mapUrl(x)}" target="_blank" rel="noopener noreferrer">📍 View station on map <span aria-hidden="true">↗</span></a>
-   </details>
   </article>`;
  }).join('');
 }
