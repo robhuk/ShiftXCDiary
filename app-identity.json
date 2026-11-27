@@ -2,10 +2,10 @@
   "app_id": "uk.co.crosscountry.shiftapp",
   "product_name": "Staff Shift App",
   "full_name": "Staff Shift App – Rail Staff Shift Diary",
-  "version": "1.3.281",
-  "build": "2026.11.27-customer-service-reference-daily-log-modal",
+  "version": "1.3.286",
+  "build": "2026.11.27-bold-form-prompts",
   "storage_key": "uk.co.crosscountry.shiftapp.shiftdata.v1",
-  "service_worker_cache": "xc-shiftapp-cache-v1.3.281-customer-service-daily-log-modal",
+  "service_worker_cache": "xc-shiftapp-cache-v1.3.285-cs-export-cleanup",
   "manifest": "manifest.json",
   "entry_point": "index.html",
   "language": "en-GB",
@@ -150,10 +150,13 @@
     "Voice note recorder includes a prominent elapsed timer, two-minute automatic stop, clear-recording control, and green/orange/red time warning colours.",
     "Shift Tools / Reference: a collapsed-by-default bottom-of-page expandable menu with separate Crossings, Stations and Access points buttons. Each opens the location finder directly in the selected category, using device GPS, distance sorting, radius filters, an interactive map, directions and locally cached access point data. Data loading now refreshes the visible results after the offline station and crossing datasets finish loading; GPS denial does not prevent the finder pages or results lists from opening.",
     "UK Station Lookup results redesigned as a touch-friendly station directory: clearer station cards, prominent CRS codes, expandable basic details, coordinate-based map links, improved match ranking, clear-search control and clearer empty states. Uses only station name, CRS code and coordinates from the bundled station dataset. Station Lookup search is isolated from the form-field autocomplete so tapping directory results cannot trigger a second suggestion layer or another search.",
-    "Lost property records receive a globally sequential reference in the format DDMMYY-HEADCODE-NNN, displayed beside the Lost Property entry on the live main log only; the reference is excluded from generated reports and emails."
+    "Lost property records receive a globally sequential reference in the format DDMMYY-HEADCODE-NNN, displayed beside the Lost Property entry on the live main log only; the reference is excluded from generated reports and emails.",
+    "Share operational Incident entries to Customer Service Issues / Diary from the operational log three-dot menu, with duplicate prevention and DDMMYY-000-XCCS references.",
+    "Customer Service Issues / Diary entries are included in the main app cloud and manual backups; customer service edits queue cloud sync, and restore imports those diary records."
   ],
   "releaseNotes": [
     "v1.3.278: Corrected the Lost Property email action label from 'Email list property' to 'Email Lost Property'.",
-    "v1.3.279: Added the Customer Service Issues / Diary page, accessible from a button at the bottom of the main screen. Diary records remain in separate local storage."
+    "v1.3.279: Added the Customer Service Issues / Diary page, accessible from a button at the bottom of the main screen. Diary records remain in separate local storage.",
+    "v1.3.286: Customer Service Issues / Diary records are included alongside the main shift diary in daily Google Drive backups and manual JSON backups. Diary edits queue the next cloud backup, and restoring a backup restores the Customer Service diary too."
   ]
 }
