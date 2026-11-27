@@ -83,3 +83,9 @@ Version 1.3.272: Button reliability pass. Corrected the main application version
 Version 1.3.272: Fixed numbered map pins across Nearest Crossings, Nearest Stations and Nearest Access Points. Map markers now retain the numbered result set when GPS location is acquired or refreshed, rather than being cleared by the subsequent map redraw.
 
 Version 1.3.273: Fixed Station Lookup becoming unresponsive after interacting with a station result. The general station-field autocomplete is now explicitly excluded from the Station Lookup dialog/search field. Station directory cards remain informational only; tapping a card does not launch another search or map. Removed a redundant Station Lookup open-handler definition.
+
+Version 1.3.278: Corrected the Lost Property three-dots menu label from 'Email list property' to 'Email Lost Property'.
+
+Version 1.3.279: Added the supplied Customer Service Issues / Diary as a separate offline page, launched by a full-width button at the bottom of the main screen. Its records use their own local-storage key and remain separate from shift records. A Back to Staff Shift App link returns to the main screen.
+
+Version 1.3.280: Added “Catering issue” and “Crew/Staffing issue” to the Nature of complaint / incident dropdown on the Customer Service Issues / Diary page. Existing diary entries and stored data are unchanged.

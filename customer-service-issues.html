@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#173b32">
+<meta name="description" content="Private local feedback and incident log">
+<title>Feedback & Incident Log</title>
+<style>
+:root{--green:#173b32;--green2:#245b4d;--mint:#e7f1ed;--bg:#f4f6f5;--ink:#1b2925;--muted:#64716c;--line:#d9e1dd;--white:#fff;--amber:#fff2d4;--red:#9b3434}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{background:var(--green);color:white;padding:20px 16px 18px}header .inner,main{max-width:980px;margin:auto}header h1{font-size:1.35rem;margin:0 0 4px}header p{margin:0;color:#d9e9e2;font-size:.92rem}
+main{padding:16px;display:grid;gap:16px}.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 2px 8px #10282008}
+h2{font-size:1.08rem;margin:0 0 12px}.sub{color:var(--muted);font-size:.88rem;margin:-5px 0 14px}
+label{display:block;font-weight:650;font-size:.9rem;margin:0 0 5px}input,select,textarea{width:100%;border:1px solid #bdcbc4;border-radius:9px;padding:11px 12px;background:#fff;color:var(--ink);font:inherit;min-width:0}textarea{resize:vertical;min-height:76px}input:focus,select:focus,textarea:focus{outline:3px solid #b6d7ca;border-color:var(--green2)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{min-width:0}.wide{grid-column:1/-1}.section-title{margin:18px 0 9px;padding-bottom:6px;border-bottom:1px solid var(--line);font-weight:750;color:var(--green)}
+.checks{display:flex;gap:18px;flex-wrap:wrap}.checks label{display:flex;align-items:center;gap:8px;font-weight:500;margin:2px 0}.checks input{width:20px;height:20px;accent-color:var(--green)}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.btn{border:0;border-radius:10px;padding:11px 14px;font:inherit;font-weight:700;cursor:pointer}.primary{background:var(--green);color:white}.secondary{background:var(--mint);color:var(--green)}.danger{background:#fae9e9;color:var(--red)}.small{padding:7px 10px;font-size:.86rem}
+.toolbar{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}.toolbar .wide{grid-column:1/-1}
+.record{border:1px solid var(--line);border-radius:12px;padding:13px;margin-top:10px;background:#fff}.record-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.record h3{font-size:1rem;margin:0 0 4px;overflow-wrap:anywhere}.meta{font-size:.85rem;color:var(--muted)}.pills{display:flex;gap:6px;flex-wrap:wrap;margin:9px 0}.pill{font-size:.75rem;font-weight:700;padding:4px 8px;border-radius:99px;background:#edf1ef;color:#45544e}.pill.yes{background:#dff2e8;color:#17603e}.pill.no{background:#fff0d6;color:#80551a}.review-toggle{display:flex;align-items:center;gap:7px;margin-top:7px;font-size:.83rem;font-weight:600;color:var(--muted)}.review-toggle input{width:19px;height:19px;accent-color:var(--green)}.record-details{white-space:pre-wrap;overflow-wrap:anywhere;font-size:.92rem;margin-top:8px}.empty{text-align:center;color:var(--muted);padding:24px 10px}.notice{background:var(--amber);border-radius:10px;padding:10px 12px;font-size:.84rem;color:#6b4b13;margin-top:12px}.hidden{display:none!important}.foot{font-size:.8rem;color:var(--muted);text-align:center;padding:0 12px 20px}
+@media(max-width:560px){main{padding:10px}.panel{padding:13px}.grid,.toolbar{grid-template-columns:1fr}.wide,.toolbar .wide{grid-column:auto}.record-head{display:block}.record-head .actions{margin-top:8px}}
+</style>
+<style id="xc-theme">
+.back-to-shift{display:inline-flex;align-items:center;min-height:42px;padding:9px 13px;margin:0 0 12px;border:1px solid rgba(255,255,255,.55);border-radius:10px;color:#fff!important;text-decoration:none;font-weight:700;background:rgba(255,255,255,.12)}.back-to-shift:focus{outline:3px solid #fff;outline-offset:2px}
+
+:root{--xc-burgundy:#5b1535;--xc-magenta:#c2185b;--xc-pink:#e50070;--xc-silver:#d8dbe0;--xc-ink:#25252b;--xc-muted:#656873;--xc-bg:#f3f4f6;--xc-card:#fff}
+html,body{background:var(--xc-bg)!important;color:var(--xc-ink)}
+body{font-family:Arial,Helvetica,sans-serif}
+header,.header,.topbar,.app-header,.hero{background:linear-gradient(115deg,var(--xc-burgundy),#7a1647 58%,var(--xc-magenta))!important;color:#fff!important}
+header h1,header h2,.header h1,.app-header h1,.hero h1{color:#fff!important}
+button,.btn,.primary,.primary-button,[type=submit]{background:var(--xc-magenta)!important;color:#fff!important;border-color:var(--xc-magenta)!important}
+button:hover,.btn:hover,.primary:hover,[type=submit]:hover{background:var(--xc-burgundy)!important}
+button.secondary,.secondary,.btn-secondary{background:#fff!important;color:var(--xc-burgundy)!important;border:1px solid var(--xc-silver)!important}
+a{color:var(--xc-magenta)}
+input:focus,select:focus,textarea:focus{outline:2px solid #c2185b!important;border-color:#c2185b!important}
+.card,.entry,.entry-card,.panel,.form-card,.stat-card,.filter-panel,details{background:var(--xc-card);border-color:var(--xc-silver)!important}
+h1,h2,h3{color:var(--xc-burgundy)}
+label,.field-label{color:var(--xc-ink)}
+.badge,.pill,.status-chip{border-radius:999px}
+.badge,.status-chip{background:#f7e6ee;color:var(--xc-burgundy)}
+hr{border-color:var(--xc-silver)}
+</style>
+</head>
+<body>
+<header><div class="inner"><a class="back-to-shift" href="./index.html">← Back to Staff Shift App</a><h1>🗂️ Customer Service Issues / Diary</h1><p>A private record for incidents you may need to refer back to.</p></div></header>
+<main>
+<section class="panel" id="listPanel">
+<div class="record-head"><div><h2>Saved entries <span id="count" class="meta">(0)</span></h2><p class="sub">Tick an entry once the feedback / reply has been raised with and sent to your line manager.</p></div><button class="btn primary" type="button" id="addEntryBtn">＋ Add entry</button></div>
+<div class="toolbar">
+<div class="field wide"><label for="search">Search entries</label><input id="search" placeholder="Search title, headcode, category or notes…"></div>
+<div class="field"><label for="sort">Sort by</label><select id="sort"><option value="date-desc">Date — newest first</option><option value="date-asc">Date — oldest first</option><option value="title">Title A–Z</option></select></div>
+<div class="field"><label for="statusFilter">Complaint / “please explain” received?</label><select id="statusFilter"><option value="all">All</option><option value="yes">Yes</option><option value="no">No</option></select></div>
+<div class="field"><label for="replyFilter">Account / response sent?</label><select id="replyFilter"><option value="all">All</option><option value="yes">Yes</option><option value="no">No</option></select></div>
+</div>
+<div class="actions">
+<button class="btn secondary" type="button" id="exportJson">Export backup</button>
+<button class="btn secondary" type="button" id="importBtn">Import backup</button>
+<input type="file" id="importFile" accept="application/json,.json" class="hidden">
+<button class="btn secondary" type="button" id="printBtn">Print / Save PDF</button>
+</div>
+<div id="records"></div>
+</section>
+
+<section class="panel hidden" id="formPanel">
+<h2 id="formTitle">＋ New incident / feedback</h2>
+<p class="sub">Records are saved on this device in this browser. No account is required.</p>
+<form id="entryForm">
+<input type="hidden" id="editId">
+<div class="grid">
+<div class="field"><label for="incidentDate">Date of incident *</label><input id="incidentDate" type="date" required></div>
+<div class="field"><label for="headcode">Headcode *</label><input id="headcode" maxlength="30" placeholder="e.g. 1E23" required></div>
+<div class="field wide"><label for="nature">Nature of complaint / incident *</label><select id="nature" required><option value="">Select a category…</option><option>Abuse / assault</option><option>Catering issue</option><option>Customer issue</option><option>Crew/Staffing issue</option><option>External incident</option><option>Incident on board</option><option>Late running</option><option>Other</option><option>Potential complaint</option><option>Safety incident</option></select><input id="natureOther" type="hidden" value=""></div>
+<div class="field wide"><label for="shortTitle">Short title (optional)</label><input id="shortTitle" maxlength="100" placeholder="Brief description; otherwise generated from date, headcode and nature"></div>
+</div>
+<div class="section-title">Incident record</div>
+<div class="grid">
+<div class="field wide"><label for="context">Context</label><textarea id="context" placeholder="Relevant background or circumstances"></textarea></div>
+<div class="field"><label for="when">When</label><input id="when" placeholder="Time / journey stage"></div>
+<div class="field"><label for="who">Who</label><input id="who" placeholder="People involved (avoid unnecessary personal data)"></div>
+<div class="field wide"><label for="what">What happened?</label><textarea id="what" placeholder="Record the events factually, including what you remember"></textarea></div>
+<div class="field wide"><label for="where">Where</label><input id="where" placeholder="Station, train, coach or location"></div>
+<div class="field wide"><label for="why">Why / contributing factors</label><textarea id="why" placeholder="Reason, trigger or relevant factors, if known"></textarea></div>
+<div class="field wide"><label for="summary">Summary / follow-up notes</label><textarea id="summary" placeholder="Key points to remember if this is raised later"></textarea></div>
+</div>
+<div class="section-title">Follow-up status</div>
+<div class="grid">
+<div class="field"><label>Complaint / “please explain” received?</label><div class="checks"><label><input type="radio" name="raised" value="yes"> Yes</label><label><input type="radio" name="raised" value="no" checked> No</label></div></div>
+<div class="field"><label>Account / response sent?</label><div class="checks"><label><input type="radio" name="replied" value="yes"> Yes</label><label><input type="radio" name="replied" value="no" checked> No</label></div></div>
+<div class="field"><label for="raisedDate">Date complaint / “please explain” received (optional)</label><input id="raisedDate" type="date"></div>
+<div class="field"><label for="replyDate">Date account / response sent (optional)</label><input id="replyDate" type="date"></div>
+<div class="field wide"><label for="followup">Follow-up / reply notes</label><textarea id="followup" placeholder="Reference number, response summary, or next action"></textarea></div>
+</div>
+<div class="actions"><button class="btn primary" type="submit" id="saveBtn">Save incident</button><button class="btn secondary" type="button" id="clearBtn">Clear form</button><button class="btn secondary hidden" type="button" id="cancelEdit">Cancel edit</button></div>
+</form>
+<div class="notice">Privacy note: this app stores entries in this browser on this device. Clearing browser/site data may erase them. Use Export backup regularly, and do not rely on this app as your only record.</div>
+</section>
+
+</main>
+<div class="foot">Customer Service Issues / Diary · Local-first storage · v1.0</div>
+<script>
+const $=id=>document.getElementById(id);
+const STORAGE_KEY='feedbackIncidentLog.v1';
+let entries=[];
+try{entries=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');if(!Array.isArray(entries))entries=[]}catch(e){entries=[]}
+const fields=['incidentDate','headcode','nature','natureOther','shortTitle','context','when','who','what','where','why','summary','raisedDate','replyDate','followup'];
+const val=id=>$(id).value.trim();
+const status=name=>document.querySelector(`input[name="${name}"]:checked`)?.value||'no';
+const setStatus=(name,value)=>{const el=document.querySelector(`input[name="${name}"][value="${value||'no'}"]`);if(el)el.checked=true};
+const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
+function formatDate(value){if(!value)return '';const m=String(value).match(/^(\\d{4})-(\\d{2})-(\\d{2})$/);return m?`${m[3]} ${m[2]} ${m[1]}`:value}
+function refBase(e){const d=String(e.incidentDate||'').match(/^(\\d{4})-(\\d{2})-(\\d{2})$/);return `${d?d[3]+d[2]+d[1].slice(-2):'000000'}-${String(e.headcode||'NOHEADCODE').trim().toUpperCase().replace(/[^A-Z0-9]/g,'')}`}
+function assignReference(e, excludeId=null){if(e.reference)return e.reference;const base=refBase(e);const used=entries.filter(x=>x.id!==excludeId&&x.reference&&x.reference.startsWith(base+'-')).map(x=>parseInt(x.reference.split('-').pop(),10)).filter(Number.isFinite);let n=1;while(used.includes(n))n++;return `${base}-${String(n).padStart(2,'0')}`}
+function reference(e){return e.reference||assignReference(e)}
+$('incidentDate').value=today();
+entries.forEach(e=>{if(!e.reference)e.reference=assignReference(e,e.id)});try{localStorage.setItem(STORAGE_KEY,JSON.stringify(entries))}catch(e){}
+function natureLabel(e){return e.nature==='Other'&&e.natureOther?`Other — ${e.natureOther}`:(e.nature||'')}
+function generatedTitle(e){return `${formatDate(e.incidentDate)||'Undated'} / ${e.headcode||'No headcode'} / ${natureLabel(e)||'Uncategorised'}`}
+function title(e){return e.shortTitle||generatedTitle(e)}
+function persist(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(entries));render()}catch(e){alert('Could not save. Your browser storage may be full. Export a backup and try again.')}}
+function showForm(){ $('listPanel').classList.add('hidden'); $('formPanel').classList.remove('hidden'); window.scrollTo({top:0,behavior:'smooth'}); }
+function showList(){ $('formPanel').classList.add('hidden'); $('listPanel').classList.remove('hidden'); window.scrollTo({top:0,behavior:'smooth'}); }
+function clearForm(){ $('entryForm').reset();$('editId').value='';$('incidentDate').value=today();
+entries.forEach(e=>{if(!e.reference)e.reference=assignReference(e,e.id)});try{localStorage.setItem(STORAGE_KEY,JSON.stringify(entries))}catch(e){}$('formTitle').textContent='＋ New incident / feedback';$('saveBtn').textContent='Save incident';$('cancelEdit').classList.add('hidden');setStatus('raised','no');setStatus('replied','no')}
+function readForm(){const e={};fields.forEach(id=>e[id]=val(id));e.raised=status('raised');e.replied=status('replied');return e}
+$('nature').addEventListener('change',()=>{if($('nature').value==='Other'){const reason=window.prompt('Please enter the reason for selecting Other:');if(reason===null||!reason.trim()){$('nature').value='';$('natureOther').value='';return}$('natureOther').value=reason.trim()}else{$('natureOther').value=''}});
+$('entryForm').addEventListener('submit',ev=>{ev.preventDefault();const e=readForm();if(!e.incidentDate||!e.headcode||!e.nature){alert('Please complete date, headcode and nature of complaint.');return}const id=$('editId').value;if(id){const i=entries.findIndex(x=>x.id===id);if(i>=0){const previous=entries[i];const updated={...previous,...e,updatedAt:new Date().toISOString()};if(previous.incidentDate!==e.incidentDate||previous.headcode!==e.headcode)updated.reference='';entries[i]=updated;if(!entries[i].reference)entries[i].reference=assignReference(entries[i],id)}}else{e.id=crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random();e.createdAt=new Date().toISOString();e.reference=assignReference(e);entries.push(e)}persist();clearForm();showList()});
+$('clearBtn').addEventListener('click',clearForm);$('cancelEdit').addEventListener('click',()=>{clearForm();showList()});$('addEntryBtn').addEventListener('click',()=>{clearForm();showForm()});
+function editEntry(id){const e=entries.find(x=>x.id===id);if(!e)return;fields.forEach(k=>$(k).value=e[k]||'');$('editId').value=id;setStatus('raised',e.raised);setStatus('replied',e.replied);$('formTitle').textContent='✎ Edit incident / feedback';$('saveBtn').textContent='Save changes';$('cancelEdit').classList.remove('hidden');showForm()}
+function toggleReviewed(id,checked){const e=entries.find(x=>x.id===id);if(e){e.reviewed=checked;persist()}}
+function deleteEntry(id){const e=entries.find(x=>x.id===id);if(e&&confirm(`Delete this record?\n\n${title(e)}\n\nThis cannot be undone unless you have a backup.`)){entries=entries.filter(x=>x.id!==id);persist()}}
+function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function exportEntryPdf(id){const e=entries.find(x=>x.id===id);if(!e)return;const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const w=window.open('','_blank');if(!w){alert('Allow pop-ups to print this entry.');return}const parts=[['Context',e.context],['When',e.when],['Who',e.who],['What',e.what],['Where',e.where],['Why',e.why],['Summary / follow-up',e.summary],['Date complaint received',formatDate(e.raisedDate)],['Date account / response sent',formatDate(e.replyDate)],['Follow-up / reply notes',e.followup]].filter(x=>x[1]);w.document.write(`<html><head><meta charset="utf-8"><title>${esc(title(e))}</title><style>body{font:12px Arial;margin:18mm;color:#222}h1{color:#3b0018}h2{font-size:14px;color:#70002f;margin:16px 0 4px}p{white-space:pre-wrap;line-height:1.4}</style></head><body><h1>Customer Issues / Shift Diary</h1><p><b>Reference: ${esc(reference(e))}</b><br><b>${esc(title(e))}</b><br>Date: ${esc(formatDate(e.incidentDate))} · Headcode: ${esc(e.headcode)} · Nature: ${esc(natureLabel(e))}<br>Raised: ${e.raised==='yes'?'Yes':'No'} · Reply: ${e.replied==='yes'?'Yes':'No'} · Sent to line manager: ${e.reviewed?'Yes':'No'}</p>${parts.map(([k,v])=>`<h2>${esc(k)}</h2><p>${esc(v)}</p>`).join('')}<script>window.onload=()=>window.print()<\/script></body></html>`);w.document.close()}
+function emailEntry(id){const e=entries.find(x=>x.id===id);if(!e)return;const lines=[`Reference: ${reference(e)}`,title(e),`Date: ${formatDate(e.incidentDate)||'Not recorded'}`,`Headcode: ${e.headcode||'Not recorded'}`,`Nature: ${e.nature||'Not recorded'}`,`Complaint / “please explain” received: ${e.raised==='yes'?'Yes':'No'}${e.raisedDate?' (received '+formatDate(e.raisedDate)+')':''}`,`Account / response sent: ${e.replied==='yes'?'Yes':'No'}${e.replyDate?' (sent '+formatDate(e.replyDate)+')':''}`,`Sent to line manager: ${e.reviewed?'Yes':'No'}`,'',... [['Context',e.context],['When',e.when],['Who',e.who],['What',e.what],['Where',e.where],['Why',e.why],['Summary',e.summary],['Follow-up / reply notes',e.followup]].filter(x=>x[1]).map(([k,v])=>`${k}:\n${v}`)];location.href='mailto:?subject='+encodeURIComponent(title(e))+'&body='+encodeURIComponent(lines.join('\n'))}
+
+function render(){const q=$('search').value.toLowerCase().trim(),sf=$('statusFilter').value,rf=$('replyFilter').value,sort=$('sort').value;let list=entries.filter(e=>{const hay=[title(e),...fields.map(k=>e[k]),e.raised,e.replied].join(' ').toLowerCase();return(!q||hay.includes(q))&&(sf==='all'||e.raised===sf)&&(rf==='all'||e.replied===rf)});list.sort((a,b)=>sort==='date-asc'?(a.incidentDate||'').localeCompare(b.incidentDate||''):sort==='title'?title(a).localeCompare(title(b)):(b.incidentDate||'').localeCompare(a.incidentDate||''));$('count').textContent=`(${entries.length} total · ${list.length} shown)`;const root=$('records');if(!list.length){root.innerHTML='<div class="empty">No matching records yet.<br>Use the form above to add your first incident.</div>';return}root.innerHTML=list.map(e=>`<article class="record"><div class="record-head"><div><h3>${escapeHtml(reference(e))} · ${escapeHtml(title(e))}</h3><div class="meta">Incident date: ${escapeHtml(formatDate(e.incidentDate)||'Not set')} · Headcode: ${escapeHtml(e.headcode||'—')}</div><label class="review-toggle"><input type="checkbox" data-reviewed="${escapeHtml(e.id)}" ${e.reviewed?'checked':''}> Sent to line manager</label></div><div class="actions"><button class="btn secondary small" data-edit="${escapeHtml(e.id)}">Edit</button><button class="btn danger small" data-delete="${escapeHtml(e.id)}">Delete</button></div></div><div class="pills"><span class="pill ${e.raised==='yes'?'yes':'no'}">Complaint received: ${e.raised==='yes'?'Yes':'No'}</span><span class="pill ${e.replied==='yes'?'yes':'no'}">Response sent: ${e.replied==='yes'?'Yes':'No'}</span><span class="pill">${escapeHtml(natureLabel(e))}</span></div>${e.summary?`<div class="record-details"><strong>Summary:</strong> ${escapeHtml(e.summary)}</div>`:''}<div class="actions"><button class="btn secondary small" data-pdf="${escapeHtml(e.id)}">Export entry PDF</button><button class="btn secondary small" data-email="${escapeHtml(e.id)}">Email entry</button></div><details><summary>View full record</summary><div class="record-details">${[['Context',e.context],['When',e.when],['Who',e.who],['What',e.what],['Where',e.where],['Why',e.why],['Date complaint received',formatDate(e.raisedDate)],['Date account / response sent',formatDate(e.replyDate)],['Follow-up / reply notes',e.followup]].filter(x=>x[1]).map(x=>`<p><strong>${x[0]}:</strong><br>${escapeHtml(x[1])}</p>`).join('')||'No additional notes entered.'}</div></details></article>`).join('');root.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>editEntry(b.dataset.edit));root.querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>deleteEntry(b.dataset.delete));root.querySelectorAll('[data-reviewed]').forEach(b=>b.onchange=()=>toggleReviewed(b.dataset.reviewed,b.checked));root.querySelectorAll('[data-pdf]').forEach(b=>b.onclick=()=>exportEntryPdf(b.dataset.pdf));root.querySelectorAll('[data-email]').forEach(b=>b.onclick=()=>emailEntry(b.dataset.email))}
+['search','sort','statusFilter','replyFilter'].forEach(id=>$(id).addEventListener(id==='search'?'input':'change',render));
+$('exportJson').onclick=()=>{const blob=new Blob([JSON.stringify({app:'Feedback & Incident Log',version:1,exportedAt:new Date().toISOString(),entries},null,2)],{type:'application/json'});downloadBlob(blob,`feedback-log-backup-${today()}.json`)};
+function downloadBlob(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+$('importBtn').onclick=()=> $('importFile').click();
+$('importFile').onchange=async ev=>{const f=ev.target.files[0];if(!f)return;try{const data=JSON.parse(await f.text());const incoming=Array.isArray(data)?data:data.entries;if(!Array.isArray(incoming))throw new Error('Invalid format');if(!confirm(`Import ${incoming.length} records? Existing records with the same ID will be replaced; other records will be kept.`))return;const map=new Map(entries.map(e=>[e.id,e]));incoming.forEach(e=>{if(e&&e.id)map.set(e.id,{...e})});entries=[...map.values()];persist();alert('Backup imported.');}catch(e){alert('Could not import this file. Please select a backup exported by this app.')}finally{ev.target.value=''}};
+$('printBtn').onclick=()=>{const q=$('search').value.toLowerCase().trim(),sf=$('statusFilter').value,rf=$('replyFilter').value;const list=entries.filter(e=>[title(e),...fields.map(k=>e[k]),e.raised,e.replied].join(' ').toLowerCase().includes(q)&&(sf==='all'||e.raised===sf)&&(rf==='all'||e.replied===rf)).sort((a,b)=>(b.incidentDate||'').localeCompare(a.incidentDate||''));const w=window.open('','_blank');if(!w){alert('Please allow pop-ups to print or save as PDF.');return}w.document.write(`<!doctype html><html><head><title>Feedback & Incident Log</title><style>body{font:12px Arial,sans-serif;color:#111;margin:20mm}h1{font-size:20px}h2{font-size:15px;margin:0 0 5px}article{page-break-inside:avoid;border-bottom:1px solid #bbb;padding:12px 0}p{margin:4px 0;white-space:pre-wrap}.muted{color:#555} @media print{button{display:none}}</style></head><body><h1>Feedback & Incident Log</h1><p class="muted">Printed ${new Date().toLocaleString()} · ${list.length} record(s)</p>${list.map(e=>`<article><h2>${escapeHtml(reference(e))} · ${escapeHtml(title(e))}</h2><p><b>Incident date:</b> ${escapeHtml(formatDate(e.incidentDate))} &nbsp; <b>Headcode:</b> ${escapeHtml(e.headcode)} &nbsp; <b>Nature:</b> ${escapeHtml(natureLabel(e))}</p><p><b>Complaint / “please explain” received:</b> ${e.raised==='yes'?'Yes':'No'} (${escapeHtml(formatDate(e.raisedDate)||'date not recorded')}) &nbsp; <b>Account / response sent:</b> ${e.replied==='yes'?'Yes':'No'} (${escapeHtml(formatDate(e.replyDate)||'date not recorded')})</p>${[['Context',e.context],['When',e.when],['Who',e.who],['What',e.what],['Where',e.where],['Why',e.why],['Summary',e.summary],['Follow-up / reply notes',e.followup]].filter(x=>x[1]).map(x=>`<p><b>${x[0]}:</b> ${escapeHtml(x[1])}</p>`).join('')}</article>`).join('')}<script>window.onload=()=>window.print()<\/script></body></html>`);w.document.close()};
+render();
+
+</script>
+</body></html>
