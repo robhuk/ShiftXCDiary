@@ -132,7 +132,7 @@ function drawMap(items=visibleItems){
  else if(visibleItems.length)map.fitBounds(visibleItems.map(x=>[x.lat,x.lon]),{padding:[20,20]});
 }
 function initMap(){if(mode==='nhd'||!window.L||mapReady)return;try{map=L.map(activeDialog?.querySelector('#aroundMap'),{scrollWheelZoom:false}).setView([54.5,-2.5],6);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map);mapReady=true;drawMap();}catch(err){console.warn('Around me map unavailable:',err);$('aroundResultCount').textContent='Map unavailable; list results are still available.';}}
-function setMode(next){mode=next;$('aroundSearch').placeholder=mode==='crossings'?'Search crossing name, UID or ELR…':mode==='stations'?'Search station name or CRS code…':'Search access point name, ID, ELR or item code…';render();if(mode==='nhd')loadCachedAllNhd();}
+function setMode(next){mode=next;$('aroundSearch').placeholder=mode==='crossings'?'Search crossing name, UID or ELR…':mode==='stations'?'Search station name or CRS code…':'Search access point name, ID, ELR or item code…';render();}
 function openAround(selectedMode){
   try{
     updateRadiusLabels();
@@ -150,7 +150,15 @@ function openAround(selectedMode){
     if(map){try{map.remove();}catch(e){}}
     map=null;mapReady=false;markers=[];resultMarkers=[];visibleItems=[];
     initMap();
-    if(!crossings.length||!stations.length)loadBaseData();
+    if(selectedMode==='nhd'){
+      loadCachedAllNhd();
+    }else{
+      // Load the bundled reference datasets before presenting results. Re-render
+      // only if this page is still the active, open dialog when the fetch completes.
+      loadBaseData().then(()=>{
+        if(activeDialog===pageDialog(selectedMode)&&activeDialog?.open)render();
+      });
+    }
     render();
     setTimeout(()=>{try{if(map)map.invalidateSize();}catch(e){}},150);
     locate();
