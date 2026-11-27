@@ -120,7 +120,7 @@ function locate(){
 function numberedPin(number){return L.divIcon({className:'',html:`<div style="width:30px;height:30px;background:#A50034;border:2px solid #fff;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 2px 6px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center"><span style="transform:rotate(45deg);color:#fff;font-size:13px;font-weight:800;line-height:1">${number}</span></div>`,iconSize:[34,34],iconAnchor:[17,30],popupAnchor:[0,-28]});}
 function mapPopup(x,number){if(mode==='crossings')return `<strong>${number}. ${esc(x.name)}</strong><br>UID ${esc(x.uid||'—')} · ${esc(x.type||'Type unknown')}<br>ELR ${esc(x.elr||'—')} · ${esc(x.route||'—')}`;if(mode==='stations')return `<strong>${number}. ${esc(x.name)}</strong><br>CRS ${esc(x.code||'—')}`;return `<strong>${number}. ${esc(x.name)}</strong><br>Hazard ID ${esc(x.id||'—')} · ELR ${esc(x.elr||'—')} · Mileage ${esc(x.mileage||'—')}`;}
 function drawMap(items=visibleItems){
- if(mode==='nhd'||!map)return;
+ if(!map)return;
  visibleItems=Array.isArray(items)?items:visibleItems;
  markers.forEach(m=>map.removeLayer(m));markers=[];resultMarkers=[];
  if(position)markers.push(L.circleMarker([position.lat,position.lon],{radius:8,color:'#1769aa',fillColor:'#42a5f5',fillOpacity:1}).addTo(map).bindPopup('Your GPS location'));
@@ -128,10 +128,11 @@ function drawMap(items=visibleItems){
   const number=index+1,marker=L.marker([x.lat,x.lon],{icon:numberedPin(number)}).bindPopup(mapPopup(x,number));
   resultMarkers[index]=marker;markers.push(marker.addTo(map));
  });
- if(position)map.setView([position.lat,position.lon],13);
- else if(visibleItems.length)map.fitBounds(visibleItems.map(x=>[x.lat,x.lon]),{padding:[20,20]});
+ if(position)map.setView([position.lat,position.lon],13,{animate:false});
+ else if(visibleItems.length)map.setView([visibleItems[0].lat,visibleItems[0].lon],13,{animate:false});
+ else map.setView([54.5,-2.5],6,{animate:false});
 }
-function initMap(){if(mode==='nhd'||!window.L||mapReady)return;try{map=L.map(activeDialog?.querySelector('#aroundMap'),{scrollWheelZoom:false}).setView([54.5,-2.5],6);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map);mapReady=true;drawMap();}catch(err){console.warn('Around me map unavailable:',err);$('aroundResultCount').textContent='Map unavailable; list results are still available.';}}
+function initMap(){if(!window.L||mapReady)return;try{map=L.map(activeDialog?.querySelector('#aroundMap'),{zoomControl:false,scrollWheelZoom:false,doubleClickZoom:false,boxZoom:false,keyboard:false,dragging:false,touchZoom:false,tap:false,zoomSnap:0.5,zoomDelta:0.5}).setView([54.5,-2.5],6);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map);mapReady=true;drawMap();}catch(err){console.warn('Around me map unavailable:',err);$('aroundResultCount').textContent='Map unavailable; list results are still available.';}}
 function setMode(next){mode=next;$('aroundSearch').placeholder=mode==='crossings'?'Search crossing name, UID or ELR…':mode==='stations'?'Search station name or CRS code…':'Search access point name, ID, ELR or item code…';render();}
 function openAround(selectedMode){
   try{
@@ -144,8 +145,8 @@ function openAround(selectedMode){
     }
     activeDialog.style.display='block';
     setMode(selectedMode);
-    // Access-point results use the device's mapping app rather than an embedded map.
-    const mapPanel=activeDialog.querySelector('#aroundMap');if(mapPanel)mapPanel.style.display=selectedMode==='nhd'?'none':'';
+    // Show the same fixed-scale, non-interactive reference map for access points, crossings and stations.
+    const mapPanel=activeDialog.querySelector('#aroundMap');if(mapPanel)mapPanel.style.display='';
     // Each dedicated page owns its own map element; recreate Leaflet when changing pages.
     if(map){try{map.remove();}catch(e){}}
     map=null;mapReady=false;markers=[];resultMarkers=[];visibleItems=[];

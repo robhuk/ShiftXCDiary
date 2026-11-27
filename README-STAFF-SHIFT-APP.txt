@@ -116,3 +116,8 @@ Version 1.3.286: Customer Service Issues / Diary records are now included in the
 Version 1.3.286: Customer Service Issues / Diary records are now included in the same Google Drive cloud backup and manual JSON backup as the main Staff Shift App. Diary edits queue the next cloud backup; restoring a backup restores the diary records too.
 
 Version 1.3.287: Access-point results now show one Open in Maps action. On iPhone/iPad it opens Apple Maps; on Android it uses a geo: link to open an available mapping app. The embedded access-point map and separate Google/Apple links are hidden for access points only; crossing and station map behaviour is unchanged.
+
+Version 1.3.290 – Fixed location maps
+- Nearest Access Points now displays an embedded reference map with numbered markers.
+- Access point, crossing and station maps use a fixed zoom level and do not support map zooming, dragging, or scrolling gestures.
+- Map zoom controls are hidden; result lists and Open in Maps links remain available.
