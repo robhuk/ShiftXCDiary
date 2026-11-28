@@ -921,3 +921,13 @@ body.map-fullscreen-active{overflow:hidden!important}
 .crossing-status-layer-toggle input{width:17px;height:17px;accent-color:#a50034;margin:0}
 
 .crossing-status-layer-legend{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;color:#665b61;margin-left:3px}.crossing-status-layer-legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-left:3px}.crossing-status-layer-legend .open-dot{background:#159447}.crossing-status-layer-legend .closed-dot{background:#d71920}.crossing-status-layer-legend .unknown-dot{background:#777}
+
+/* Fullscreen maps stay inside their native modal dialog (the browser top layer),
+   but the dialog itself becomes a viewport-sized map surface. This avoids the
+   scroll-container clipping and pointer interception seen on mobile PWAs. */
+.around-me-page.map-fullscreen-owner{position:fixed!important;inset:0!important;margin:0!important;width:100vw!important;max-width:none!important;height:100vh!important;height:100dvh!important;max-height:none!important;overflow:hidden!important;overscroll-behavior:none!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;}
+.around-me-page.map-fullscreen-owner>:not(.around-map-shell){visibility:hidden!important;pointer-events:none!important;}
+.around-me-page.map-fullscreen-owner .around-map-shell.is-fullscreen{position:absolute!important;inset:0!important;z-index:1!important;width:100%!important;height:100%!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:#fff!important;pointer-events:auto!important;isolation:auto!important;}
+.around-me-page.map-fullscreen-owner .around-map-shell.is-fullscreen .around-map{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;border:0!important;border-radius:0!important;pointer-events:auto!important;touch-action:pan-x pan-y!important;}
+.around-me-page.map-fullscreen-owner .around-map-shell.is-fullscreen .around-map-fullscreen-close{z-index:10000!important;pointer-events:auto!important;touch-action:manipulation!important;}
+.around-me-page.map-fullscreen-owner .around-map-shell.is-fullscreen .leaflet-container,.around-me-page.map-fullscreen-owner .around-map-shell.is-fullscreen .leaflet-pane,.around-me-page.map-fullscreen-owner .around-map-shell.is-fullscreen .leaflet-marker-icon,.around-me-page.map-fullscreen-owner .around-map-shell.is-fullscreen .leaflet-marker-shadow{pointer-events:auto;}

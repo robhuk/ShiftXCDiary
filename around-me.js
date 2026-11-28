@@ -32,8 +32,10 @@ function setCrossingStatusLayer(enabled){crossingStatusLayerEnabled=!!enabled;tr
 function updateCrossingStatusMarkers(){if(!map)return;drawMap(visibleItems);}
 function liveStatusForMapItem(item){if(mode!=='crossings'||!Array.isArray(liveCrossingRows))return 'unknown';let match=liveCrossingRows.find(row=>row.uid&&item.uid&&String(row.uid)===String(item.uid));if(!match){let nearest=null,best=Infinity;for(const row of liveCrossingRows){const lat=Number(row.lat),lon=Number(row.lon);if(!Number.isFinite(lat)||!Number.isFinite(lon))continue;const distance=hav(Number(item.lat),Number(item.lon),lat,lon);if(distance<best){best=distance;nearest=row;}}if(best<=120)match=nearest;}return match?liveStatusLabel(match.liveStatus?.status||match.liveStatus):'unknown';}
 
-const NHD_BASE='https://raw.githubusercontent.com/infrastructureclub/nr-national-hazard-directory/main/data/';
-const NHD_REGIONS=[['QE','East Coast'],['QF','North and East'],['QL','Scotland'],['QM','East Midlands'],['QR','London North West North'],['QS','London North West South'],['QT','Anglia'],['QK','Kent'],['QU','Sussex'],['QC','Wales'],['QW','Wessex'],['QD','Western']];
+const NHD_BASE='https://raw.githubusercontent.com/infrastructureclub/nr-national-hazard-directory/main/';
+// Region codes are refreshed from the source's regions.json; these are a fallback.
+let NHD_REGIONS=[['QT','Anglia'],['QK','Kent'],['QG','London North East'],['QR','London North West North'],['QS','London North West South'],['QM','East Midlands'],['QL','Scotland'],['QC','Wales'],['QW','Wessex'],['QD','Western'],['QX','CVL']];
+async function refreshNhdRegions(){try{const response=await fetch(NHD_BASE+'data/regions.json',{cache:'no-store'});if(!response.ok)return;const payload=await response.json();if(payload&&typeof payload==='object'&&!Array.isArray(payload)){const regions=Object.entries(payload).filter(([code,name])=>/^[A-Z]{2}$/.test(code)&&typeof name==='string').map(([code,name])=>[code,name]);if(regions.length)NHD_REGIONS=regions;}}catch(error){console.warn('Could not refresh National Hazard Directory regions; using fallback list.',error);}}
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const UNIT_KEY='shiftapp.mappingDistanceUnit';
 const getDistanceUnit=()=>localStorage.getItem(UNIT_KEY)==='km'?'km':'mi';
@@ -54,20 +56,64 @@ const bngToWgs84=(E,N)=>{
  return {lat:latW*180/Math.PI,lon:Math.atan2(y2,x2)*180/Math.PI};
 };
 function parseCSV(text){const rows=[];let row=[],field='',quoted=false;for(let i=0;i<text.length;i++){const c=text[i],n=text[i+1];if(quoted){if(c==='"'&&n==='"'){field+='"';i++;}else if(c==='"')quoted=false;else field+=c;}else if(c==='"')quoted=true;else if(c===','){row.push(field);field='';}else if(c==='\n'){row.push(field);rows.push(row);row=[];field='';}else if(c!=='\r')field+=c;}if(field.length||row.length){row.push(field);rows.push(row);}return rows;}
-function mapNhdRows(rows,code){if(!rows.length)return[];const header=rows[0].map(x=>x.trim().toLowerCase()),idx=k=>{const i=header.indexOf(k);return i>=0?i:null;};const col={id:idx('hazard id'),elr:idx('elr'),mile:idx('start mileage'),item:idx('item code'),east:idx('easting'),north:idx('northing'),name:idx('local name'),updated:idx('last updated')},out=[];for(let i=1;i<rows.length;i++){const r=rows[i],get=k=>col[k]===null?'':(r[col[k]]||'').trim(),E=Number(get('east')),N=Number(get('north'));if(!Number.isFinite(E)||!Number.isFinite(N)||E<0||E>700000||N<0||N>1300000)continue;const ll=bngToWgs84(E,N);if(!Number.isFinite(ll.lat)||!Number.isFinite(ll.lon))continue;out.push({id:get('id'),elr:get('elr'),mileage:get('mile'),itemCode:get('item'),name:get('name')||'Unnamed access point',lat:ll.lat,lon:ll.lon,updated:get('updated'),region:code});}return out;}
+function mapNhdRows(rows,code){
+ if(!Array.isArray(rows)||!rows.length)return[];
+ const norm=v=>String(v??'').toLowerCase().replace(/[^a-z0-9]/g,'');
+ const aliases={
+  id:['hazardid','accessid','id','accesspointid','recordid'],
+  elr:['elr','accesselr','engineersline'],
+  mile:['startmileage','accessstartmileage','mileage','startmile'],
+  item:['itemcode','accessitemcode','hazardcode'],
+  east:['easting','accesseasting','osgbeasting','eastings','x'],
+  north:['northing','accessnorthing','osgbnorthing','northings','y'],
+  name:['localname','accesslocalname','name','description','accesspointname'],
+  updated:['lastupdated','updated','dateupdated','modified']
+ };
+ const first=rows[0].map(norm),hasHeader=first.some(v=>aliases.east.includes(v))&&first.some(v=>aliases.north.includes(v));
+ let columns={};
+ if(hasHeader){Object.entries(aliases).forEach(([key,names])=>{columns[key]=first.findIndex(v=>names.includes(v));});}
+ else columns={id:0,elr:1,mile:2,item:8,east:10,north:11,name:12,updated:-1};
+ const out=[];
+ for(let i=hasHeader?1:0;i<rows.length;i++){
+  const r=rows[i];if(!Array.isArray(r))continue;
+  const get=k=>columns[k]===undefined||columns[k]<0?'':String(r[columns[k]]??'').trim();
+  const eastRaw=get('east'),northRaw=get('north');if(!eastRaw||!northRaw)continue;
+  const E=Number(eastRaw),N=Number(northRaw);
+  if(!Number.isFinite(E)||!Number.isFinite(N)||E<0||E>700000||N<0||N>1300000)continue;
+  const ll=bngToWgs84(E,N);if(!Number.isFinite(ll.lat)||!Number.isFinite(ll.lon))continue;
+  out.push({id:get('id'),elr:get('elr'),mileage:get('mile'),itemCode:get('item'),name:get('name')||'Unnamed access point',lat:ll.lat,lon:ll.lon,updated:get('updated'),region:code});
+ }
+ return out;
+}
+function mapNhdJson(payload,code){
+ const rows=Array.isArray(payload)?payload:Array.isArray(payload?.features)?payload.features:Array.isArray(payload?.records)?payload.records:Array.isArray(payload?.access_points)?payload.access_points:Array.isArray(payload?.data)?payload.data:[];
+ const out=[];
+ for(const entry of rows){const props=entry?.properties||entry?.attributes||entry||{},geom=entry?.geometry,rawE=props.easting??props.Easting??props.ACCESS_EASTING??props.access_easting,rawN=props.northing??props.Northing??props.ACCESS_NORTHING??props.access_northing,E=rawE==null||rawE===''?NaN:Number(rawE),N=rawN==null||rawN===''?NaN:Number(rawN);let lat,lon;
+  if((!Number.isFinite(E)||!Number.isFinite(N))&&Array.isArray(geom?.coordinates)&&geom.coordinates.length>=2){lon=Number(geom.coordinates[0]);lat=Number(geom.coordinates[1]);}
+  else if(Number.isFinite(E)&&Number.isFinite(N)){const ll=bngToWgs84(E,N);lat=ll.lat;lon=ll.lon;}
+  if(!Number.isFinite(lat)||!Number.isFinite(lon))continue;
+  out.push({id:String(props.hazard_id??props.access_id??props.id??''),elr:String(props.elr??props.access_elr??''),mileage:String(props.start_mileage??props.mileage??''),itemCode:String(props.item_code??''),name:String(props.local_name??props.name??props.description??'Unnamed access point'),lat,lon,updated:String(props.last_updated??props.updated??''),region:code});
+ }
+ return out;
+}
+async function fetchNhdRegion(code){
+ const paths=[`data/${code}/core_data.csv`,`data/${code}/coreData.csv`,`data/${code}/access_points.csv`,`data/${code}/core_data.json`,`data/${code}/access_points.json`,`data-pre-2025/${code}/core_data.csv`];
+ let lastError=null;
+ for(const path of paths){try{const response=await fetch(NHD_BASE+path,{cache:'no-store'});if(!response.ok){lastError=new Error(`${path}: HTTP ${response.status}`);continue;}const body=await response.text();if(!body.trim())throw Error(`${path}: empty response`);let records=[];try{const json=JSON.parse(body);records=mapNhdJson(json,code);}catch{records=mapNhdRows(parseCSV(body),code);}if(records.length)return records;lastError=new Error(`${path}: no usable coordinate records`);}catch(error){lastError=error;}}
+ throw lastError||new Error(`No supported access point file found for ${code}`);
+}
 function openNhdDb(){return new Promise((resolve,reject)=>{const req=indexedDB.open('shift-diary-around-me-nhd',1);req.onupgradeneeded=()=>req.result.createObjectStore('regions',{keyPath:'code'});req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);});}
 async function getNhdCache(code){try{const db=await openNhdDb();return await new Promise((res,rej)=>{const r=db.transaction('regions').objectStore('regions').get(code);r.onsuccess=()=>res(r.result||null);r.onerror=()=>rej(r.error);});}catch{return null;}}
 async function putNhdCache(code,records){const db=await openNhdDb();return new Promise((res,rej)=>{const tx=db.transaction('regions','readwrite');tx.objectStore('regions').put({code,records,savedAt:new Date().toISOString()});tx.oncomplete=()=>res(true);tx.onerror=()=>rej(tx.error);});}
 async function loadCachedAllNhd(){
- const loaded=[];
- for(const [code] of NHD_REGIONS){
-  const cached=await getNhdCache(code);
-  if(cached?.records?.length)loaded.push(...cached.records);
- }
- nhdRecords=loaded;
- $('aroundNhdStatus').textContent=loaded.length
-  ? `${loaded.length.toLocaleString()} access point records from all saved UK regions are available${navigator.onLine?'':' offline'}. Use Update all to refresh the data.`
-  : 'No access point data is saved yet. Tap Update all to download every UK region.';
+ try{
+  const db=await openNhdDb();
+  const cached=await new Promise((resolve,reject)=>{const request=db.transaction('regions').objectStore('regions').getAll();request.onsuccess=()=>resolve(request.result||[]);request.onerror=()=>reject(request.error);});
+  nhdRecords=cached.flatMap(entry=>Array.isArray(entry?.records)?entry.records:[]);
+ }catch(error){console.warn('Could not read saved access point data:',error);nhdRecords=[];}
+ $('aroundNhdStatus').textContent=nhdRecords.length
+  ? `${nhdRecords.length.toLocaleString()} access point records from ${new Set(nhdRecords.map(x=>x.region)).size} saved UK regions are available${navigator.onLine?'':' offline'}. Use Update all to refresh the data.`
+  : 'No access point data is saved yet. Tap Update all to download the latest UK regions.';
  render();
 }
 async function loadAllNhd(){
@@ -75,18 +121,16 @@ async function loadAllNhd(){
  const button=$('aroundNhdLoadAll');if(button){button.disabled=true;button.textContent='⏳ Updating all UK regions…';}
  let ok=0,failed=[];const merged=[];
  try{
+  await refreshNhdRegions();
   for(const [code,name] of NHD_REGIONS){
    $('aroundNhdStatus').textContent=`Updating ${name} (${code})…`;
    try{
-    const response=await fetch(NHD_BASE+code+'/coreData.csv',{cache:'no-store'});
-    if(!response.ok)throw Error('Source returned '+response.status);
-    const records=mapNhdRows(parseCSV(await response.text()),code);
-    if(!records.length)throw Error('No usable coordinate records were found.');
+    const records=await fetchNhdRegion(code);
     await putNhdCache(code,records);merged.push(...records);ok++;
    }catch(error){
+    console.warn(`Access point region ${code} could not be refreshed:`,error);
     const cached=await getNhdCache(code);
-    if(cached?.records?.length){merged.push(...cached.records);failed.push(`${code} (using saved data)`);}
-    else failed.push(code);
+    if(cached?.records?.length){merged.push(...cached.records);failed.push(`${code} (using saved data)`);}else failed.push(code);
    }
   }
   nhdRecords=merged;
@@ -176,7 +220,32 @@ function drawMap(items=visibleItems){
 }
 function initMap(){if(!window.L||mapReady)return;try{map=L.map(activeDialog?.querySelector('#aroundMap'),{zoomControl:false,scrollWheelZoom:false,wheelPxPerZoomLevel:120,doubleClickZoom:false,boxZoom:false,keyboard:false,dragging:true,touchZoom:false,tap:true,zoomSnap:0.5,zoomDelta:0.5}).setView([54.5,-2.5],5.5);setMapType(selectedMapType());addMapTypeControl();addRailwayOverlayControl();applySavedRailwayOverlays();mapReady=true;drawMap();updateCrossingStatusMarkers();}catch(err){console.warn('Around me map unavailable:',err);$('aroundResultCount').textContent='Map unavailable; list results are still available.';}}
 function setMode(next){mode=next;$('aroundSearch').placeholder=mode==='crossings'?'Search crossing name, UID or ELR…':mode==='stations'?'Search station name or CRS code…':'Search access point name, ID, ELR or item code…';render();}
-function setMapFullscreen(enabled){if(!activeDialog)return;const shell=activeDialog.querySelector('.around-map-shell');if(!shell)return;shell.classList.toggle('is-fullscreen',!!enabled);const close=shell.querySelector('.around-map-fullscreen-close');if(close)close.hidden=!enabled;const open=activeDialog.querySelector('.map-fullscreen-open');if(open)open.hidden=!!enabled;document.body.classList.toggle('map-fullscreen-active',!!enabled);setTimeout(()=>{try{map?.invalidateSize();}catch(e){}},100);}
+let fullscreenShell=null,fullscreenPlaceholder=null,fullscreenOwner=null;
+function setMapFullscreen(enabled){
+ if(enabled){
+  if(!activeDialog||fullscreenShell)return;
+  const shell=activeDialog.querySelector('.around-map-shell');if(!shell)return;
+  fullscreenOwner=activeDialog;fullscreenShell=shell;fullscreenPlaceholder=document.createComment('map-fullscreen-placeholder');
+  shell.parentNode.insertBefore(fullscreenPlaceholder,shell);
+  activeDialog.appendChild(shell);
+  activeDialog.classList.add('map-fullscreen-owner');
+  shell.classList.add('is-fullscreen');
+  const close=shell.querySelector('.around-map-fullscreen-close');if(close)close.hidden=false;
+  const open=fullscreenOwner.querySelector('.map-fullscreen-open');if(open)open.hidden=true;
+  document.body.classList.add('map-fullscreen-active');
+ }else{
+  if(!fullscreenShell)return;
+  const shell=fullscreenShell,owner=fullscreenOwner,placeholder=fullscreenPlaceholder;
+  shell.classList.remove('is-fullscreen');
+  if(placeholder?.parentNode){placeholder.parentNode.insertBefore(shell,placeholder);placeholder.remove();}
+  owner?.classList.remove('map-fullscreen-owner');
+  const close=shell.querySelector('.around-map-fullscreen-close');if(close)close.hidden=true;
+  const open=owner?.querySelector('.map-fullscreen-open');if(open)open.hidden=false;
+  document.body.classList.remove('map-fullscreen-active');
+  fullscreenShell=null;fullscreenPlaceholder=null;fullscreenOwner=null;
+ }
+ setTimeout(()=>{try{map?.invalidateSize({pan:false});}catch(e){}},180);
+}
 function openAround(selectedMode){
   try{
     updateRadiusLabels();
@@ -263,6 +332,6 @@ updateRadiusLabels();
  });
  page.addEventListener('click',e=>{if(e.target===page){try{page.close();}catch(e){page.removeAttribute('open');}}});
  page.addEventListener('cancel',e=>{const shell=page.querySelector('.around-map-shell');if(shell?.classList.contains('is-fullscreen')){e.preventDefault();setMapFullscreen(false);return;}e.preventDefault();try{page.close();}catch(err){page.removeAttribute('open');}});
- page.addEventListener('close',()=>{setMapFullscreen(false);page.style.display='';if(activeDialog===page)activeDialog=null;});
+ page.addEventListener('close',()=>{if(fullscreenOwner===page)setMapFullscreen(false);page.style.display='';if(activeDialog===page)activeDialog=null;});
 });
 })();
