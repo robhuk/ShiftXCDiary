@@ -13,7 +13,7 @@ const MAP_TYPES={
 };
 function selectedMapType(){try{const saved=localStorage.getItem(MAP_TYPE_KEY);return Object.prototype.hasOwnProperty.call(MAP_TYPES,saved)?saved:'street';}catch{return 'street';}}
 function setMapType(type){if(!map||!Object.prototype.hasOwnProperty.call(MAP_TYPES,type))return;const centre=map.getCenter(),zoom=map.getZoom();if(baseTileLayer)map.removeLayer(baseTileLayer);const cfg=MAP_TYPES[type];baseTileLayer=L.tileLayer(cfg.url,cfg.options).addTo(map);map.setView(centre,zoom,{animate:false});try{localStorage.setItem(MAP_TYPE_KEY,type);}catch{} }
-function addMapTypeControl(){if(!map)return;const control=L.control({position:'bottomright'});control.onAdd=()=>{const wrap=L.DomUtil.create('div','leaflet-control map-type-control');const label=L.DomUtil.create('label','map-type-label',wrap);label.textContent='Map type';const select=L.DomUtil.create('select','map-type-select',wrap);select.setAttribute('aria-label','Map type');Object.entries(MAP_TYPES).forEach(([value,cfg])=>{const option=L.DomUtil.create('option','',select);option.value=value;option.textContent=cfg.label;});select.value=selectedMapType();L.DomEvent.disableClickPropagation(wrap);L.DomEvent.disableScrollPropagation(wrap);L.DomEvent.on(select,'change',()=>setMapType(select.value));return wrap;};control.addTo(map);}
+function addMapTypeControl(){if(!map||!activeDialog)return;const select=activeDialog.querySelector('#aroundMapType');if(!select)return;select.replaceChildren();Object.entries(MAP_TYPES).forEach(([value,cfg])=>{const option=document.createElement('option');option.value=value;option.textContent=cfg.label;select.append(option);});select.value=selectedMapType();select.onchange=()=>setMapType(select.value);}
 
 // OpenRailwayMap is an optional transparent overlay. Tiles are requested only
 // when the user enables a layer; selections are remembered across all three maps.
@@ -27,7 +27,7 @@ const RAILWAY_OVERLAYS={
 function selectedRailwayOverlays(){try{const saved=JSON.parse(localStorage.getItem(RAILWAY_OVERLAY_KEY)||'[]');return Array.isArray(saved)?saved.filter(key=>Object.prototype.hasOwnProperty.call(RAILWAY_OVERLAYS,key)):[];}catch{return[];}}
 function saveRailwayOverlaySelection(){try{localStorage.setItem(RAILWAY_OVERLAY_KEY,JSON.stringify(Object.keys(railwayOverlayLayers).filter(key=>railwayOverlayLayers[key]&&map?.hasLayer(railwayOverlayLayers[key]))));}catch{}}
 function setRailwayOverlay(key,enabled){if(!map||!Object.prototype.hasOwnProperty.call(RAILWAY_OVERLAYS,key))return;const existing=railwayOverlayLayers[key];if(enabled&&!existing){const cfg=RAILWAY_OVERLAYS[key];const layer=L.tileLayer(`https://tiles.openrailwaymap.org/${cfg.style}/{z}/{x}/{y}.png`,{minZoom:2,maxZoom:19,maxNativeZoom:19,opacity:0.86,attribution:'Data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>, Style: <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA 2.0</a> <a href="https://www.openrailwaymap.org/">OpenRailwayMap</a>'});railwayOverlayLayers[key]=layer;layer.addTo(map);}else if(!enabled&&existing){map.removeLayer(existing);delete railwayOverlayLayers[key];}saveRailwayOverlaySelection();}
-function addRailwayOverlayControl(){if(!map)return;const control=L.control({position:'bottomright'});control.onAdd=()=>{const wrap=L.DomUtil.create('div','leaflet-control railway-overlay-control');const details=L.DomUtil.create('details','railway-overlay-details',wrap);const summary=L.DomUtil.create('summary','railway-overlay-summary',details);summary.textContent='🚆 Railway layers';const list=L.DomUtil.create('div','railway-overlay-options',details);const selected=selectedRailwayOverlays();Object.entries(RAILWAY_OVERLAYS).forEach(([key,cfg])=>{const label=L.DomUtil.create('label','railway-overlay-option',list);const checkbox=L.DomUtil.create('input','',label);checkbox.type='checkbox';checkbox.value=key;checkbox.checked=selected.includes(key);const text=L.DomUtil.create('span','',label);text.textContent=cfg.label;L.DomEvent.on(checkbox,'change',()=>setRailwayOverlay(key,checkbox.checked));});const note=L.DomUtil.create('small','railway-overlay-note',list);note.textContent='Community-mapped data; may be incomplete. Not an operational safety source.';L.DomEvent.disableClickPropagation(wrap);L.DomEvent.disableScrollPropagation(wrap);return wrap;};control.addTo(map);}
+function addRailwayOverlayControl(){if(!map||!activeDialog)return;const list=activeDialog.querySelector('#aroundRailwayOptions');if(!list)return;list.replaceChildren();const selected=selectedRailwayOverlays();Object.entries(RAILWAY_OVERLAYS).forEach(([key,cfg])=>{const label=document.createElement('label');label.className='railway-overlay-option';const checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.value=key;checkbox.checked=selected.includes(key);const text=document.createElement('span');text.textContent=cfg.label;label.append(checkbox,text);checkbox.addEventListener('change',()=>setRailwayOverlay(key,checkbox.checked));list.append(label);});const note=document.createElement('small');note.className='railway-overlay-note';note.textContent='Community-mapped data; may be incomplete. Not an operational safety source.';list.append(note);}
 function applySavedRailwayOverlays(){selectedRailwayOverlays().forEach(key=>setRailwayOverlay(key,true));}
 
 const NHD_BASE='https://raw.githubusercontent.com/infrastructureclub/nr-national-hazard-directory/main/data/';
@@ -160,8 +160,9 @@ function drawMap(items=visibleItems){
   else map.panTo(centre,{animate:false});
  }
 }
-function initMap(){if(!window.L||mapReady)return;try{map=L.map(activeDialog?.querySelector('#aroundMap'),{zoomControl:false,scrollWheelZoom:false,wheelPxPerZoomLevel:120,doubleClickZoom:false,boxZoom:false,keyboard:false,dragging:true,touchZoom:false,tap:true,zoomSnap:0.5,zoomDelta:0.5}).setView([54.5,-2.5],5.5);L.control.zoom({position:'topright'}).addTo(map);setMapType(selectedMapType());addMapTypeControl();addRailwayOverlayControl();applySavedRailwayOverlays();mapReady=true;drawMap();}catch(err){console.warn('Around me map unavailable:',err);$('aroundResultCount').textContent='Map unavailable; list results are still available.';}}
+function initMap(){if(!window.L||mapReady)return;try{map=L.map(activeDialog?.querySelector('#aroundMap'),{zoomControl:false,scrollWheelZoom:false,wheelPxPerZoomLevel:120,doubleClickZoom:false,boxZoom:false,keyboard:false,dragging:true,touchZoom:false,tap:true,zoomSnap:0.5,zoomDelta:0.5}).setView([54.5,-2.5],5.5);setMapType(selectedMapType());addMapTypeControl();addRailwayOverlayControl();applySavedRailwayOverlays();mapReady=true;drawMap();}catch(err){console.warn('Around me map unavailable:',err);$('aroundResultCount').textContent='Map unavailable; list results are still available.';}}
 function setMode(next){mode=next;$('aroundSearch').placeholder=mode==='crossings'?'Search crossing name, UID or ELR…':mode==='stations'?'Search station name or CRS code…':'Search access point name, ID, ELR or item code…';render();}
+function setMapFullscreen(enabled){if(!activeDialog)return;const shell=activeDialog.querySelector('.around-map-shell');if(!shell)return;shell.classList.toggle('is-fullscreen',!!enabled);const close=shell.querySelector('.around-map-fullscreen-close');if(close)close.hidden=!enabled;const open=activeDialog.querySelector('.map-fullscreen-open');if(open)open.hidden=!!enabled;document.body.classList.toggle('map-fullscreen-active',!!enabled);setTimeout(()=>{try{map?.invalidateSize();}catch(e){}},100);}
 function openAround(selectedMode){
   try{
     updateRadiusLabels();
@@ -222,6 +223,9 @@ updateRadiusLabels();
  bindClick(page.querySelector('#aroundMeClose'),()=>{try{if(page.open)page.close();else page.removeAttribute('open');}catch(e){page.removeAttribute('open');}});
  bindClick(page.querySelector('#aroundLocate'),locate);
  bindClick(page.querySelector('#aroundFind'),locate);
+ page.querySelectorAll('[data-map-zoom]').forEach(button=>bindClick(button,()=>{if(!map)return;button.dataset.mapZoom==='in'?map.zoomIn():map.zoomOut();}));
+ bindClick(page.querySelector('.map-fullscreen-open'),()=>setMapFullscreen(true));
+ bindClick(page.querySelector('.around-map-fullscreen-close'),()=>setMapFullscreen(false));
  if(page.dataset.pageMode==='nhd')bindClick(page.querySelector('#aroundNhdLoadAll'),loadAllNhd);
  page.querySelector('#aroundRadius')?.addEventListener('change',render);
  page.querySelector('#aroundLimit')?.addEventListener('change',render);
@@ -243,7 +247,7 @@ updateRadiusLabels();
   }
  });
  page.addEventListener('click',e=>{if(e.target===page){try{page.close();}catch(e){page.removeAttribute('open');}}});
- page.addEventListener('cancel',e=>{e.preventDefault();try{page.close();}catch(err){page.removeAttribute('open');}});
- page.addEventListener('close',()=>{page.style.display='';if(activeDialog===page)activeDialog=null;});
+ page.addEventListener('cancel',e=>{const shell=page.querySelector('.around-map-shell');if(shell?.classList.contains('is-fullscreen')){e.preventDefault();setMapFullscreen(false);return;}e.preventDefault();try{page.close();}catch(err){page.removeAttribute('open');}});
+ page.addEventListener('close',()=>{setMapFullscreen(false);page.style.display='';if(activeDialog===page)activeDialog=null;});
 });
 })();

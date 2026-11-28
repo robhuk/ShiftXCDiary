@@ -68,12 +68,29 @@
     <button type="button" class="secondary" id="aroundLocate">📍 Locate me</button>
   </div>
   <button type="button" class="primary full" id="aroundFind">⌖ FIND NEAREST</button>
-  <div class="around-controls">
-    <label>Search radius<select id="aroundRadius"><option value="1">1 mile</option><option value="5">5 miles</option><option value="10" selected>10 miles</option><option value="25">25 miles</option><option value="all">All distances</option></select></label>
-    <label>Results<select id="aroundLimit"><option>5</option><option selected>10</option><option>20</option><option>50</option></select></label>
+  <div class="around-map-shell">
+    <div id="aroundMap" class="around-map"></div>
+    <button type="button" class="around-map-fullscreen-close" aria-label="Close full-screen map" hidden>×</button>
   </div>
-  <input id="aroundSearch" class="around-search" type="search" placeholder="Search name, ELR or reference…" autocomplete="off">
-  <div id="aroundMap" class="around-map"></div>
+  <section class="around-map-tools" aria-label="Map controls and filters">
+    <div class="around-map-toolbar">
+      <div class="map-zoom-buttons" aria-label="Map zoom controls">
+        <button type="button" data-map-zoom="out" aria-label="Zoom out">−</button>
+        <button type="button" data-map-zoom="in" aria-label="Zoom in">+</button>
+      </div>
+      <label class="map-type-field">Map type<select id="aroundMapType" class="map-type-select" aria-label="Map type"></select></label>
+      <details class="railway-overlay-details">
+        <summary class="railway-overlay-summary">🚆 Railway layers</summary>
+        <div class="railway-overlay-options" id="aroundRailwayOptions"></div>
+      </details>
+      <button type="button" class="secondary map-fullscreen-open">⛶ Full screen map</button>
+    </div>
+    <div class="around-controls">
+      <label>Search radius<select id="aroundRadius"><option value="1">1 mile</option><option value="5">5 miles</option><option value="10" selected>10 miles</option><option value="25">25 miles</option><option value="all">All distances</option></select></label>
+      <label>Results<select id="aroundLimit"><option>5</option><option selected>10</option><option>20</option><option>50</option></select></label>
+    </div>
+    <input id="aroundSearch" class="around-search" type="search" placeholder="Search name, ELR or reference…" autocomplete="off">
+  </section>
   <div class="around-results-heading"><strong id="aroundResultHeading">Nearest level crossings</strong><small id="aroundResultCount">Waiting for GPS</small></div>
   <div id="aroundResults" class="around-results"><div class="empty">Allow location access, then tap FIND NEAREST.</div></div>
   <div class="notice around-notice"><strong>Safety and accuracy:</strong> This is a proximity reference tool only. GPS accuracy varies. A nearby result does not confirm your exact position, provide operational authority, or establish permission to access railway infrastructure. Access point records must be checked against authorised railway information systems and applicable safety arrangements.</div>
@@ -87,12 +104,29 @@
     <button type="button" class="secondary" id="aroundLocate">📍 Locate me</button>
   </div>
   <button type="button" class="primary full" id="aroundFind">⌖ FIND NEAREST</button>
-  <div class="around-controls">
-    <label>Search radius<select id="aroundRadius"><option value="1">1 mile</option><option value="5">5 miles</option><option value="10" selected>10 miles</option><option value="25">25 miles</option><option value="all">All distances</option></select></label>
-    <label>Results<select id="aroundLimit"><option>5</option><option selected>10</option><option>20</option><option>50</option></select></label>
+  <div class="around-map-shell">
+    <div id="aroundMap" class="around-map"></div>
+    <button type="button" class="around-map-fullscreen-close" aria-label="Close full-screen map" hidden>×</button>
   </div>
-  <input id="aroundSearch" class="around-search" type="search" placeholder="Search name, ELR or reference…" autocomplete="off">
-  <div id="aroundMap" class="around-map"></div>
+  <section class="around-map-tools" aria-label="Map controls and filters">
+    <div class="around-map-toolbar">
+      <div class="map-zoom-buttons" aria-label="Map zoom controls">
+        <button type="button" data-map-zoom="out" aria-label="Zoom out">−</button>
+        <button type="button" data-map-zoom="in" aria-label="Zoom in">+</button>
+      </div>
+      <label class="map-type-field">Map type<select id="aroundMapType" class="map-type-select" aria-label="Map type"></select></label>
+      <details class="railway-overlay-details">
+        <summary class="railway-overlay-summary">🚆 Railway layers</summary>
+        <div class="railway-overlay-options" id="aroundRailwayOptions"></div>
+      </details>
+      <button type="button" class="secondary map-fullscreen-open">⛶ Full screen map</button>
+    </div>
+    <div class="around-controls">
+      <label>Search radius<select id="aroundRadius"><option value="1">1 mile</option><option value="5">5 miles</option><option value="10" selected>10 miles</option><option value="25">25 miles</option><option value="all">All distances</option></select></label>
+      <label>Results<select id="aroundLimit"><option>5</option><option selected>10</option><option>20</option><option>50</option></select></label>
+    </div>
+    <input id="aroundSearch" class="around-search" type="search" placeholder="Search name, ELR or reference…" autocomplete="off">
+  </section>
   <div class="around-results-heading"><strong id="aroundResultHeading">Nearest level crossings</strong><small id="aroundResultCount">Waiting for GPS</small></div>
   <div id="aroundResults" class="around-results"><div class="empty">Allow location access, then tap FIND NEAREST.</div></div>
   <div class="notice around-notice"><strong>Safety and accuracy:</strong> This is a proximity reference tool only. GPS accuracy varies. A nearby result does not confirm your exact position, provide operational authority, or establish permission to access railway infrastructure. Access point records must be checked against authorised railway information systems and applicable safety arrangements.</div>
@@ -106,12 +140,29 @@
     <button type="button" class="secondary" id="aroundLocate">📍 Locate me</button>
   </div>
   <button type="button" class="primary full" id="aroundFind">⌖ FIND NEAREST</button>
-  <div class="around-controls">
-    <label>Search radius<select id="aroundRadius"><option value="1">1 mile</option><option value="5">5 miles</option><option value="10" selected>10 miles</option><option value="25">25 miles</option><option value="all">All distances</option></select></label>
-    <label>Results<select id="aroundLimit"><option>5</option><option selected>10</option><option>20</option><option>50</option></select></label>
+  <div class="around-map-shell">
+    <div id="aroundMap" class="around-map"></div>
+    <button type="button" class="around-map-fullscreen-close" aria-label="Close full-screen map" hidden>×</button>
   </div>
-  <input id="aroundSearch" class="around-search" type="search" placeholder="Search name, ELR or reference…" autocomplete="off">
-  <div id="aroundMap" class="around-map"></div>
+  <section class="around-map-tools" aria-label="Map controls and filters">
+    <div class="around-map-toolbar">
+      <div class="map-zoom-buttons" aria-label="Map zoom controls">
+        <button type="button" data-map-zoom="out" aria-label="Zoom out">−</button>
+        <button type="button" data-map-zoom="in" aria-label="Zoom in">+</button>
+      </div>
+      <label class="map-type-field">Map type<select id="aroundMapType" class="map-type-select" aria-label="Map type"></select></label>
+      <details class="railway-overlay-details">
+        <summary class="railway-overlay-summary">🚆 Railway layers</summary>
+        <div class="railway-overlay-options" id="aroundRailwayOptions"></div>
+      </details>
+      <button type="button" class="secondary map-fullscreen-open">⛶ Full screen map</button>
+    </div>
+    <div class="around-controls">
+      <label>Search radius<select id="aroundRadius"><option value="1">1 mile</option><option value="5">5 miles</option><option value="10" selected>10 miles</option><option value="25">25 miles</option><option value="all">All distances</option></select></label>
+      <label>Results<select id="aroundLimit"><option>5</option><option selected>10</option><option>20</option><option>50</option></select></label>
+    </div>
+    <input id="aroundSearch" class="around-search" type="search" placeholder="Search name, ELR or reference…" autocomplete="off">
+  </section>
   <div class="around-results-heading"><strong id="aroundResultHeading">Nearest level crossings</strong><small id="aroundResultCount">Waiting for GPS</small></div>
   <div id="aroundResults" class="around-results"><div class="empty">Allow location access, then tap FIND NEAREST.</div></div>
   <div class="notice around-notice"><strong>Safety and accuracy:</strong> This is a proximity reference tool only. GPS accuracy varies. A nearby result does not confirm your exact position, provide operational authority, or establish permission to access railway infrastructure. Access point records must be checked against authorised railway information systems and applicable safety arrangements.</div>
