@@ -303,35 +303,44 @@ updateRadiusLabels();
 ['crossingsPageDialog','stationsPageDialog','accessPointsPageDialog'].forEach(id=>{
  const page=document.getElementById(id);
  if(!page)return;
- bindClick(page.querySelector('#aroundMeClose'),()=>{try{if(page.open)page.close();else page.removeAttribute('open');}catch(e){page.removeAttribute('open');}});
- bindClick(page.querySelector('#aroundLocate'),locate);
- bindClick(page.querySelector('#aroundFind'),locate);
- if(page.dataset.pageMode==='crossings')bindCrossingStatusLayerControl();
- page.querySelectorAll('[data-map-zoom]').forEach(button=>bindClick(button,()=>{if(!map)return;button.dataset.mapZoom==='in'?map.zoomIn():map.zoomOut();}));
- bindClick(page.querySelector('.map-fullscreen-open'),()=>setMapFullscreen(true));
- bindClick(page.querySelector('.around-map-fullscreen-close'),()=>setMapFullscreen(false));
- if(page.dataset.pageMode==='nhd')bindClick(page.querySelector('#aroundNhdLoadAll'),loadAllNhd);
- page.querySelector('#aroundRadius')?.addEventListener('change',render);
- page.querySelector('#aroundLimit')?.addEventListener('change',render);
- page.querySelector('#aroundSearch')?.addEventListener('input',render);
- const resultsEl=page.querySelector('#aroundResults');
- const focusResult=(e)=>{
-  const card=e.target.closest('.around-result[data-map-index]');
-  if(!card||!resultsEl?.contains(card)||e.target.closest('a'))return;
-  const index=Number(card.dataset.mapIndex),item=visibleItems[index],marker=resultMarkers[index];
-  if(!item||!marker||!map)return;
-  e.preventDefault();
-  try{map.invalidateSize();map.panTo([item.lat,item.lon],{animate:false});marker.openPopup();}
-  catch(err){console.warn('Could not focus selected station/location on map:',err);}
- };
- resultsEl?.addEventListener('click',focusResult);
- resultsEl?.addEventListener('keydown',e=>{
-  if((e.key==='Enter'||e.key===' ')&&e.target.matches('.around-result[data-map-index]')){
-   e.preventDefault();focusResult(e);
-  }
- });
- page.addEventListener('click',e=>{if(e.target===page){try{page.close();}catch(e){page.removeAttribute('open');}}});
- page.addEventListener('cancel',e=>{const shell=page.querySelector('.around-map-shell');if(shell?.classList.contains('is-fullscreen')){e.preventDefault();setMapFullscreen(false);return;}e.preventDefault();try{page.close();}catch(err){page.removeAttribute('open');}});
- page.addEventListener('close',()=>{if(fullscreenOwner===page)setMapFullscreen(false);page.style.display='';if(activeDialog===page)activeDialog=null;});
+ // Bind every page's controls independently. A stale crossing-layer hook in an
+ // earlier build referenced a removed function and aborted this loop before the
+ // station/access-point map controls were attached.
+ try{
+  bindClick(page.querySelector('.dialoghead .x'),()=>{
+   if(fullscreenOwner===page)setMapFullscreen(false);
+   try{if(page.open)page.close();else page.removeAttribute('open');}catch(e){page.removeAttribute('open');}
+  });
+  bindClick(page.querySelector('#aroundLocate'),()=>{if(activeDialog!==page)activeDialog=page;locate();});
+  bindClick(page.querySelector('#aroundFind'),()=>{if(activeDialog!==page)activeDialog=page;locate();});
+  page.querySelectorAll('[data-map-zoom]').forEach(button=>bindClick(button,()=>{
+   if(activeDialog!==page||!map||!page.open)return;
+   try{map.invalidateSize({pan:false});if(button.dataset.mapZoom==='in')map.zoomIn(0.5);else map.zoomOut(0.5);}
+   catch(error){console.warn('Map zoom control failed:',error);}
+  }));
+  bindClick(page.querySelector('.map-fullscreen-open'),()=>{activeDialog=page;setMapFullscreen(true);});
+  bindClick(page.querySelector('.around-map-fullscreen-close'),()=>{if(fullscreenOwner===page)setMapFullscreen(false);});
+  if(page.dataset.pageMode==='nhd')bindClick(page.querySelector('#aroundNhdLoadAll'),loadAllNhd);
+  page.querySelector('#aroundRadius')?.addEventListener('change',()=>{if(activeDialog===page)render();});
+  page.querySelector('#aroundLimit')?.addEventListener('change',()=>{if(activeDialog===page)render();});
+  page.querySelector('#aroundSearch')?.addEventListener('input',()=>{if(activeDialog===page)render();});
+  const resultsEl=page.querySelector('#aroundResults');
+  const focusResult=(e)=>{
+   const card=e.target.closest('.around-result[data-map-index]');
+   if(!card||!resultsEl?.contains(card)||e.target.closest('a'))return;
+   const index=Number(card.dataset.mapIndex),item=visibleItems[index],marker=resultMarkers[index];
+   if(!item||!marker||!map||activeDialog!==page)return;
+   e.preventDefault();
+   try{map.invalidateSize();map.panTo([item.lat,item.lon],{animate:false});marker.openPopup();}
+   catch(err){console.warn('Could not focus selected station/location on map:',err);}
+  };
+  resultsEl?.addEventListener('click',focusResult);
+  resultsEl?.addEventListener('keydown',e=>{
+   if((e.key==='Enter'||e.key===' ')&&e.target.matches('.around-result[data-map-index]')){e.preventDefault();focusResult(e);}
+  });
+  page.addEventListener('click',e=>{if(e.target===page){try{page.close();}catch(err){page.removeAttribute('open');}}});
+  page.addEventListener('cancel',e=>{if(fullscreenOwner===page){e.preventDefault();setMapFullscreen(false);return;}e.preventDefault();try{page.close();}catch(err){page.removeAttribute('open');}});
+  page.addEventListener('close',()=>{if(fullscreenOwner===page)setMapFullscreen(false);page.style.display='';if(activeDialog===page)activeDialog=null;});
+ }catch(error){console.error(`Could not initialise mapping controls for ${id}:`,error);}
 });
 })();

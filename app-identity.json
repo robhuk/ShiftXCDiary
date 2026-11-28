@@ -2,10 +2,10 @@
   "app_id": "uk.co.crosscountry.shiftapp",
   "product_name": "Staff Shift App",
   "full_name": "Staff Shift App – Rail Staff Shift Diary",
-  "version": "1.3.305",
-  "build": "2026.11.28-fullscreen-access-points-fix",
+  "version": "1.3.306",
+  "build": "2026.11.28-mapping-controls-fix",
   "storage_key": "uk.co.crosscountry.shiftapp.shiftdata.v1",
-  "service_worker_cache": "xc-shiftapp-cache-v1.3.305-fullscreen-access-points-fix",
+  "service_worker_cache": "xc-shiftapp-cache-v1.3.306-mapping-controls-fix",
   "manifest": "manifest.json",
   "entry_point": "index.html",
   "language": "en-GB",
@@ -170,6 +170,7 @@
     "v1.3.305: Fixed fullscreen map interaction and repaired National Hazard Directory access point data loading, including current region discovery, file-name fallbacks and flexible coordinate parsing.",
     "v1.3.304: Removed individual Mind the Gates crossing links. Added an optional Crossing status map layer with green open, red closed and grey unknown markers, sourced from live Mind the Gates status data.",
     "v1.3.302: Added live nearby crossing status, forecast timelines and approaching trains from Mind the Gates to the Nearest Crossings page, with source credit and safety warnings.",
-    "v1.3.301: Moved all location map controls and filters below the map frame. Added full-screen map mode with a close button."
+    "v1.3.301: Moved all location map controls and filters below the map frame. Added full-screen map mode with a close button.",
+    "v1.3.306: Fixed mapping page control initialisation: removed a stale reference to a deleted crossing-status binding that aborted the shared control setup. Rebound close, fullscreen and zoom actions independently for crossings, stations and access points, with active-page map checks and mobile touch-target handling."
   ]
 }

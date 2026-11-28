@@ -931,3 +931,14 @@ body.map-fullscreen-active{overflow:hidden!important}
 .around-me-page.map-fullscreen-owner .around-map-shell.is-fullscreen .around-map{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;border:0!important;border-radius:0!important;pointer-events:auto!important;touch-action:pan-x pan-y!important;}
 .around-me-page.map-fullscreen-owner .around-map-shell.is-fullscreen .around-map-fullscreen-close{z-index:10000!important;pointer-events:auto!important;touch-action:manipulation!important;}
 .around-me-page.map-fullscreen-owner .around-map-shell.is-fullscreen .leaflet-container,.around-me-page.map-fullscreen-owner .around-map-shell.is-fullscreen .leaflet-pane,.around-me-page.map-fullscreen-owner .around-map-shell.is-fullscreen .leaflet-marker-icon,.around-me-page.map-fullscreen-owner .around-map-shell.is-fullscreen .leaflet-marker-shadow{pointer-events:auto;}
+
+/* Mapping controls: keep mobile tap targets above surrounding layout layers. */
+.around-map-toolbar button,
+.around-map-toolbar select,
+.around-map-shell .around-map-fullscreen-close,
+.around-map-dialog .dialoghead .x,
+.around-me-page .dialoghead .x,
+.map-zoom-buttons button{position:relative;z-index:5;pointer-events:auto!important;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+.map-zoom-buttons{position:relative;z-index:5;pointer-events:auto!important}
+.around-map-shell.is-fullscreen{pointer-events:auto!important;touch-action:pan-x pan-y!important}
+.around-map-shell.is-fullscreen .around-map-fullscreen-close{pointer-events:auto!important;touch-action:manipulation!important}
