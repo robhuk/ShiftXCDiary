@@ -221,6 +221,15 @@ function drawMap(items=visibleItems){
 function initMap(){if(!window.L||mapReady)return;try{map=L.map(activeDialog?.querySelector('#aroundMap'),{zoomControl:false,scrollWheelZoom:false,wheelPxPerZoomLevel:120,doubleClickZoom:false,boxZoom:false,keyboard:false,dragging:true,touchZoom:false,tap:true,zoomSnap:0.5,zoomDelta:0.5}).setView([54.5,-2.5],5.5);setMapType(selectedMapType());addMapTypeControl();addRailwayOverlayControl();applySavedRailwayOverlays();mapReady=true;drawMap();updateCrossingStatusMarkers();}catch(err){console.warn('Around me map unavailable:',err);$('aroundResultCount').textContent='Map unavailable; list results are still available.';}}
 function setMode(next){mode=next;$('aroundSearch').placeholder=mode==='crossings'?'Search crossing name, UID or ELR…':mode==='stations'?'Search station name or CRS code…':'Search access point name, ID, ELR or item code…';render();}
 let fullscreenShell=null,fullscreenPlaceholder=null,fullscreenOwner=null;
+function refreshFullscreenMap(){
+  [90,260].forEach(delay=>setTimeout(()=>{
+    try{
+      if(map&&fullscreenShell){
+        map.invalidateSize({animate:false,pan:false});
+      }else if(map){map.invalidateSize({animate:false,pan:false});}
+    }catch(error){console.warn('Could not resize location map:',error);}
+  },delay));
+}
 function setMapFullscreen(enabled){
  if(enabled){
   if(!activeDialog||fullscreenShell)return;
@@ -229,22 +238,41 @@ function setMapFullscreen(enabled){
   shell.parentNode.insertBefore(fullscreenPlaceholder,shell);
   activeDialog.appendChild(shell);
   activeDialog.classList.add('map-fullscreen-owner');
+  // Explicitly size the native dialog as well as the map shell. This avoids
+  // browser dialog margins/max-height constraining fullscreen on mobile Safari.
+  activeDialog.style.setProperty('display','block','important');
+  activeDialog.style.setProperty('position','fixed','important');
+  activeDialog.style.setProperty('inset','0','important');
+  activeDialog.style.setProperty('width','100vw','important');
+  activeDialog.style.setProperty('height','100dvh','important');
+  activeDialog.style.setProperty('max-width','none','important');
+  activeDialog.style.setProperty('max-height','none','important');
+  activeDialog.style.setProperty('margin','0','important');
+  activeDialog.style.setProperty('padding','0','important');
+  activeDialog.style.setProperty('border','0','important');
+  activeDialog.style.setProperty('overflow','hidden','important');
   shell.classList.add('is-fullscreen');
-  const close=shell.querySelector('.around-map-fullscreen-close');if(close)close.hidden=false;
+  const close=shell.querySelector('.around-map-fullscreen-close');
+  if(close){close.hidden=false;close.removeAttribute('hidden');close.style.setProperty('display','grid','important');close.setAttribute('aria-hidden','false');}
   const open=fullscreenOwner.querySelector('.map-fullscreen-open');if(open)open.hidden=true;
   document.body.classList.add('map-fullscreen-active');
+  document.documentElement.classList.add('map-fullscreen-active');
  }else{
   if(!fullscreenShell)return;
   const shell=fullscreenShell,owner=fullscreenOwner,placeholder=fullscreenPlaceholder;
   shell.classList.remove('is-fullscreen');
   if(placeholder?.parentNode){placeholder.parentNode.insertBefore(shell,placeholder);placeholder.remove();}
   owner?.classList.remove('map-fullscreen-owner');
-  const close=shell.querySelector('.around-map-fullscreen-close');if(close)close.hidden=true;
+  if(owner){
+    ['display','position','inset','width','height','max-width','max-height','margin','padding','border','overflow'].forEach(prop=>owner.style.removeProperty(prop));
+  }
+  const close=shell.querySelector('.around-map-fullscreen-close');if(close){close.hidden=true;close.setAttribute('aria-hidden','true');close.style.removeProperty('display');}
   const open=owner?.querySelector('.map-fullscreen-open');if(open)open.hidden=false;
   document.body.classList.remove('map-fullscreen-active');
+  document.documentElement.classList.remove('map-fullscreen-active');
   fullscreenShell=null;fullscreenPlaceholder=null;fullscreenOwner=null;
  }
- setTimeout(()=>{try{map?.invalidateSize({pan:false});}catch(e){}},180);
+ refreshFullscreenMap();
 }
 function openAround(selectedMode){
   try{
@@ -299,6 +327,20 @@ bindClick(document.getElementById('openStations'),()=>openAround('stations'));
 bindClick(document.getElementById('openAccessPoints'),()=>openAround('nhd'));
 document.addEventListener('mappingdistancechange',()=>{updateRadiusLabels();render();});
 updateRadiusLabels();
+
+// Capture fullscreen actions at document level as a fallback for mobile browsers
+// where a Leaflet pane or native dialog can swallow a button's bubbling click.
+document.addEventListener('click',event=>{
+ const closeButton=event.target.closest?.('.around-map-fullscreen-close');
+ if(closeButton&&fullscreenShell){
+  event.preventDefault();event.stopImmediatePropagation();setMapFullscreen(false);return;
+ }
+ const openButton=event.target.closest?.('.map-fullscreen-open');
+ if(openButton){
+  const page=openButton.closest('.around-me-page');
+  if(page){event.preventDefault();event.stopImmediatePropagation();activeDialog=page;setMapFullscreen(true);}
+ }
+},true);
 
 ['crossingsPageDialog','stationsPageDialog','accessPointsPageDialog'].forEach(id=>{
  const page=document.getElementById(id);

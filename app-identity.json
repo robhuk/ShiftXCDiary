@@ -2,10 +2,10 @@
   "app_id": "uk.co.crosscountry.shiftapp",
   "product_name": "Staff Shift App",
   "full_name": "Staff Shift App – Rail Staff Shift Diary",
-  "version": "1.3.306",
-  "build": "2026.11.28-mapping-controls-fix",
+  "version": "1.3.308",
+  "build": "2026.11.28-customer-service-main-theme",
   "storage_key": "uk.co.crosscountry.shiftapp.shiftdata.v1",
-  "service_worker_cache": "xc-shiftapp-cache-v1.3.306-mapping-controls-fix",
+  "service_worker_cache": "xc-shiftapp-cache-v1.3.308-customer-service-main-theme",
   "manifest": "manifest.json",
   "entry_point": "index.html",
   "language": "en-GB",
@@ -19,6 +19,7 @@
   "update_policy": "The app checks for updates on launch and at most once every 24 hours while open or when returning to the foreground. Updates use a versioned cache and do not clear locally saved shift data.",
   "asset_layout": "PDF exports no longer include a header image; automatic page-number footers remain.",
   "features": [
+    "Location maps: full-screen mode now expands the native mapping dialog and map container to the full mobile viewport, keeps a prominent always-visible close control above Leaflet layers, restores the original map position on exit, and refreshes map sizing after transitions.",
     "Trains: unit number and second unit number fields use an in-app numeric keypad with six-digit entry, Clear and Backspace controls, and accepted special values Cancelled, Set Swap and N/A; special values are retained as unit entries in shift logs and reports.",
     "Customer Service Issues / Diary: references use DDMMYY-000-XCCS with a date-based sequence; entries can be exported into the main daily log as Customer service issue; per-entry edit, share/email, PDF export, daily-log export and delete actions are grouped in a three-dot menu; View full record opens a custom scrollable pop-up with an X close button.",
     "Customer Service Issues / Diary: added Catering issue and Crew/Staffing issue to the nature of complaint / incident categories; existing records are preserved.",
@@ -155,9 +156,11 @@
     "Share operational Incident entries to Customer Service Issues / Diary from the operational log three-dot menu, with duplicate prevention and DDMMYY-000-XCCS references.",
     "Customer Service Issues / Diary entries are included in the main app cloud and manual backups; customer service edits queue cloud sync, and restore imports those diary records.",
     "Location maps: optional OpenRailwayMap overlays for railway infrastructure and maximum speeds. Layers can be enabled independently and remembered across nearest crossings, stations and access points. Overlay tiles load only when actively enabled and require an internet connection; community-mapped information may be incomplete and is not an operational safety source.",
-    "Nearest Crossings live status and closure forecasts from Mind the Gates, with optional per-crossing timeline and approaching train details; source credit and safety disclaimer included."
+    "Nearest Crossings live status and closure forecasts from Mind the Gates, with optional per-crossing timeline and approaching train details; source credit and safety disclaimer included.",
+    "v1.3.308: Customer Service Issues / Diary visual design updated to match the main Staff Shift App navy, blue, red and gold palette, railway banner, white cards, buttons, form controls and modal styling; local diary records and storage remain unchanged."
   ],
   "releaseNotes": [
+    "v1.3.307: Corrected full-screen map sizing and close-button interaction across all three location finders using explicit viewport sizing, a high-priority close control and document-level touch-safe click handling. Changed Customer Service Issues / Diary launcher into a collapsed-by-default menu matching the Shift Tools / Reference panel style.",
     "v1.3.305: Fixed full-screen location maps by expanding the map surface within its modal top layer rather than clipping it inside the scrollable page. Improved mobile map pointer/touch interaction. Repaired access point loading by using current National Hazard Directory region discovery and current/legacy CSV and JSON file fallbacks, with flexible coordinate field parsing and loading of all locally cached regions.",
     "v1.3.299: Added optional OpenRailwayMap overlays to nearest crossings, stations and access points: Infrastructure, Signals, Maximum speeds, Electrification. Multiple overlays can be enabled together; selections are remembered across all three maps. Tiles are requested only when selected and require internet access.",
     "v1.3.298: Location maps for nearest crossings, nearest stations and nearest access points now zoom only with the on-map + and − controls. Scroll-wheel, pinch, double-click and automatic zoom-on-result selection are disabled; map dragging remains available.",
@@ -167,6 +170,7 @@
     "v1.3.286: Customer Service Issues / Diary records are included alongside the main shift diary in daily Google Drive backups and manual JSON backups. Diary edits queue the next cloud backup, and restoring a backup restores the Customer Service diary too."
   ],
   "release_notes": [
+    "v1.3.307: Corrected full-screen map sizing and close-button interaction across all three location finders using explicit viewport sizing, a high-priority close control and document-level touch-safe click handling. Changed Customer Service Issues / Diary launcher into a collapsed-by-default menu matching the Shift Tools / Reference panel style.",
     "v1.3.305: Fixed fullscreen map interaction and repaired National Hazard Directory access point data loading, including current region discovery, file-name fallbacks and flexible coordinate parsing.",
     "v1.3.304: Removed individual Mind the Gates crossing links. Added an optional Crossing status map layer with green open, red closed and grey unknown markers, sourced from live Mind the Gates status data.",
     "v1.3.302: Added live nearby crossing status, forecast timelines and approaching trains from Mind the Gates to the Nearest Crossings page, with source credit and safety warnings.",

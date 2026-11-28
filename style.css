@@ -942,3 +942,39 @@ body.map-fullscreen-active{overflow:hidden!important}
 .map-zoom-buttons{position:relative;z-index:5;pointer-events:auto!important}
 .around-map-shell.is-fullscreen{pointer-events:auto!important;touch-action:pan-x pan-y!important}
 .around-map-shell.is-fullscreen .around-map-fullscreen-close{pointer-events:auto!important;touch-action:manipulation!important}
+
+
+/* v1.3.307 – robust full-viewport mapping dialog and collapsible diary launcher */
+.around-me-page.map-fullscreen-owner{
+  display:block!important;position:fixed!important;inset:0!important;left:0!important;top:0!important;right:0!important;bottom:0!important;
+  box-sizing:border-box!important;width:100vw!important;max-width:none!important;min-width:100vw!important;
+  height:100vh!important;height:100dvh!important;min-height:100vh!important;min-height:100dvh!important;max-height:none!important;
+  margin:0!important;padding:0!important;border:0!important;border-radius:0!important;transform:none!important;
+  overflow:hidden!important;overscroll-behavior:none!important;background:#fff!important;box-shadow:none!important;
+}
+.around-me-page.map-fullscreen-owner::backdrop{background:transparent!important;backdrop-filter:none!important}
+.around-me-page.map-fullscreen-owner .around-map-shell.is-fullscreen{
+  display:block!important;position:absolute!important;inset:0!important;left:0!important;top:0!important;right:0!important;bottom:0!important;
+  box-sizing:border-box!important;width:100%!important;height:100%!important;min-height:100%!important;max-height:none!important;
+  margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:#fff!important;
+  z-index:1!important;overflow:hidden!important;pointer-events:auto!important;isolation:isolate!important;
+}
+.around-me-page.map-fullscreen-owner .around-map-shell.is-fullscreen>.around-map{
+  display:block!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
+  min-height:100%!important;max-height:none!important;margin:0!important;border:0!important;border-radius:0!important;
+  pointer-events:auto!important;touch-action:pan-x pan-y!important;
+}
+.around-me-page.map-fullscreen-owner .around-map-shell.is-fullscreen>.around-map-fullscreen-close{
+  display:grid!important;visibility:visible!important;opacity:1!important;position:absolute!important;
+  top:max(14px,env(safe-area-inset-top))!important;right:max(14px,env(safe-area-inset-right))!important;
+  z-index:2147483000!important;width:52px!important;height:52px!important;min-width:52px!important;min-height:52px!important;
+  padding:0!important;border:2px solid #a50034!important;border-radius:50%!important;background:#fff!important;color:#a50034!important;
+  font-size:34px!important;font-weight:900!important;line-height:1!important;box-shadow:0 3px 14px #0005!important;
+  pointer-events:auto!important;touch-action:manipulation!important;cursor:pointer!important;
+}
+.around-me-page.map-fullscreen-owner .around-map-shell.is-fullscreen>.around-map-fullscreen-close[hidden]{display:grid!important}
+html.map-fullscreen-active,body.map-fullscreen-active{overflow:hidden!important;width:100%!important;height:100%!important;overscroll-behavior:none!important}
+.customer-service-launch-panel{margin-top:14px;border-top:2px solid #a50034}
+.customer-service-launch-panel .collapse-summary{display:flex;align-items:center;gap:9px}
+.customer-service-launch-panel .collapse-summary h2{flex:1}
+.customer-service-launch-panel .collapse-content>button{min-height:46px;text-align:left;padding-left:16px;margin:8px 0 4px}

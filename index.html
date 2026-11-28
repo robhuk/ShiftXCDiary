@@ -52,10 +52,13 @@
     </div>
   </div>
 </details>
-<section class="panel customer-service-launch-panel" aria-label="Customer service issues diary">
-  <button type="button" class="primary full" id="openCustomerServiceDiary" onclick="window.location.href='./customer-service-issues.html'">🗂️ Customer Service Issues / Diary</button>
-  <p class="muted">Record customer issues, complaints, incidents and follow-up notes.</p>
-</section>
+<details class="panel collapsible customer-service-launch-panel" id="customerServiceDiaryMenu">
+  <summary class="collapse-summary"><h2>🗂️ Customer Service Issues / Diary</h2><span class="muted">Customer service records</span><span class="collapse-indicator">⌄</span></summary>
+  <div class="collapse-content">
+    <p class="muted">Record customer issues, complaints, incidents and follow-up notes.</p>
+    <button type="button" class="secondary full" id="openCustomerServiceDiary" onclick="window.location.href='./customer-service-issues.html'">🗂️ Open Customer Service Issues / Diary</button>
+  </div>
+</details>
 </main>
 <button id="floatingAddEntry" class="floating-add-entry" type="button" aria-label="Add issue or log entry" title="Add issue / log entry">＋</button>
 <footer class="app-footer"><button id="installBtn" class="install-footer hidden" type="button">Install app</button><button type="button" id="driveSettingsOpen" class="settings-footer-button">⚙️ App settings</button><span id="version" class="footer-version"></span></footer>
