@@ -8,8 +8,7 @@ const MAP_TYPE_KEY='shiftapp.locationMapType.v1';
 const MAP_TYPES={
  street:{label:'Street',url:'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',options:{maxZoom:19,attribution:'&copy; OpenStreetMap contributors',subdomains:'abc'}},
  satellite:{label:'Satellite',url:'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',options:{maxZoom:19,attribution:'Tiles &copy; Esri — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community'}},
- terrain:{label:'Terrain',url:'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',options:{maxZoom:17,attribution:'Map data: &copy; OpenStreetMap contributors, SRTM | Map style: &copy; OpenTopoMap',subdomains:'abc'}},
- light:{label:'Light',url:'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',options:{maxZoom:20,attribution:'&copy; OpenStreetMap contributors &copy; CARTO',subdomains:'abcd'}}
+ terrain:{label:'Terrain',url:'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',options:{maxZoom:17,attribution:'Map data: &copy; OpenStreetMap contributors, SRTM | Map style: &copy; OpenTopoMap',subdomains:'abc'}}
 };
 function selectedMapType(){try{const saved=localStorage.getItem(MAP_TYPE_KEY);return Object.prototype.hasOwnProperty.call(MAP_TYPES,saved)?saved:'street';}catch{return 'street';}}
 function setMapType(type){if(!map||!Object.prototype.hasOwnProperty.call(MAP_TYPES,type))return;const centre=map.getCenter(),zoom=map.getZoom();if(baseTileLayer)map.removeLayer(baseTileLayer);const cfg=MAP_TYPES[type];baseTileLayer=L.tileLayer(cfg.url,cfg.options).addTo(map);map.setView(centre,zoom,{animate:false});try{localStorage.setItem(MAP_TYPE_KEY,type);}catch{} }
@@ -20,9 +19,7 @@ function addMapTypeControl(){if(!map||!activeDialog)return;const select=activeDi
 const RAILWAY_OVERLAY_KEY='shiftapp.openRailwayMap.overlays.v1';
 const RAILWAY_OVERLAYS={
  infrastructure:{label:'Infrastructure',style:'standard'},
- signals:{label:'Signals',style:'signals'},
  maxspeed:{label:'Maximum speeds',style:'maxspeed'},
- electrification:{label:'Electrification',style:'electrification'},
 };
 function selectedRailwayOverlays(){try{const saved=JSON.parse(localStorage.getItem(RAILWAY_OVERLAY_KEY)||'[]');return Array.isArray(saved)?saved.filter(key=>Object.prototype.hasOwnProperty.call(RAILWAY_OVERLAYS,key)):[];}catch{return[];}}
 function saveRailwayOverlaySelection(){try{localStorage.setItem(RAILWAY_OVERLAY_KEY,JSON.stringify(Object.keys(railwayOverlayLayers).filter(key=>railwayOverlayLayers[key]&&map?.hasLayer(railwayOverlayLayers[key]))));}catch{}}

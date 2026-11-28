@@ -1,7 +1,9 @@
+Version 1.3.301 (28 November 2026): Removed the Light map type and removed Signals and Electrification from the optional OpenRailwayMap layers. Previously saved selections for removed options are ignored.
+
 Version 1.3.300 (28 November 2026): Moved all map controls and filters below the map frame on Nearest Crossings, Nearest Stations and Nearest Access Points. Added full-screen map mode with an on-map close button. Existing map types, optional OpenRailwayMap overlays, GPS, pins, dragging and + / − zoom controls are retained.
 
 
-Version 1.3.298 (28 November 2026): Added a map-type dropdown at the bottom-right of Nearest Crossings, Nearest Stations and Nearest Access Points maps. Select Street (OpenStreetMap), Satellite (Esri imagery), Terrain (OpenTopoMap) or Light (CARTO). The selection is remembered on the device and applies across all three location maps. Existing +/− zoom controls remain the only zoom controls; wheel, pinch and double-click zoom remain disabled, while map dragging remains enabled. Alternative basemaps require an internet connection; Street remains the default.
+Version 1.3.298 (28 November 2026): Added a map-type dropdown at the bottom-right of Nearest Crossings, Nearest Stations and Nearest Access Points maps. Select Street (OpenStreetMap), Satellite (Esri imagery) or Terrain (OpenTopoMap). The selection is remembered on the device and applies across all three location maps. Existing +/− zoom controls remain the only zoom controls; wheel, pinch and double-click zoom remain disabled, while map dragging remains enabled. Alternative basemaps require an internet connection; Street remains the default.
 
 Version 1.3.297 (28 November 2026): Location maps now zoom only with the on-map + and − controls. Scroll-wheel, pinch, double-click and automatic zoom-on-result selection are disabled; map dragging remains available.
 
@@ -486,6 +488,11 @@ v1.3.295: Access Point, Level Crossing and Station maps can now be moved by drag
 
 Version 1.3.297: Nearest Crossings, Nearest Stations and Nearest Access Points now show one ‘Open in Maps’ action for each result. The action opens the device mapping app using the selected location coordinates (iOS Maps URL on Apple devices; geo: intent on Android).
 
+
+Version 1.3.301 – Map selection cleanup
+- Removed the Light basemap option.
+- Removed Signals and Electrification from the optional OpenRailwayMap overlays.
+- Saved selections for removed options are ignored.
 
 Version 1.3.300 – Location map layout
 - Moved zoom buttons, map type selector, OpenRailwayMap layer toggles, search radius, result limit and search field below the map frame.
