@@ -1,3 +1,5 @@
+Version 1.3.304 (28 November 2026): Enlarged the map type dropdown. Combined OpenRailwayMap layers and the Crossing status toggle in one options box on Nearest Crossings. When enabled, the numbered crossing pins are green for open, red for closed and grey for unknown, using live Mind the Gates status data.
+
 Version 1.3.303 (28 November 2026): Removed individual Mind the Gates links from crossing cards and detail panels. Added an optional Crossing status map layer to Nearest Crossings, showing green dots for open, red dots for closed and grey dots for unknown live status. The layer can be toggled on/off and remembers the selection.
 
 Version 1.3.302 (28 November 2026): Added live nearby level-crossing status from Mind the Gates to the Nearest Crossings page, including open/closed/unknown state, confirmation status, estimated next closure, and on-demand forecast timeline and approaching train details. Added source credit and safety disclaimer. Live information requires an internet connection and GPS.
