@@ -3,7 +3,33 @@ let activeDialog=null;
 const $=id=>activeDialog?.querySelector('#'+id)||document.getElementById(id);
 const pageDialog=mode=>document.getElementById(mode==='crossings'?'crossingsPageDialog':mode==='stations'?'stationsPageDialog':'accessPointsPageDialog');
 if(!pageDialog('crossings')||!pageDialog('stations')||!pageDialog('nhd'))return;
-let mode='crossings',crossings=[],stations=[],nhdRecords=[],position=null,accuracy=null,map=null,markers=[],resultMarkers=[],mapReady=false,visibleItems=[];
+let mode='crossings',crossings=[],stations=[],nhdRecords=[],position=null,accuracy=null,map=null,baseTileLayer=null,railwayOverlayLayers={},markers=[],resultMarkers=[],mapReady=false,mapFramed=false,visibleItems=[];
+const MAP_TYPE_KEY='shiftapp.locationMapType.v1';
+const MAP_TYPES={
+ street:{label:'Street',url:'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',options:{maxZoom:19,attribution:'&copy; OpenStreetMap contributors',subdomains:'abc'}},
+ satellite:{label:'Satellite',url:'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',options:{maxZoom:19,attribution:'Tiles &copy; Esri — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community'}},
+ terrain:{label:'Terrain',url:'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',options:{maxZoom:17,attribution:'Map data: &copy; OpenStreetMap contributors, SRTM | Map style: &copy; OpenTopoMap',subdomains:'abc'}},
+ light:{label:'Light',url:'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',options:{maxZoom:20,attribution:'&copy; OpenStreetMap contributors &copy; CARTO',subdomains:'abcd'}}
+};
+function selectedMapType(){try{const saved=localStorage.getItem(MAP_TYPE_KEY);return Object.prototype.hasOwnProperty.call(MAP_TYPES,saved)?saved:'street';}catch{return 'street';}}
+function setMapType(type){if(!map||!Object.prototype.hasOwnProperty.call(MAP_TYPES,type))return;const centre=map.getCenter(),zoom=map.getZoom();if(baseTileLayer)map.removeLayer(baseTileLayer);const cfg=MAP_TYPES[type];baseTileLayer=L.tileLayer(cfg.url,cfg.options).addTo(map);map.setView(centre,zoom,{animate:false});try{localStorage.setItem(MAP_TYPE_KEY,type);}catch{} }
+function addMapTypeControl(){if(!map)return;const control=L.control({position:'bottomright'});control.onAdd=()=>{const wrap=L.DomUtil.create('div','leaflet-control map-type-control');const label=L.DomUtil.create('label','map-type-label',wrap);label.textContent='Map type';const select=L.DomUtil.create('select','map-type-select',wrap);select.setAttribute('aria-label','Map type');Object.entries(MAP_TYPES).forEach(([value,cfg])=>{const option=L.DomUtil.create('option','',select);option.value=value;option.textContent=cfg.label;});select.value=selectedMapType();L.DomEvent.disableClickPropagation(wrap);L.DomEvent.disableScrollPropagation(wrap);L.DomEvent.on(select,'change',()=>setMapType(select.value));return wrap;};control.addTo(map);}
+
+// OpenRailwayMap is an optional transparent overlay. Tiles are requested only
+// when the user enables a layer; selections are remembered across all three maps.
+const RAILWAY_OVERLAY_KEY='shiftapp.openRailwayMap.overlays.v1';
+const RAILWAY_OVERLAYS={
+ infrastructure:{label:'Infrastructure',style:'standard'},
+ signals:{label:'Signals',style:'signals'},
+ maxspeed:{label:'Maximum speeds',style:'maxspeed'},
+ electrification:{label:'Electrification',style:'electrification'},
+};
+function selectedRailwayOverlays(){try{const saved=JSON.parse(localStorage.getItem(RAILWAY_OVERLAY_KEY)||'[]');return Array.isArray(saved)?saved.filter(key=>Object.prototype.hasOwnProperty.call(RAILWAY_OVERLAYS,key)):[];}catch{return[];}}
+function saveRailwayOverlaySelection(){try{localStorage.setItem(RAILWAY_OVERLAY_KEY,JSON.stringify(Object.keys(railwayOverlayLayers).filter(key=>railwayOverlayLayers[key]&&map?.hasLayer(railwayOverlayLayers[key]))));}catch{}}
+function setRailwayOverlay(key,enabled){if(!map||!Object.prototype.hasOwnProperty.call(RAILWAY_OVERLAYS,key))return;const existing=railwayOverlayLayers[key];if(enabled&&!existing){const cfg=RAILWAY_OVERLAYS[key];const layer=L.tileLayer(`https://tiles.openrailwaymap.org/${cfg.style}/{z}/{x}/{y}.png`,{minZoom:2,maxZoom:19,maxNativeZoom:19,opacity:0.86,attribution:'Data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>, Style: <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA 2.0</a> <a href="https://www.openrailwaymap.org/">OpenRailwayMap</a>'});railwayOverlayLayers[key]=layer;layer.addTo(map);}else if(!enabled&&existing){map.removeLayer(existing);delete railwayOverlayLayers[key];}saveRailwayOverlaySelection();}
+function addRailwayOverlayControl(){if(!map)return;const control=L.control({position:'bottomright'});control.onAdd=()=>{const wrap=L.DomUtil.create('div','leaflet-control railway-overlay-control');const details=L.DomUtil.create('details','railway-overlay-details',wrap);const summary=L.DomUtil.create('summary','railway-overlay-summary',details);summary.textContent='🚆 Railway layers';const list=L.DomUtil.create('div','railway-overlay-options',details);const selected=selectedRailwayOverlays();Object.entries(RAILWAY_OVERLAYS).forEach(([key,cfg])=>{const label=L.DomUtil.create('label','railway-overlay-option',list);const checkbox=L.DomUtil.create('input','',label);checkbox.type='checkbox';checkbox.value=key;checkbox.checked=selected.includes(key);const text=L.DomUtil.create('span','',label);text.textContent=cfg.label;L.DomEvent.on(checkbox,'change',()=>setRailwayOverlay(key,checkbox.checked));});const note=L.DomUtil.create('small','railway-overlay-note',list);note.textContent='Community-mapped data; may be incomplete. Not an operational safety source.';L.DomEvent.disableClickPropagation(wrap);L.DomEvent.disableScrollPropagation(wrap);return wrap;};control.addTo(map);}
+function applySavedRailwayOverlays(){selectedRailwayOverlays().forEach(key=>setRailwayOverlay(key,true));}
+
 const NHD_BASE='https://raw.githubusercontent.com/infrastructureclub/nr-national-hazard-directory/main/data/';
 const NHD_REGIONS=[['QE','East Coast'],['QF','North and East'],['QL','Scotland'],['QM','East Midlands'],['QR','London North West North'],['QS','London North West South'],['QT','Anglia'],['QK','Kent'],['QU','Sussex'],['QC','Wales'],['QW','Wessex'],['QD','Western']];
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -110,7 +136,7 @@ function locate(){
   $('aroundGpsTitle').textContent='Location acquired';
   $('aroundGpsStatus').textContent=`Accuracy approximately ${Math.round(accuracy)} m`;
   render();
-  if(map){map.invalidateSize();map.setView([position.lat,position.lon],14,{animate:false});drawMap();}
+  if(map){map.invalidateSize();drawMap();}
  },e=>{
   locating=false;
   if(activeDialog!==dialog||!dialog.open)return;
@@ -128,11 +154,13 @@ function drawMap(items=visibleItems){
   const number=index+1,marker=L.marker([x.lat,x.lon],{icon:numberedPin(number)}).bindPopup(mapPopup(x,number));
   resultMarkers[index]=marker;markers.push(marker.addTo(map));
  });
- if(position)map.setView([position.lat,position.lon],12.5,{animate:false});
- else if(visibleItems.length)map.setView([visibleItems[0].lat,visibleItems[0].lon],12.5,{animate:false});
- else map.setView([54.5,-2.5],5.5,{animate:false});
+ const centre=position?[position.lat,position.lon]:(visibleItems.length?[visibleItems[0].lat,visibleItems[0].lon]:null);
+ if(centre){
+  if(!mapFramed){map.setView(centre,12.5,{animate:false});mapFramed=true;}
+  else map.panTo(centre,{animate:false});
+ }
 }
-function initMap(){if(!window.L||mapReady)return;try{map=L.map(activeDialog?.querySelector('#aroundMap'),{zoomControl:false,scrollWheelZoom:false,doubleClickZoom:false,boxZoom:false,keyboard:false,dragging:true,touchZoom:false,tap:true,zoomSnap:0.5,zoomDelta:0.5}).setView([54.5,-2.5],5.5);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map);mapReady=true;drawMap();}catch(err){console.warn('Around me map unavailable:',err);$('aroundResultCount').textContent='Map unavailable; list results are still available.';}}
+function initMap(){if(!window.L||mapReady)return;try{map=L.map(activeDialog?.querySelector('#aroundMap'),{zoomControl:false,scrollWheelZoom:false,wheelPxPerZoomLevel:120,doubleClickZoom:false,boxZoom:false,keyboard:false,dragging:true,touchZoom:false,tap:true,zoomSnap:0.5,zoomDelta:0.5}).setView([54.5,-2.5],5.5);L.control.zoom({position:'topright'}).addTo(map);setMapType(selectedMapType());addMapTypeControl();addRailwayOverlayControl();applySavedRailwayOverlays();mapReady=true;drawMap();}catch(err){console.warn('Around me map unavailable:',err);$('aroundResultCount').textContent='Map unavailable; list results are still available.';}}
 function setMode(next){mode=next;$('aroundSearch').placeholder=mode==='crossings'?'Search crossing name, UID or ELR…':mode==='stations'?'Search station name or CRS code…':'Search access point name, ID, ELR or item code…';render();}
 function openAround(selectedMode){
   try{
@@ -149,7 +177,7 @@ function openAround(selectedMode){
     const mapPanel=activeDialog.querySelector('#aroundMap');if(mapPanel)mapPanel.style.display='';
     // Each dedicated page owns its own map element; recreate Leaflet when changing pages.
     if(map){try{map.remove();}catch(e){}}
-    map=null;mapReady=false;markers=[];resultMarkers=[];visibleItems=[];
+    map=null;baseTileLayer=null;railwayOverlayLayers={};mapReady=false;mapFramed=false;markers=[];resultMarkers=[];visibleItems=[];
     initMap();
     if(selectedMode==='nhd'){
       loadCachedAllNhd();
@@ -205,7 +233,7 @@ updateRadiusLabels();
   const index=Number(card.dataset.mapIndex),item=visibleItems[index],marker=resultMarkers[index];
   if(!item||!marker||!map)return;
   e.preventDefault();
-  try{map.invalidateSize();map.setView([item.lat,item.lon],Math.max(map.getZoom(),15),{animate:false});marker.openPopup();}
+  try{map.invalidateSize();map.panTo([item.lat,item.lon],{animate:false});marker.openPopup();}
   catch(err){console.warn('Could not focus selected station/location on map:',err);}
  };
  resultsEl?.addEventListener('click',focusResult);

@@ -845,3 +845,30 @@ footer{color:#D7E5FF}
 .unit-keypad-special{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:10px}
 .unit-keypad-special button{min-height:48px;padding:6px 3px;background:#A50034;color:#fff;border-color:#A50034;font-size:13px;line-height:1.15}
 .unit-keypad-special button:active{background:#7d0028}
+
+/* Location map zoom is controlled only by the visible + / − buttons. */
+.around-map .leaflet-control-zoom{border:1px solid #A50034!important;border-radius:10px!important;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.22)!important}
+.around-map .leaflet-control-zoom a{background:#A50034!important;color:#fff!important;border:0!important;font-weight:800!important;width:36px!important;height:36px!important;line-height:36px!important}
+.around-map .leaflet-control-zoom a:hover,.around-map .leaflet-control-zoom a:focus{background:#7d0028!important;color:#fff!important}
+.around-map .leaflet-control-zoom a.leaflet-disabled{background:#eee!important;color:#777!important}
+
+/* Basemap selector is anchored to the bottom-right of each location map. */
+.around-map .map-type-control{background:rgba(255,255,255,.96);border:1px solid #A50034;border-radius:9px;padding:5px 7px;box-shadow:0 2px 8px rgba(0,0,0,.22);display:flex;align-items:center;gap:5px;max-width:calc(100vw - 34px)}
+.around-map .map-type-label{font-size:11px;font-weight:800;color:#4a1d2e;white-space:nowrap;margin:0}
+.around-map .map-type-select{max-width:112px;min-width:92px;border:1px solid #c9a6b5;border-radius:6px;background:#fff;color:#351d28;font-size:12px;font-weight:700;padding:5px 20px 5px 6px;min-height:30px}
+.around-map .map-type-select:focus{outline:2px solid #A50034;outline-offset:1px}
+@media(max-width:380px){.around-map .map-type-control{padding:4px 5px;gap:3px}.around-map .map-type-label{font-size:10px}.around-map .map-type-select{min-width:82px;max-width:96px;font-size:11px}}
+
+
+/* Optional OpenRailwayMap overlays: independent toggles, shown above the basemap. */
+.around-map .railway-overlay-control{background:rgba(255,255,255,.97);border:1px solid #A50034;border-radius:9px;padding:5px 8px;box-shadow:0 2px 8px rgba(0,0,0,.22);max-width:calc(100vw - 34px);color:#351d28}
+.around-map .railway-overlay-details{min-width:132px}
+.around-map .railway-overlay-summary{list-style:none;cursor:pointer;font-size:11px;font-weight:850;color:#4a1d2e;white-space:nowrap;min-height:22px;display:flex;align-items:center}
+.around-map .railway-overlay-summary::-webkit-details-marker{display:none}
+.around-map .railway-overlay-summary::after{content:'▾';margin-left:auto;padding-left:10px;color:#A50034}
+.around-map .railway-overlay-details[open] .railway-overlay-summary::after{content:'▴'}
+.around-map .railway-overlay-options{display:grid;gap:5px;padding-top:7px;max-height:155px;overflow:auto;min-width:150px}
+.around-map .railway-overlay-option{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;color:#35232b;white-space:nowrap;cursor:pointer}
+.around-map .railway-overlay-option input{width:16px;height:16px;margin:0;accent-color:#A50034;flex:0 0 auto}
+.around-map .railway-overlay-note{display:block;font-size:9px;color:#75666d;line-height:1.25;padding-top:3px;max-width:190px;white-space:normal}
+@media(max-width:380px){.around-map .railway-overlay-control{padding:4px 6px}.around-map .railway-overlay-summary{font-size:10px}.around-map .railway-overlay-options{gap:4px}}

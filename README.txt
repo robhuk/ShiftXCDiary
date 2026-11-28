@@ -1,3 +1,10 @@
+Version 1.3.299 (28 November 2026): Added optional OpenRailwayMap overlays to Nearest Crossings, Nearest Stations and Nearest Access Points. Independent toggles are available for Infrastructure, Signals, Maximum speeds, Electrification; multiple layers can be enabled together. Selections are remembered across all three maps. Tiles are requested only when enabled and require an internet connection. OpenRailwayMap and OpenStreetMap attribution is displayed. The data is community-mapped and may be incomplete; it is not an operational safety source.
+
+
+Version 1.3.298 (28 November 2026): Added a map-type dropdown at the bottom-right of Nearest Crossings, Nearest Stations and Nearest Access Points maps. Select Street (OpenStreetMap), Satellite (Esri imagery), Terrain (OpenTopoMap) or Light (CARTO). The selection is remembered on the device and applies across all three location maps. Existing +/− zoom controls remain the only zoom controls; wheel, pinch and double-click zoom remain disabled, while map dragging remains enabled. Alternative basemaps require an internet connection; Street remains the default.
+
+Version 1.3.297 (28 November 2026): Location maps now zoom only with the on-map + and − controls. Scroll-wheel, pinch, double-click and automatic zoom-on-result selection are disabled; map dragging remains available.
+
 Version 1.3.281 (27 November 2026): Customer Service Issues / Diary now uses DDMMYY-000-XCCS references, supports export to the main daily log as Customer service issue, groups edit/share/export/delete actions under the three-dot menu, and opens full records in a custom pop-up with an X close button.
 
 VERSION 1.3.275 – REMOVE GRID REFERENCES FROM LOCATION TOOLS
@@ -477,4 +484,4 @@ Version 1.3.294 – Trains unit number keypad
 
 v1.3.295: Access Point, Level Crossing and Station maps can now be moved by dragging. Map zoom remains fixed; wheel, pinch and double-click zoom remain disabled.
 
-Version 1.3.296: Nearest Crossings, Nearest Stations and Nearest Access Points now show one ‘Open in Maps’ action for each result. The action opens the device mapping app using the selected location coordinates (iOS Maps URL on Apple devices; geo: intent on Android).
+Version 1.3.297: Nearest Crossings, Nearest Stations and Nearest Access Points now show one ‘Open in Maps’ action for each result. The action opens the device mapping app using the selected location coordinates (iOS Maps URL on Apple devices; geo: intent on Android).

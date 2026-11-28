@@ -2,10 +2,10 @@
   "app_id": "uk.co.crosscountry.shiftapp",
   "product_name": "Staff Shift App",
   "full_name": "Staff Shift App – Rail Staff Shift Diary",
-  "version": "1.3.296",
-  "build": "2026.11.28-location-map-pan",
+  "version": "1.3.299",
+  "build": "2026.11.28-openrailwaymap-overlays",
   "storage_key": "uk.co.crosscountry.shiftapp.shiftdata.v1",
-  "service_worker_cache": "xc-shiftapp-cache-v1.3.296-location-map-pan",
+  "service_worker_cache": "xc-shiftapp-cache-v1.3.299-openrailwaymap-overlays",
   "manifest": "manifest.json",
   "entry_point": "index.html",
   "language": "en-GB",
@@ -153,16 +153,15 @@
     "UK Station Lookup results redesigned as a touch-friendly station directory: clearer station cards, prominent CRS codes, expandable basic details, coordinate-based map links, improved match ranking, clear-search control and clearer empty states. Uses only station name, CRS code and coordinates from the bundled station dataset. Station Lookup search is isolated from the form-field autocomplete so tapping directory results cannot trigger a second suggestion layer or another search.",
     "Lost property records receive a globally sequential reference in the format DDMMYY-HEADCODE-NNN, displayed beside the Lost Property entry on the live main log only; the reference is excluded from generated reports and emails.",
     "Share operational Incident entries to Customer Service Issues / Diary from the operational log three-dot menu, with duplicate prevention and DDMMYY-000-XCCS references.",
-    "Customer Service Issues / Diary entries are included in the main app cloud and manual backups; customer service edits queue cloud sync, and restore imports those diary records."
+    "Customer Service Issues / Diary entries are included in the main app cloud and manual backups; customer service edits queue cloud sync, and restore imports those diary records.",
+    "Location maps: optional OpenRailwayMap overlays for railway infrastructure, signals, maximum speeds, electrification. Layers can be enabled independently and remembered across nearest crossings, stations and access points. Overlay tiles load only when actively enabled and require an internet connection; community-mapped information may be incomplete and is not an operational safety source."
   ],
   "releaseNotes": [
+    "v1.3.299: Added optional OpenRailwayMap overlays to nearest crossings, stations and access points: Infrastructure, Signals, Maximum speeds, Electrification. Multiple overlays can be enabled together; selections are remembered across all three maps. Tiles are requested only when selected and require internet access.",
+    "v1.3.298: Location maps for nearest crossings, nearest stations and nearest access points now zoom only with the on-map + and − controls. Scroll-wheel, pinch, double-click and automatic zoom-on-result selection are disabled; map dragging remains available.",
     "v1.3.287: Access-point results now provide one Open in Maps action that launches the device mapping app; the embedded access-point map and provider-specific map links are removed. Crossing and station map behaviour is unchanged.",
     "v1.3.278: Corrected the Lost Property email action label from 'Email list property' to 'Email Lost Property'.",
     "v1.3.279: Added the Customer Service Issues / Diary page, accessible from a button at the bottom of the main screen. Diary records remain in separate local storage.",
-    "v1.3.286: Customer Service Issues / Diary records are included alongside the main shift diary in daily Google Drive backups and manual JSON backups. Diary edits queue the next cloud backup, and restoring a backup restores the Customer Service diary too.",
-    "v1.3.296: Location maps for Access Points, Level Crossings and Stations can be panned by dragging; zoom remains fixed with pinch, wheel and double-click zoom disabled."
-  ],
-  "release_notes": [
-    "v1.3.289: Access points now load and display cached records from all UK regions together, with no region selector. The Update all access point data button is retained at the bottom of the Access Points page."
+    "v1.3.286: Customer Service Issues / Diary records are included alongside the main shift diary in daily Google Drive backups and manual JSON backups. Diary edits queue the next cloud backup, and restoring a backup restores the Customer Service diary too."
   ]
 }
