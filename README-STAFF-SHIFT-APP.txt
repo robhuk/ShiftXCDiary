@@ -1,3 +1,5 @@
+Version 1.3.309 (28 November 2026): When a Trains Worked unit-number field is set to Cancelled, the display omits the word “Unit” and the train entry is highlighted with a red border. The cancelled status is also highlighted in the live train list, archived shift view, print/PDF report, email report and JPEG archive export. Existing shift data and storage keys are preserved.
+
 Version 1.3.302 (28 November 2026): Added live nearby level-crossing status from Mind the Gates to the Nearest Crossings page, including open/closed/unknown state, confirmation status, estimated next closure, and on-demand forecast timeline and approaching train details. Added source credit and safety disclaimer. Live information requires an internet connection and GPS.
 
 Version 1.3.301 (28 November 2026): Removed the Light map type and removed Signals and Electrification from the optional OpenRailwayMap layers. Previously saved selections for removed options are ignored.

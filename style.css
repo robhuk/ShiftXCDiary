@@ -978,3 +978,7 @@ html.map-fullscreen-active,body.map-fullscreen-active{overflow:hidden!important;
 .customer-service-launch-panel .collapse-summary{display:flex;align-items:center;gap:9px}
 .customer-service-launch-panel .collapse-summary h2{flex:1}
 .customer-service-launch-panel .collapse-content>button{min-height:46px;text-align:left;padding-left:16px;margin:8px 0 4px}
+
+/* A train with a cancelled unit is clearly highlighted in the live train list and archived view. */
+.trainrow.cancelled-trainrow,.archive-view-train.cancelled-trainrow{border:2px solid #C00035!important;background:#fff0f1!important;box-shadow:0 0 0 1px #C0003520}
+.trainrow.cancelled-trainrow strong,.archive-view-train.cancelled-trainrow strong{color:#8F001F!important}
