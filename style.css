@@ -982,3 +982,20 @@ html.map-fullscreen-active,body.map-fullscreen-active{overflow:hidden!important;
 /* A train with a cancelled unit is clearly highlighted in the live train list and archived view. */
 .trainrow.cancelled-trainrow,.archive-view-train.cancelled-trainrow{border:2px solid #C00035!important;background:#fff0f1!important;box-shadow:0 0 0 1px #C0003520}
 .trainrow.cancelled-trainrow strong,.archive-view-train.cancelled-trainrow strong{color:#8F001F!important}
+
+/* Local daily backups are presented as a year / month / day folder tree. */
+.local-backup-folder-preview{background:rgba(6,27,80,.045);border:1px solid rgba(6,27,80,.12);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:13px;line-height:1.9}
+.local-backup-folder-indent{padding-left:20px}.local-backup-folder-indent-2{padding-left:40px}.local-backup-folder-indent-3{padding-left:60px;overflow-wrap:anywhere}
+.local-backup-folders{margin:10px 0;border:1px solid #dce3ed;border-radius:10px;padding:8px;max-height:340px;overflow:auto;background:#fff}
+.local-backup-year,.local-backup-month{padding:5px 2px}
+.local-backup-year>summary,.local-backup-month>summary{cursor:pointer;font-weight:700;padding:7px 5px;list-style-position:inside}
+.local-backup-month{margin-left:14px;border-left:2px solid #dce3ed;padding-left:8px}
+.local-backup-day-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 4px 7px 12px;border-top:1px solid #edf0f5;font-size:12px}
+.local-backup-day-row span{min-width:0;overflow-wrap:anywhere}.local-backup-day-row button{flex:0 0 auto;min-height:34px;padding:5px 10px}
+@media(max-width:480px){.local-backup-day-row{align-items:flex-start}.local-backup-day-row button{min-width:82px}}
+
+.cancellation-reason-dialog{width:min(92vw,430px)}
+.cancellation-reason-dialog form{display:flex;flex-direction:column;gap:12px}
+.cancellation-reason-dialog label{display:flex;flex-direction:column;gap:6px;font-weight:750}
+.cancellation-reason-dialog select,.cancellation-reason-dialog input{width:100%;min-height:46px;border:1px solid #cbbbc2;border-radius:10px;padding:10px 12px;background:#fff;color:#2b2025;font:inherit}
+.cancellation-reason-inline{margin-top:5px;color:#8f001f;font-weight:700}
