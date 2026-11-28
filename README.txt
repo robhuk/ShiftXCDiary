@@ -1,3 +1,5 @@
+Version 1.3.302 (28 November 2026): Added live nearby level-crossing status from Mind the Gates to the Nearest Crossings page, including open/closed/unknown state, confirmation status, estimated next closure, and on-demand forecast timeline and approaching train details. Added source credit and safety disclaimer. Live information requires an internet connection and GPS.
+
 Version 1.3.301 (28 November 2026): Removed the Light map type and removed Signals and Electrification from the optional OpenRailwayMap layers. Previously saved selections for removed options are ignored.
 
 Version 1.3.300 (28 November 2026): Moved all map controls and filters below the map frame on Nearest Crossings, Nearest Stations and Nearest Access Points. Added full-screen map mode with an on-map close button. Existing map types, optional OpenRailwayMap overlays, GPS, pins, dragging and + / − zoom controls are retained.
