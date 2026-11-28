@@ -834,3 +834,14 @@ footer{color:#D7E5FF}
 /* Access point all-region updater stays at the bottom of its page. */
 .around-nhd-update-bottom{display:grid;gap:10px;margin:18px 0 4px;padding-top:14px;border-top:1px solid var(--line,#ddd)}
 .around-nhd-update-bottom button{width:100%;min-height:48px}
+
+/* Custom CrossCountry-styled unit number keypad */
+.unit-keypad-dialog{width:min(92vw,390px)}
+.unit-keypad-display{min-height:54px;display:flex;align-items:center;justify-content:center;margin:4px 0 13px;padding:10px;border:2px solid #d9b8c6;border-radius:12px;background:#fff7fa;color:var(--xc);font-size:25px;font-weight:850;letter-spacing:.5px;text-align:center;overflow-wrap:anywhere}
+.unit-keypad-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.unit-keypad-grid button,.unit-keypad-special button{min-height:52px;border:1px solid #dfcbd4;border-radius:11px;background:#fff;color:#35232b;font-size:21px;font-weight:800;box-shadow:0 2px 4px #0000000d}
+.unit-keypad-grid button:active,.unit-keypad-special button:active{background:#f7e3eb;transform:scale(.98)}
+.unit-keypad-grid button.unit-keypad-utility{background:#f7edf1;color:var(--xc);font-size:15px}
+.unit-keypad-special{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:10px}
+.unit-keypad-special button{min-height:48px;padding:6px 3px;background:#A50034;color:#fff;border-color:#A50034;font-size:13px;line-height:1.15}
+.unit-keypad-special button:active{background:#7d0028}

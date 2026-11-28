@@ -125,3 +125,7 @@ Version 1.3.290 – Fixed location maps
 
 Version 1.3.291 – Location map zoom reduced by approximately 25% on access points, level crossings and railway stations. Maps remain fixed and non-interactive.
 \nVersion 1.3.292 – Form question and field labels are bold in operational log and report outputs; recorded answers remain standard weight.\n
+
+v1.3.295: Access Point, Level Crossing and Station maps can now be moved by dragging. Map zoom remains fixed; wheel, pinch and double-click zoom remain disabled.
+
+Version 1.3.296: Nearest Crossings, Nearest Stations and Nearest Access Points now show one ‘Open in Maps’ action for each result. The action opens the device mapping app using the selected location coordinates (iOS Maps URL on Apple devices; geo: intent on Android).

@@ -459,3 +459,22 @@ Version 1.3.289: Access Points now combines records from all saved UK regions in
 
 
 Version 1.3.291 – Location map zoom reduced by approximately 25% on access points, level crossings and railway stations. Maps remain fixed and non-interactive.
+
+
+Version 1.3.293 – Passenger Count Station Lookup
+- Passenger Counts station/location field now explicitly uses the installed stations.json directory through the shared station autocomplete.
+- Search by station name or three-letter CRS code and select a station; between-station locations can still be entered manually.
+- The chosen station is stored in the passenger count record as Station Name [CRS].
+
+
+Version 1.3.294 – Trains unit number keypad
+- Replaced device-keyboard entry for Unit number and Second unit number with an in-app numeric keypad.
+- Keypad accepts six-digit numeric unit numbers and the special values Cancelled, Set Swap and N/A.
+- Added Clear and Backspace controls; second unit remains optional.
+- Special values are preserved in the train record and displayed in shift logs and reports.
+- Existing shift data and storage keys are unchanged.
+
+
+v1.3.295: Access Point, Level Crossing and Station maps can now be moved by dragging. Map zoom remains fixed; wheel, pinch and double-click zoom remain disabled.
+
+Version 1.3.296: Nearest Crossings, Nearest Stations and Nearest Access Points now show one ‘Open in Maps’ action for each result. The action opens the device mapping app using the selected location coordinates (iOS Maps URL on Apple devices; geo: intent on Android).
